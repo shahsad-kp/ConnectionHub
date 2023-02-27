@@ -1,0 +1,74 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyBroadExceptionInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyInterpreterInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="imdb" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="FilmForum.Plugin.ask" />
+          <option value="pyrogram.types.user_and_chats.chat.Chat.listen" />
+          <option value="pyrogram.types.user_and_chats.chat.Chat.ask" />
+          <option value="FilmForum.CodeXBotz.listen" />
+          <option value="FilmForum.Plugin.listen" />
+          <option value="Bandu.CodeXBotz.ask" />
+          <option value="Bandu.CodeXBotz.listen" />
+          <option value="pyrogram.client.Client.listen" />
+          <option value="pyrogram.client.Client.ask" />
+          <option value="pyrogram.client.Client.cancel_listener" />
+          <option value="SeriesStudio.tg_clients.CodeXBotz.listen" />
+          <option value="pyrogram.types.user_and_chats.user.User.add_to_db" />
+          <option value="pyrogram.types.user_and_chats.user.User.save" />
+          <option value="SeriesStudio.tg_clients.CodeXBotz.ask" />
+          <option value="FilterBot.tg_clients.BotClient.listen" />
+          <option value="imdb_id" />
+          <option value="chat_details" />
+          <option value="last_seen" />
+          <option value="pyrogram.types.user_and_chats.chat.Chat.refresh" />
+          <option value="FilmForum.tg_clients.Plugin.ask" />
+          <option value="FilmForum.tg_clients.Plugin.listen" />
+          <option value="FilmForum.types.movies_and_files.movie.Movie.get_imdb_url" />
+          <option value="pyrogram.types.bots_and_keyboards.callback_query.CallbackQuery.movie_data" />
+          <option value="pyrogram.types.inline_mode.chosen_inline_result.ChosenInlineResult.movie_id" />
+          <option value="FilmForum.tg_clients.Plugin.listen_inline_query" />
+          <option value="FilmForum.tg_clients.Plugin.listen_inline_result" />
+          <option value="FilmForum.tg_clients.Plugin.ask_message" />
+          <option value="pyrogram.types.user_and_chats.chat.Chat.user_id" />
+          <option value="pyrogram.types.user_and_chats.user.User.channel_id" />
+          <option value="FilmForum.tg_clients.CodeXBotz.listen_message" />
+          <option value="FilmForum.tg_clients.Plugin.listen_message" />
+          <option value="pyrogram.types.inline_mode.chosen_inline_result.ChosenInlineResult.*" />
+          <option value="pyrogram.types.user_and_chats.user.User.join_date" />
+          <option value="pyrogram.types.user_and_chats.user.User.plugin_pm" />
+          <option value="pyrogram.types.user_and_chats.user.User.update_availability" />
+          <option value="pyrogram.types.user_and_chats.user.User.group" />
+          <option value="pyrogram.types.user_and_chats.user.User.inline" />
+          <option value="pyrogram.types.messages_and_media.message.Message.datas" />
+          <option value="pyrogram.types.user_and_chats.user.User.referred_by" />
+          <option value="pyrogram.types.user_and_chats.user.User.taken_files" />
+          <option value="pyrogram.types.user_and_chats.user.User.main_pm" />
+          <option value="pyrogram.types.user_and_chats.user.User.total_files" />
+          <option value="str.html" />
+          <option value="SeriesStudio.types.client_and_handlers.client.Client.ask" />
+          <option value="SeriesStudio.types.client_and_handlers.client.Client.listen" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
