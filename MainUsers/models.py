@@ -21,6 +21,7 @@ class User(AbstractUser):
     bio = models.TextField(blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
+    email_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username

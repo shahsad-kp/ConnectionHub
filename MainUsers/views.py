@@ -133,3 +133,55 @@ def report_user(request: HttpRequest, username: str):
         }
     )
     return response
+
+
+def check_username_availability(request: HttpRequest):
+    if not ((request.method == 'GET') & ('q' in request.GET)):
+        response = JsonResponse(
+            data={
+                'error': 'Invalid parameter'
+            }
+        )
+        response.status_code = 401
+        return response
+
+    query = request.GET['q']
+    if User.objects.filter(username=query).exists():
+        response = JsonResponse(
+            data={
+                'available': False
+            }
+        )
+    else:
+        response = JsonResponse(
+            data={
+                'available': True
+            }
+        )
+    return response
+
+
+def check_email_availability(request: HttpRequest):
+    if not ((request.method == 'GET') & ('q' in request.GET)):
+        response = JsonResponse(
+            data={
+                'error': 'Invalid parameter'
+            }
+        )
+        response.status_code = 401
+        return response
+
+    query = request.GET['q']
+    if User.objects.filter(email=query).exists():
+        response = JsonResponse(
+            data={
+                'available': False
+            }
+        )
+    else:
+        response = JsonResponse(
+            data={
+                'available': True
+            }
+        )
+    return response

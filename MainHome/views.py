@@ -1,8 +1,13 @@
+from datetime import datetime
+
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
+from MainHome.models import EmailVerification
+# from MainHome.models import EmailVerification
 from MainUsers.models import User
 
 
@@ -107,9 +112,12 @@ def register_view(request):
             full_name=fullname
         )
         user.save()
-        user = authenticate(request, username=username, password=password)
-        login(request, user)
-        return redirect('user-home')
+        send_otp(email, user)
+        return render(
+            request,
+            template_name='email-verification.html',
+            context={'email': email}
+        )
     return render(
         request,
         template_name='user-register.html'
@@ -119,3 +127,28 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect('user-login')
+
+
+def send_otp(email: str, user: User):
+    email_verification = EmailVerification(user=user, email=email)
+    email_verification.generate_otp()
+    email_verification.send_otp()
+
+
+def verify_otp(request):
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        email_verification = EmailVerification.objects.filter(
+            email=request.user.email,
+            otp=otp,
+            expires_at__gt=datetime.now(),
+        ).first()
+        if email_verification:
+            email_verification.user.email_verified = True
+            email_verification.user.save()
+            email_verification.delete()
+            return redirect('user-home')
+        else:
+            return JsonResponse({'status': 'error'})
+    else:
+        return JsonResponse({'status': 'error'})

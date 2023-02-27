@@ -8,4 +8,5 @@ urlpatterns = [
     path('<str:username>/follow', follow_user, name='follow-user'),
     path('<str:username>/unfollow', unfollow_user, name='unfollow-user'),
     path('<str:username>/report', report_user, name='report-user'),
+
 ]
