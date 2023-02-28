@@ -79,7 +79,10 @@ class RegisterHomeTest(TestCase):
     def test_register_redirect_if_logged_in(self):
         self.client.force_login(self.user)
         response = self.client.get(self.url)
-        self.assertRedirects(response, reverse('user-home'))
+        self.assertTemplateUsed(
+            response=response,
+            template_name='email-verification.html'
+        )
 
 
 class LoginHomeTest(TestCase):
@@ -152,3 +155,5 @@ class LogoutTest(TestCase):
         url = reverse('user-logout')
         response = client.get(url)
         self.assertEqual(response.status_code, 302)
+
+

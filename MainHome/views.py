@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 
 from MainHome.models import EmailVerification
@@ -103,6 +103,28 @@ def register_view(request):
             response.status_code = 400
             return response
 
+        email_verification = EmailVerification.objects.filter(
+            username=username,
+            expires_at__gt=datetime.now(),
+        ).first()
+        if email_verification and not email_verification.verified:
+            response = JsonResponse(
+                data={
+                    'error': 'Email is not verified'
+                }
+            )
+            response.status_code = 400
+            return response
+        elif email_verification and email_verification.verified:
+            email_verification.delete()
+        else:
+            response = JsonResponse(
+                data={
+                    'error': 'Email is not verified'
+                }
+            )
+            response.status_code = 400
+            return response
         user = User.objects.create_user(
             username=username,
             password=password,
@@ -113,7 +135,7 @@ def register_view(request):
         send_otp(email, user)
         return render(
             request,
-            template_name='email-verification.html',
+            template_name='user-home.html',
             context={'email': email}
         )
     return render(
@@ -127,25 +149,29 @@ def logout_view(request):
     return redirect('user-login')
 
 
-def send_otp(email: str, user: User):
-    email_verification = EmailVerification(user=user, email=email)
-    email_verification.generate_otp()
-    email_verification.send_otp()
+def send_otp(request: HttpRequest):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        email_verification = EmailVerification(username=username, email=email)
+        email_verification.generate_otp()
+        email_verification.send_otp()
+        email_verification.save()
 
 
 def verify_otp(request):
     if request.method == 'POST':
         otp = request.POST.get('otp')
+        email = request.POST.get('email')
         email_verification = EmailVerification.objects.filter(
-            email=request.user.email,
+            email=email,
             otp=otp,
             expires_at__gt=datetime.now(),
         ).first()
         if email_verification:
-            email_verification.user.email_verified = True
-            email_verification.user.save()
-            email_verification.delete()
-            return redirect('user-home')
+            email_verification.verified = True
+            email_verification.save()
+            return JsonResponse({'status': 'success'})
         else:
             return JsonResponse({'status': 'error'})
     else:

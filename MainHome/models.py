@@ -8,11 +8,15 @@ from MainUsers.models import User
 
 
 class EmailVerification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=50)
     email = models.EmailField()
     otp = models.CharField(max_length=6)
+    verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(default=datetime.now() + timedelta(minutes=5))
+
+    def __str__(self):
+        return f"OTP of {self.username}"
 
     def is_valid(self):
         return self.expires_at > datetime.now()
@@ -33,4 +37,3 @@ class EmailVerification(models.Model):
             to=[self.email],
         )
         message.send()
-
