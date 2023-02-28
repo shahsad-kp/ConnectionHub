@@ -137,12 +137,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com' # Your email service provider's SMTP server address
-EMAIL_PORT = 587 # The port used for SMTP connections
-EMAIL_USE_TLS = True # Enable Transport Layer Security (TLS) encryption for the connection
-EMAIL_HOST_USER = 'connectionhub.help@gmail.com' # Your email address
-EMAIL_HOST_PASSWORD = 'eboqbgekfvhzbknk' # Your email password
-DEFAULT_FROM_EMAIL = 'connectionhub.help@gmail.com' # The email address that should appear in the "From" field of your emails
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = int(env('EMAIL_PORT'))
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env('EMAIL_ADDRESS')
+EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

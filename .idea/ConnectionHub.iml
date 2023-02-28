@@ -18,6 +18,15 @@
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/media" />
       <excludeFolder url="file://$MODULE_DIR$/test_files" />
+      <excludeFolder url="file://$MODULE_DIR$/AdminHome/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/AdminMessages/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/AdminPost/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/AdminReports/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/AdminUsers/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/MainHome/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/MainPosts/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/MainSettings/migrations" />
+      <excludeFolder url="file://$MODULE_DIR$/MainUsers/migrations" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11 (ConnectionHub)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

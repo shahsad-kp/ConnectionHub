@@ -2,12 +2,10 @@ from datetime import datetime
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from MainHome.models import EmailVerification
-# from MainHome.models import EmailVerification
 from MainUsers.models import User
 
 
