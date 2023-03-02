@@ -40,21 +40,26 @@ def like_post(request: HttpRequest, post_id: int):
         like.delete()
         liked = False
         disliked = False
+        post.likes_count -= 1
     elif dislike.exists():
         dislike.delete()
         Reaction.objects.create(user=request.user, post=post, reaction='like')
         liked = True
         disliked = False
+        post.likes_count += 1
+        post.dislikes_count -= 1
     else:
         Reaction.objects.create(user=request.user, post=post, reaction='like')
         liked = True
         disliked = False
+        post.likes_count += 1
+    post.save()
     post.refresh_from_db()
     return JsonResponse(
         data={
             'success': True,
-            'likes': post.likes.count(),
-            'dislikes': post.dislikes.count(),
+            'likes': post.likes_count,
+            'dislikes': post.dislikes_count,
             'liked': liked,
             'disliked': disliked
         }
@@ -70,20 +75,26 @@ def dislike_post(request: HttpRequest, post_id: int):
         dislike.delete()
         liked = False
         disliked = False
+        post.dislikes_count -= 1
     elif like.exists():
         like.delete()
         Reaction.objects.create(user=request.user, post=post, reaction='dislike')
         disliked = True
         liked = False
+        post.dislikes_count += 1
+        post.likes_count -= 1
     else:
         Reaction.objects.create(user=request.user, post=post, reaction='dislike')
         disliked = True
         liked = False
+        post.dislikes_count += 1
+    post.save()
+    post.refresh_from_db()
     return JsonResponse(
         data={
             'success': True,
-            'likes': post.likes.count(),
-            'dislikes': post.dislikes.count(),
+            'likes': post.likes_count,
+            'dislikes': post.dislikes_count,
             'liked': liked,
             'disliked': disliked
         }

@@ -1,36 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Suggestions</h1>
-    {% for user in suggestions %}
-    <div>
-        <b>Username: {{ user.username }}</b><br>
-        <b>Fullname: {{ user.full_name }}</b><br>
-        <b>Profile Picture: {{ user.profile_picture }}</b><br><br>
-    </div>
-    {% endfor %}
-    <h1>Suggested Posts</h1>
-    {% for post in suggest_posts %}
-        <b>Username: {{ post.user.username }}</b>
-        <b>fullname: {{ post.user.full_name }}</b>
-        <b>profile_picture: {{ post.user.profile_picture }}</b>
-        <b>Likes: {{ post.likes }}</b>
-        <b>Dislikes: {{ post.dislikes }}</b>
-    {% endfor %}
+{% extends 'right-bar-base.html' %}
+{% load static %}
 
-    <h1>Followings</h1>
-    {% for user in followings %}
-    <div>
-        <b>Username: {{ user.username }}</b><br>
-        <b>Fullname: {{ user.full_name }}</b><br>
-        <b>Profile Picture: {{ user.profile_picture }}</b><br><br>
-    </div>
-    {% endfor %}
+{% block title %}ConnectionHub{% endblock %}
+
+{% block center-portion %}
+<div class="search-area" id="user-search-area">
+    <input id="user-search-bar" type="text" class="search-bar secondary-background card text-color" placeholder="Search an user.." data-results-id="user-search-results" data-parent-id="user-search-area">
+    <ul id="user-search-results" class="search-results card secondary-background">
+
+    </ul>
+</div>
+{% include 'posts-list.html' with posts=post_updates%}
+{% endblock %}
 
 
-</body>
-</html>
+{% block scripts %}
+<script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/users.js' %}"></script>
+{% endblock %}

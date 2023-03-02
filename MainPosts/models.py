@@ -19,6 +19,9 @@ class Post(models.Model):
     image = models.ImageField(upload_to=generate_filename)
     caption = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes_count = models.IntegerField(default=0)
+    dislikes_count = models.IntegerField(default=0)
+    comments_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Post {self.id} of {self.user}"
@@ -40,7 +43,7 @@ class Reaction(models.Model):
         ('like', 'Like'),
         ('dislike', 'Dislike'),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reactions')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reactions')
     reaction = models.CharField(choices=REACTION_TYPES, max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)

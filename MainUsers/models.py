@@ -17,19 +17,30 @@ def generate_filename(instance: 'User', filename):
 class User(AbstractUser):
     full_name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255, blank=True)
-    profile_picture = models.ImageField(upload_to=generate_filename, blank=True)
+    profile_picture = models.ImageField(
+        upload_to=generate_filename,
+        default='/profile_pictures/avatar-alt.svg'
+    )
     bio = models.TextField(blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     email_verified = models.BooleanField(default=False)
+    followers_count = models.IntegerField(default=0)
+    followings_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.username
 
     def follow(self, user: 'User'):
+        user.followers_count += 1
+        user.save()
+        self.followings_count += 1
         Follow.objects.create(follower=self, followee=user).save()
 
     def unfollow(self, user: 'User'):
+        user.followers_count -= 1
+        user.save()
+        self.followings_count -= 1
         Follow.objects.filter(follower=self, followee=user).delete()
 
     def get_all_followings(self):

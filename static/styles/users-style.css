@@ -1,0 +1,234 @@
+.root-container{
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    padding: 40px 40px 40px 0;
+}
+
+.brand-logo-left-bar{
+    position: absolute;
+    top: 5%;
+}
+
+.right-bar{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    margin-right: 40px;
+}
+
+.right-bar-part{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 20px;
+    width: min-content;
+}
+
+.right-bar-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+
+    width: 400px;
+    font-family: 'Lucida Sans', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+}
+
+.right-bar-contents{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 25px;
+    gap: 20px;
+    width: 400px;
+    box-sizing: border-box;
+}
+
+.right-bar-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 25px;
+
+    width: 350px;
+}
+
+.small-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.large-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+}
+
+.avatar{
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.right-bar-user-data{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 1px;
+    gap: 20px;
+}
+
+.right-bar-content-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.right-bar-content-text-name{
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+}
+
+.right-bar-content-text-username{
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.page-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    gap: 10px;
+    height: 30px;
+    border-radius: 20px;
+    border-color: transparent;
+    cursor: pointer;
+}
+
+.center-portion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 42vw;
+    margin-right: 400px;
+}
+
+.search-results {
+    height: min-content;
+    width: 42.2%;
+    position: absolute;
+    top: 101px;
+    box-sizing: border-box;
+    gap: 20px;
+    flex-direction: column;
+    padding: 20px 20px 0 20px;
+}
+
+.search-result {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-name {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-username {
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-bio {
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-relation-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.profile-posts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding-top: 40px;
+}

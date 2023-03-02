@@ -30,6 +30,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11 (ConnectionHub)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="geticons" level="application" />
+    <orderEntry type="library" name="style" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

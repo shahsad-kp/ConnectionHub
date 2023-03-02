@@ -1,23 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <b>username: {{ username }}</b><br>
-    <b>fullname: {{ fullname }}</b><br>
-    <b>profile_picture: {{ profile_picture }}</b><br>
-    <b>bio: {{ bio }}</b><br>
-    <b>number of following : {{ number_of_followings }}</b><br>
-    <b>number of followers : {{ number_of_followers }}</b><br>
-    <style>
-        body{
-            background-color: #000000;
-        }
-    </style>
-    <script>
+{% extends 'right-bar-base.html' %}
+{% load static %}
 
-    </script>
-</body>
-</html>
+{% block title %}{{ fullname }} | ConnectionHub{% endblock %}
+
+{% block center-portion %}
+<section class="profile-section secondary-background card text-color">
+    <div class="large-avatar">
+        <img class="avatar" src="{{ profile_picture }}" alt="profile-picture of @{{ username }}">
+    </div>
+    <div class="profile-details">
+        <span class="profile-name">{{ fullname }}</span>
+        <span class="profile-username">@{{ username }}</span>
+        {% if bio %}
+        <span class="profile-bio">{{ bio }}</span>
+        {% endif %}
+    </div>
+    <div class="profile-relation-info">
+        <span>{{ number_of_followers }} Followers</span>
+        <i>●</i>
+        <span>{{ number_of_followings }} Followings</span>
+    </div>
+    {% if not self %}
+    <div>
+        <button class="follow-button page-button accent-two-bg text-color" data-user-id="{{ suggestion.username }}">Follow</button>
+    </div>
+    {% endif %}
+</section>
+
+<section class="profile-posts">
+{% include 'posts-list.html' %}
+</section>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles/users-style.css' %}">
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static '/js/posts.js' %}"></script>
+{% endblock %}

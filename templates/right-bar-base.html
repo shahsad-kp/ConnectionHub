@@ -1,0 +1,53 @@
+{% extends 'users-base.html' %}
+
+{% block content %}
+<div class="body-div-with-right-bar">
+    {% block center-portion %}
+    {% endblock %}
+</div>
+<div class="right-bar">
+    {% if suggestions %}
+    <div class="right-bar-part">
+        <div class="right-bar-head card secondary-background text-color">Suggestions</div>
+        <div class="right-bar-contents card secondary-background">
+            {% for suggestion in suggestions %}
+            <div class="right-bar-content">
+                <div class="right-bar-user-data">
+                    <div class="small-avatar">
+                        <img class="avatar" src="{{ suggestion.profile_picture }}" alt="Avatar">
+                    </div>
+                    <div class="right-bar-content-text">
+                        <div class="right-bar-content-text-name text-color">{{ suggestion.fullname }}</div>
+                        <a href="{% url 'profile-pages' username=suggestion.username %}"><div class="right-bar-content-text-username text-color">@{{ suggestion.username }}</div></a>
+                    </div>
+                </div>
+                <button class="follow-button page-button accent-two-bg text-color" data-user-id="{{ suggestion.username }}">Follow</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if followings %}
+    <div class="right-bar-part">
+        <div class="right-bar-head card secondary-background text-color">Followings</div>
+        <div class="right-bar-contents card secondary-background">
+            {% for following in followings %}
+            <div class="right-bar-content">
+                <div class="right-bar-user-data">
+                    <div class="small-avatar">
+                        <img class="avatar" src="{{ following.profile_picture }}" alt="Avatar">
+                    </div>
+                    <div class="right-bar-content-text">
+                        <div class="right-bar-content-text-name text-color">{{ following.fullname }}</div>
+                        <div class="right-bar-content-text-username text-color">@{{ following.username }}</div>
+                    </div>
+                </div>
+                <a href="{% url 'profile-pages' username=following.username %}"><button class="page-button accent-two-bg text-color">View</button></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

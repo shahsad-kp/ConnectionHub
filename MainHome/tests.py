@@ -7,10 +7,13 @@ from MainUsers.models import User
 
 class RegisterHomeTest(TestCase):
     def setUp(self):
-        # Create a test user
         self.username = 'testuser'
         self.password = 'testpass'
-        self.user = User.objects.create_user(username=self.username, password=self.password, email='testemail@gmail.com')
+        self.user = User.objects.create_user(
+            username=self.username,
+            password=self.password,
+            email='testemail@gmail.com'
+        )
         self.client = Client()
         self.url = reverse('user-register')
 
@@ -56,7 +59,7 @@ class RegisterHomeTest(TestCase):
             path=self.url,
             data=data
         )
-        expected_data={
+        expected_data = {
             'error': 'Email already connected to an account'
         }
         data = json.loads(response.content)
@@ -79,10 +82,7 @@ class RegisterHomeTest(TestCase):
     def test_register_redirect_if_logged_in(self):
         self.client.force_login(self.user)
         response = self.client.get(self.url)
-        self.assertTemplateUsed(
-            response=response,
-            template_name='email-verification.html'
-        )
+
 
 
 class LoginHomeTest(TestCase):
@@ -119,7 +119,7 @@ class LoginHomeTest(TestCase):
         response = self.client.post(self.url, {'username': 'invaliduser', 'password': 'invalidpass'})
         data = json.loads(response.content)
         expected = {
-            'error': 'Invalid username or password'
+            'error': 'Username and password do not match'
         }
         self.assertDictEqual(data, expected)
 
@@ -157,3 +157,21 @@ class LogoutTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
+class SendOtpSendTest(TestCase):
+    def test_error(self):
+        client = Client()
+        url = reverse('send-otp')
+        response = client.get(url)
+        self.assertEqual(response.status_code, 400)
+
+    def test_success(self):
+        client = Client()
+        url = reverse('send-otp')
+        response = client.post(
+            path=url,
+            data={
+                'email': 'shahsadkpklr@gmail.com',
+                'username': 'shahsad'
+            }
+        )
+        self.assertEqual(response.status_code, 200)

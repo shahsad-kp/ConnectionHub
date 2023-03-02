@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'logo/logo.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'logo/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

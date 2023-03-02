@@ -1,0 +1,63 @@
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.main-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 70px;
+    gap: 30px;
+    flex-direction: column;
+}
+
+.welcome{
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 55px;
+    color: #F2F2F2;
+}
+
+.form-header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+}
+
+.sign-in-text{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.login-form-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 396px;
+    height: 50px;
+    border-radius: 10px;
+    font-family: 'MuseoModerno', cursive;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px
+}

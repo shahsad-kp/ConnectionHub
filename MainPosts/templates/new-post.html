@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'users-base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}Add new post{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="new-post-body">
+        <div class="new-post-placeholder">
+
+        </div>
+        <div class="settings-side-form"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles/new-post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/styles/users-style.css' %}">
+{% endblock %}

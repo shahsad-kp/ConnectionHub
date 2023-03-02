@@ -1,0 +1,322 @@
+
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,700;1,500;1,800&display=swap');
+
+body{
+    background: #121212;
+    font-family: 'MuseoModerno', cursive !important;
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+    color: #F2F2F2;
+}
+
+.secondary-background{
+    background: #1C1C1C;
+}
+
+.card{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.brand-logo{
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 51px;
+    color: #F8E71C;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+}
+
+.text-color{
+    color: #F2F2F2;
+}
+
+.text-color-disabled{
+    color: #757575 !important;
+}
+
+.main-background{
+    background: #121212;
+}
+
+.main-background-disabled{
+    background: #3f3f3f !important;
+}
+
+.input-field{
+    width: 366px;
+    height: 50px;
+    border-color: transparent;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    padding-left: 20px;
+}
+
+.input-field::placeholder{
+    color: #646464;
+    opacity: 1;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.card{
+    border-bottom: 1px solid #000000;
+    border-radius: 10px;
+}
+
+.accent-two-bg{
+    background: #4C4CFF;
+}
+
+.accent-two{
+    color: #4C4CFF;
+}
+
+.accent-one-bg{
+    background: #F8E71C;
+}
+
+.accent-one{
+    color: #F8E71C;
+}
+
+.accent-three-bg{
+    background: #C74CD2;
+}
+
+.accent-three{
+    color: #C74CD2;
+}
+
+.error-message{
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #FF4136;
+    display: none;
+    width: 100%;
+}
+
+.error-message-each{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.is-invalid{
+    border-color: #FF4136 !important;
+}
+
+.is-invalid:focus{
+    border-color: #FF4136 !important;
+}
+
+.left-bar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding-right: 20px;
+    height: 100vh;
+    width: min-content;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.left-bar-elements{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    border-radius: 0 20px 20px 0;
+    padding: 10px 34px;
+    box-sizing: border-box;
+}
+
+.icons{
+    width: 24px;
+    height: 24px;
+}
+
+.left-bar-elements-text{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.body-div-with-right-bar{
+    width: 100%;
+    margin-right: 400px;
+    height: 100vh;
+    margin-left: 320px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 60px;
+}
+
+.body-div-without-right-bar{
+    width: 100%;
+    height: 100vh;
+    margin-left: 320px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 60px;
+}
+
+.full-post{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.search-area{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.search-bar{
+    height: 50px;
+    border: none;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    padding: 0 28px;
+}
+
+.search-bar::placeholder{
+    color: #646464;
+}
+
+.main-post-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.post-user-data {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    padding: 10px 0 10px 20px;
+    box-sizing: border-box;
+}
+
+.post-user-name {
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+}
+
+.post-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.post-caption {
+    font-family: 'Arial', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    padding: 20px 25px;
+
+}
+
+.post-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0 20px 20px;
+    gap: 50px;
+    box-sizing: border-box;
+}
+
+.post-action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-action-text {
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.blank-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+    color: #3f3f3f;
+}
+
+.settings-side-form {
+    width: 50%;
+    height: min-content;
+}

@@ -19,7 +19,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('MainHome.urls')),
     path('djangoadmin', admin.site.urls),
     path('users/', include('MainUsers.urls')),
     path('settings/', include('MainSettings.urls')),
@@ -29,9 +28,14 @@ urlpatterns = [
     path('admin/users/', include('AdminUsers.urls')),
     path('admin/post/', include('AdminPost.urls')),
     path('admin/', include('AdminHome.urls')),
+    path('', include('MainHome.urls')),
 ]
 
 urlpatterns = urlpatterns + static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT
+)
+urlpatterns = urlpatterns + static(
+    settings.STATIC_URL,
+    document_root=settings.STATICFILES_DIRS
 )
