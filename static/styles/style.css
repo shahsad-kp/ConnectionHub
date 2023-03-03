@@ -18,7 +18,7 @@ a{
 }
 
 .card{
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
 }
 
@@ -38,7 +38,7 @@ a{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0px;
+    padding: 0;
     gap: 10px;
 }
 
@@ -319,4 +319,49 @@ a{
 .settings-side-form {
     width: 50%;
     height: min-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    gap: 40px;
+}
+
+.settings-header{
+    padding: 0 0 25px 0;
+}
+
+.settings-elements {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 0 0;
+    gap: 15px;
+}
+
+.settings-input {
+    background: #1C1C1C;
+    border: 3px solid rgba(84, 84, 84, 0.35);
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 100%;
+    resize: none;
+    padding: 5px 10px;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.settings-submit-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    border-radius: 20px;
+    padding: 0 40px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 38px;
+    font-family: 'MuseoModerno', cursive !important;
 }

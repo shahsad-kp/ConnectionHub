@@ -225,6 +225,11 @@ def new_post(request: HttpRequest):
             tag, _ = Tag.objects.get_or_create(name=tag_name)
             post.tags.add(tag)
 
-        return redirect('post-detail', post_id=post.id)
+        return JsonResponse(
+            data={
+                'success': 'Logged in successfully',
+                'redirect': reverse('post-detail', args=[post.id])
+            }
+        )
     else:
         return render(request, 'new-post.html')
