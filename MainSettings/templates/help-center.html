@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h3 class="text-color settings-header">Help Center</h3>
+<form id="file-input-form">
+    {% csrf_token %}
+    <div class="settings-elements">
+        <label for="subject" class="text-color">Subject</label>
+        <input class="settings-input text-color" type="text" name="subject" id="subject">
+    </div>
 
-</body>
-</html>
+    <div class="settings-elements">
+        <label for="message" class="text-color">Message</label>
+        <textarea style="height: 200px" name="message" id="message" class="settings-input text-color"></textarea>
+    </div>
+
+    <div id="error" class="error-message danger-text"></div>
+    <div id="success" class="success-message"></div>
+    <div class="settings-elements">
+        <input class="settings-submit-button accent-one-bg card" data-form-type="help" type="submit" id="submit-button">
+    </div>
+</form>

@@ -1,14 +1,15 @@
-from datetime import datetime
+
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 
-from MainHome.models import EmailVerification
+from MainHome.models import OtpVerification
 from MainUsers.models import User
-from utils.posts import get_suggested_posts_context
+from utils.posts import get_suggested_posts
 from utils.users import get_suggestion_users_context, get_following_users_context
 
 
@@ -17,12 +18,17 @@ def home_view(request):
     user = User.objects.get(username=request.user.username)
     user_suggestions = get_suggestion_users_context(user)
     followings = get_following_users_context(user)
-    suggested_posts = get_suggested_posts_context(user)
+    suggested_posts = get_suggested_posts(user)
+    suggested_posts = [
+        post.get_context(user)
+        for post in suggested_posts
+    ]
 
     context = {
         'suggestions': user_suggestions,
         'followings': followings,
         'post_updates': suggested_posts,
+        'logged_user': request.user.get_context()
     }
     return render(
         request=request,
@@ -84,6 +90,7 @@ def register_view(request):
         except KeyError:
             response = JsonResponse(
                 data={
+                    'success': False,
                     'error': 'Invalid data'
                 }
             )
@@ -94,6 +101,7 @@ def register_view(request):
         if User.objects.filter(username=username).exists():
             response = JsonResponse(
                 data={
+                    'success': False,
                     'error': 'Username already taken'
                 }
             )
@@ -103,19 +111,21 @@ def register_view(request):
         if User.objects.filter(email=email).exists():
             response = JsonResponse(
                 data={
+                    'success': False,
                     'error': 'Email already connected to an account'
                 }
             )
             response.status_code = 400
             return response
 
-        email_verification = EmailVerification.objects.filter(
+        email_verification = OtpVerification.objects.filter(
             username=username,
-            expires_at__gt=datetime.now(),
+            expires_at__gt=timezone.now()
         ).first()
         if email_verification and not email_verification.verified:
             response = JsonResponse(
                 data={
+                    'success': False,
                     'error': 'Email is not verified'
                 }
             )
@@ -126,6 +136,7 @@ def register_view(request):
         else:
             response = JsonResponse(
                 data={
+                    'success': False,
                     'error': 'Email is not verified'
                 }
             )
@@ -139,9 +150,11 @@ def register_view(request):
             email_verified=True
         )
         user.save()
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
         return JsonResponse(
             data={
-                'success': 'Account created successfully',
+                'success': True,
                 'redirect': reverse('user-home')
             }
         )
@@ -163,13 +176,23 @@ def send_otp(request: HttpRequest):
         username: str = request.POST.get('username')
         email = email.lower()
         username = username.lower()
-        email_verification = EmailVerification(username=username, email=email)
+        email_verification = OtpVerification(username=username, email=email, type='email')
         email_verification.generate_otp()
         email_verification.send_otp()
         email_verification.save()
-        return JsonResponse({'status': 'success'})
+        return JsonResponse(
+            {
+                'status': True,
+                'message': 'OTP sent successfully'
+            }
+        )
     else:
-        response = JsonResponse({'status': 'error'})
+        response = JsonResponse(
+            {
+                'status': False,
+                'error': 'Invalid request'
+            }
+        )
         response.status_code = 400
         return response
 
@@ -180,21 +203,28 @@ def verify_otp(request):
         email: str = request.POST.get('email')
         email = email.lower()
         otp = otp.lower()
-        email_verification = EmailVerification.objects.filter(
+        email_verification = OtpVerification.objects.filter(
             email=email,
-            otp=otp,
-            expires_at__gt=datetime.now(),
+            otp=otp
         ).first()
-        if email_verification:
-            email_verification.verified = True
-            email_verification.save()
-            return JsonResponse({'status': 'success'})
+        if email_verification and email_verification.verify_otp():
+            return JsonResponse({'success': True})
         else:
-            response = JsonResponse({'status': 'error'})
+            response = JsonResponse(
+                {
+                    'success': False,
+                    'error': 'OTP is invalid or expired'
+                }
+            )
             response.status_code = 400
             return response
     else:
-        response = JsonResponse({'status': 'error'})
+        response = JsonResponse(
+            {
+                'success': False,
+                'error': 'Invalid request'
+            }
+        )
         response.status_code = 400
         return response
 

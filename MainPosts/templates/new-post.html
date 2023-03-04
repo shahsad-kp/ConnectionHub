@@ -12,7 +12,7 @@
             </label>
             <input id="file-input" type="file">
         </div>
-        <div class="settings-side-form">
+        <div class="side-form">
             <h3 class="text-color settings-header">Enter the details</h3>
             <form id="file-input-form">
                 {% csrf_token %}
@@ -25,7 +25,7 @@
                     <input class="settings-input text-color" type="text" name="tags" id="tags">
                 </div>
                 <div class="settings-elements">
-                    <label for="location" class="text-color">Caption</label>
+                    <label for="location" class="text-color">Location</label>
                     <input class="settings-input text-color" type="text" name="location" id="location">
                 </div>
                 <div class="settings-elements">
@@ -39,7 +39,6 @@
 
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static '/styles/new-post.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static '/styles/users-style.css' %}">
 {% endblock %}
 
 {% block scripts %}

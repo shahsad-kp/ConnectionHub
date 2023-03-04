@@ -1,7 +1,9 @@
 $(document).ready(
     function() {
-        let searchBar = $('#user-search-bar')
-        let searchArea = $('#'+searchBar.data('user-search-area'))
+        const searchBar = $('#user-search-bar');
+        const searchArea = $('#'+searchBar.data('user-search-area'));
+        const followButton = $('.follow-button');
+
         $('#'+searchBar.data('results-id')).hide()
         function searchUsers() {
             const search_results = $(this).data('results-id');
@@ -48,6 +50,27 @@ $(document).ready(
             }
         }
 
+        function followUser() {
+            let username = $(this).data('username');
+            let following = !!$(this).hasClass('following');
+            let url;
+            if (following) {
+                url = '/users/' + username + '/unfollow/';
+            }
+            else {
+                url = '/users/' + username + '/follow/';
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    if (response['success']) {
+                        location.reload()
+                    }
+                }
+            });
+        }
+
 
         searchBar.on(
             'input',
@@ -59,6 +82,10 @@ $(document).ready(
                 const search_results = $(this).data('results-id');
                 $('#' + search_results).hide();
             }
+        )
+
+        followButton.click(
+            followUser
         )
     }
 )

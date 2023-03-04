@@ -13,24 +13,12 @@ from utils.users import get_suggestion_users_context, get_following_users_contex
 def home_view(request: HttpRequest, username: str):
     logined_user = User.objects.get(pk=request.user.pk)
     user = get_object_or_404(User, username=username)
-    username = user.username
-    fullname = user.full_name
-    profile_picture = user.profile_picture.url
-    posts = get_posts_context(user.get_posts(), logined_user)
-
-    bio = user.bio
 
     context = {
-        'username': username,
-        'fullname': fullname,
-        'profile_picture': profile_picture,
-        'bio': bio,
-        'posts': posts,
-        'number_of_followers': user.followers_count,
-        'number_of_followings': user.followings_count,
+        'user': user.get_context(logined_user, True),
         'suggestions': get_suggestion_users_context(logined_user),
         'followings': get_following_users_context(logined_user),
-        'self': logined_user == user,
+        'logged_user': request.user.get_context()
     }
     return render(
         request=request,
@@ -91,7 +79,10 @@ def follow_user(request: HttpRequest, username: str):
         org_user.follow(user)
         response = JsonResponse(
             {
-                'success': True
+                'success': True,
+                'followed': True,
+                'followers': user.followers_count,
+                'followings': user.followings_count,
             }
         )
     return response
@@ -105,7 +96,10 @@ def unfollow_user(request: HttpRequest, username: str):
         org_user.unfollow(user)
         response = JsonResponse(
             {
-                'success': True
+                'success': True,
+                'followed': False,
+                'followers': user.followers_count,
+                'followings': user.followings_count,
             }
         )
     else:

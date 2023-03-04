@@ -115,7 +115,6 @@ a{
     font-weight: 400;
     font-size: 15px;
     color: #FF4136;
-    display: none;
     width: 100%;
 }
 
@@ -195,6 +194,7 @@ a{
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    height: min-content;
 }
 
 .search-area{
@@ -271,7 +271,7 @@ a{
     line-height: 18px;
     display: flex;
     align-items: center;
-    padding: 20px 25px;
+    padding: 20px 25px 0 25px;
 
 }
 
@@ -282,7 +282,7 @@ a{
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 0 20px 20px;
+    padding: 20px 0 20px 20px;
     gap: 50px;
     box-sizing: border-box;
 }
@@ -293,6 +293,7 @@ a{
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
 }
 
 .post-action-text {
@@ -316,7 +317,7 @@ a{
     color: #3f3f3f;
 }
 
-.settings-side-form {
+.side-form {
     width: 50%;
     height: min-content;
     display: flex;
@@ -327,7 +328,8 @@ a{
 }
 
 .settings-header{
-    padding: 0 0 25px 0;
+    padding: 0;
+    margin: 0;
 }
 
 .settings-elements {
@@ -364,4 +366,27 @@ a{
     font-size: 24px;
     line-height: 38px;
     font-family: 'MuseoModerno', cursive !important;
+    margin-top: 20px;
+}
+
+.scrollable{
+    overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+.image-upload{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.image-upload img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: i;
 }

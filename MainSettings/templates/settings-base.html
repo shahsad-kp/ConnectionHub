@@ -1,0 +1,39 @@
+{% extends 'users-base.html' %}
+{% load static %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="settings-body">
+        <div class="settings-chooser">
+            <a class="settings-options card{% if profile_settings %} selected-settings{% endif %}" href="{% url 'profile-settings' %}">Profile Settings</a>
+            <a class="settings-options card{% if update_password %} selected-settings{% endif %}" href="{% url 'profile-password' %}">Change Password</a>
+            <a class="settings-options card{% if help_center %} selected-settings{% endif %}" href="{% url 'settings-help' %}">Help Center</a>
+            <a class="settings-options card danger-text-color{% if delete_account %} danger-bg{% endif %}" href="{% url 'profile-delete' %}">Delete Account</a>
+        </div>
+        <div class="side-form">
+            {% if profile_settings %}
+                {% include 'profile-update-settings.html' %}
+            {% elif update_password %}
+                {% include 'profile-change-password.html' %}
+            {% elif help_center %}
+                {% include 'help-center.html' %}
+            {% elif delete_account %}
+                {% include 'profile-delete-account.html' %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<link type="text/css" rel="stylesheet" href="{% static '/styles/settings.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static '/js/settings.js' %}"></script>
+{% endblock %}

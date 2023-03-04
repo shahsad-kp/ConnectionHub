@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
@@ -74,13 +75,20 @@ def settings_update_profile(request: HttpRequest):
 
         return JsonResponse(
             data={
-                'success': True
+                'success': True,
+                'message': 'Profile updated successfully'
             }
         )
     else:
+        data = {
+            'logged_user': request.user.get_context(),
+            'settings': True,
+            'profile_settings': True
+        }
         return render(
             request=request,
-            template_name='profile-update-settings.html'
+            template_name='settings-base.html',
+            context=data
         )
 
 
@@ -114,13 +122,20 @@ def settings_change_password(request: HttpRequest):
 
         return JsonResponse(
             data={
-                'success': True
+                'success': True,
+                'message': 'Password updated successfully'
             }
         )
     else:
+        data = {
+            'logged_user': request.user,
+            'settings': True,
+            'update_password': True
+        }
         return render(
             request=request,
-            template_name='profile-change-password.html'
+            template_name='settings-base.html',
+            context=data
         )
 
 
@@ -148,17 +163,25 @@ def settings_delete_account(request: HttpRequest):
             response.status_code = 403
             return response
 
+        logout(request)
         user.delete()
 
         return JsonResponse(
             data={
-                'success': True
+                'success': True,
+                'message': 'Account deleted successfully'
             }
         )
     else:
+        data = {
+            'logged_user': request.user,
+            'settings': True,
+            'delete_account': True
+        }
         return render(
             request=request,
-            template_name='profile-delete-account.html'
+            template_name='settings-base.html',
+            context=data
         )
 
 
@@ -184,10 +207,18 @@ def help_view(request: HttpRequest):
         )
         return JsonResponse(
             data={
-                'success': True
+                'success': True,
+                'message': 'Message sent successfully'
             }
         )
-    return render(
-        request=request,
-        template_name='help-center.html'
-    )
+    else:
+        data = {
+            'logged_user': request.user,
+            'settings': True,
+            'help_center': True
+        }
+        return render(
+            request=request,
+            template_name='settings-base.html',
+            context=data
+        )

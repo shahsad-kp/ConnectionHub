@@ -1,7 +1,9 @@
 import os
 import uuid
+from typing import List, Dict
 
 from django.db import models
+from django.urls import reverse
 
 from MainUsers.models import User
 
@@ -37,6 +39,35 @@ class Post(models.Model):
     def dislikes(self):
         return self.reactions.filter(reaction='dislike')
 
+    def get_context(self, user: 'User', comments: bool = False) -> Dict[str, str]:
+        if comments:
+            comments = [
+                comment.get_context()
+                for comment in self.comments.all().order_by('-created_at')
+            ]
+        else:
+            comments = []
+
+        return {
+            'id': self.id,
+            'user': self.user.get_context(),
+            'image': self.image.url,
+            'caption': self.caption,
+            'likes': self.likes_count,
+            'dislikes': self.dislikes_count,
+            'liked': self.reactions.filter(user=user, reaction='like').exists(),
+            'disliked': self.reactions.filter(user=user, reaction='dislike').exists(),
+            'comments_count': self.comments_count,
+            'comments': comments,
+            'saved': self.saved_by.filter(user=user).exists(),
+            'url': reverse(
+                'post-detail',
+                kwargs={
+                    'post_id': self.id
+                }
+            )
+        }
+
 
 class Reaction(models.Model):
     REACTION_TYPES = [
@@ -67,6 +98,12 @@ class Comment(models.Model):
     def __repr__(self):
         return f'<Comment {self.id}>'
 
+    def get_context(self) -> Dict[str, str]:
+        return {
+            'user': self.user.get_context(),
+            'content': self.content,
+        }
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
@@ -82,6 +119,7 @@ class Tag(models.Model):
 class SavedPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved_posts')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='saved_by')
+    saved_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user} saved {self.post}"

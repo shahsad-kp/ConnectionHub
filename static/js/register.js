@@ -67,10 +67,13 @@ $(document).ready(
                                 otp_input.removeClass('main-background-disabled');
                             },
                             statusCode: {
-                                400: function(xhr, _, __) {
-                                    $('#register-error').text('Can\'t send OTP, Try again..').show();
+                                400: function(xhr) {
+                                    showError('#otp-input', xhr.responseJSON['error']);
                                 }
-                            }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log("Error: " + error);
+                            },
                         },
                     );
                     waitForOtp()
@@ -102,18 +105,27 @@ $(document).ready(
                                             window.location.replace(redirectUrl);
                                         },
                                         statusCode: {
-                                            400: function(xhr, _, __) {
-                                                $('#register-error').text(xhr.responseJSON['error']).show();
+                                            400: function(xhr) {
+                                               showError('#otp-input', xhr.responseJSON['error']);
                                             }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.log("Error: " + error);
+                                        },
+                                        complete: function(xhr, status) {
+                                            console.log("Request complete with status: " + status);
                                         }
                                     },
                                 );
                             },
                             statusCode: {
-                                400: function(xhr, _, __) {
-                                    $('#register-error').text('Invalid OTP').show();
+                                400: function(xhr) {
+                                    showError('#otp-input', xhr.responseJSON['error']);
                                 }
-                            }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log("Error: " + error);
+                            },
                         },
                     );
                 }

@@ -75,6 +75,12 @@
     border-radius: 25px;
 }
 
+.tiny-avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+}
+
 .large-avatar {
     width: 150px;
     height: 150px;

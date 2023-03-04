@@ -4,7 +4,7 @@
 {% block title %}Login to your account{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'styles/userhome/login-register.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/login-register.css' %}">
 {% endblock %}
 
 
@@ -19,8 +19,8 @@
         {% csrf_token %}
         <input id="username" class="main-background input-field card text-color" type="text" placeholder="Enter Username">
         <input id="password" class="main-background input-field card text-color" type="password" placeholder="Enter Password">
-        <div id="register-error" class="error-message danger-text"></div>
-        <button type="submit" id="submit-button" class="accent-two-bg text-color login-form-button card" type="submit">Register</button>
+        <div id="error" class="error-message danger-text"></div>
+        <button type="submit" id="submit-button" class="accent-two-bg text-color login-form-button card" type="submit">Login</button>
         <div class="register-text text-color">Don't have an account? <a href="{% url 'user-register' %}">Register</a></div>
     </form>
 </div>

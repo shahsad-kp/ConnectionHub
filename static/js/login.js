@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    const errorMessages = {};
     $('#submit-button').click(
         function(event) {
             event.preventDefault();
@@ -20,11 +21,53 @@ $(document).ready(function() {
                     },
                     statusCode: {
                         400: function(xhr, textStatus, errorThrown) {
-                            $('#login-error').text(xhr.responseJSON['error']).show();
+                            showError('#password', xhr.responseJSON['error']);
                         }
                     }
                 },
             );
         }
     )
+    
+    $('#password').focus(
+        function() {
+            clearError('#password');
+        }
+    )
+    
+    function showError(
+        field,
+        message
+    ) {
+        errorMessages[field] = message;
+        let errorMessage = '';
+        for (let key in errorMessages) {
+            errorMessage += ('<div class="error-message-each">' +  errorMessages[key] + '</div>');
+            $(key).addClass('is-invalid');
+        }
+        if (errorMessage === '') {
+            $('#error').hide();
+        }
+        else {
+            $('#error').html(errorMessage).show();
+        }
+    }
+
+    function clearError(
+        field
+    ) {
+        delete errorMessages[field]
+        $(field).removeClass('is-invalid');
+        let errorMessage = '';
+        for (let key in errorMessages) {
+            errorMessage += ('<div class="error-message-each">' +  errorMessages[key] + '</div>');
+            $(key).addClass('is-invalid');
+        }
+        if (errorMessage === '') {
+            $('#error').hide();
+        }
+        else {
+            $('#error').html(errorMessage).show();
+        }
+    }
 });

@@ -33,14 +33,16 @@ class User(AbstractUser):
 
     def follow(self, user: 'User'):
         user.followers_count += 1
-        user.save()
         self.followings_count += 1
+        user.save()
+        self.save()
         Follow.objects.create(follower=self, followee=user).save()
 
     def unfollow(self, user: 'User'):
         user.followers_count -= 1
-        user.save()
         self.followings_count -= 1
+        user.save()
+        self.save()
         Follow.objects.filter(follower=self, followee=user).delete()
 
     def get_all_followings(self):
@@ -57,7 +59,35 @@ class User(AbstractUser):
         return users_not_followed
 
     def get_posts(self):
-        return self.posts.all()
+        return self.posts.all().order_by('-created_at')
+
+    def get_context(
+            self,
+            logined_user: 'User' = None,
+            posts: bool = False,
+    ):
+        if not logined_user:
+            logined_user = self
+
+        if posts:
+            posts = [post.get_context(logined_user) for post in self.get_posts()]
+        else:
+            posts = []
+
+        return {
+            'username': self.username,
+            'fullname': self.full_name,
+            'profile_picture': self.profile_picture.url,
+            'bio': self.bio,
+            'posts': posts,
+            'number_of_followers': self.followers_count,
+            'number_of_followings': self.followings_count,
+            'is_following': Follow.objects.filter(follower=logined_user, followee=self).exists(),
+            'self': logined_user.id == self.id,
+        }
+
+    def get_suggestion_user_context(self):
+        return
 
 
 class Follow(models.Model):

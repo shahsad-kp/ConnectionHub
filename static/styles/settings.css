@@ -1,0 +1,74 @@
+.settings-chooser {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    display: flex;
+    width: max-content;
+    height: max-content;
+    box-sizing: border-box;
+}
+
+.settings-options {
+    padding: 20px 100px 20px 20px;;
+    background: #1C1C1C;
+    color: #F2F2F2;
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.selected-settings{
+    background: #F8E71C !important;
+    color: #121212 !important;
+}
+
+.settings-body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.danger-text-color{
+    color: #FF0000 !important;
+}
+
+.danger-bg{
+    background: #FF0000 !important;
+    color: #121212 !important;
+}
+
+.profile-picture {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-picture input[type="file"] {
+  display: none;
+}
+
+.profile-picture label {
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.success-message {
+    color: #13a804;
+    padding: 10px;
+}

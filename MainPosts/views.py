@@ -4,29 +4,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from MainPosts.models import Post, Reaction, Tag
+from MainUsers.models import User
+from utils.posts import get_saved_posts_context, get_posts_context
 
 
 @login_required(login_url='user-login')
 def post_detail_page(request: HttpRequest, post_id: int):
     post = get_object_or_404(Post, id=post_id)
+    user = request.user
     context = {
-        'post': post.image.url,
-        'likes': post.likes.count(),
-        'dislikes': post.dislikes.count(),
-        'comments': [
-            {
-                'user': {
-                    'username': comment.user.username,
-                    'profile_picture': comment.user.profile_picture.url if comment.user.profile_picture else '',
-                },
-                'content': comment.content,
-            }
-            for comment in post.comments.all()
-        ],
-        'tags': [
-            tag.name
-            for tag in post.tags.all()
-        ],
+        'post': post.get_context(user, True),
+        'logged_user': request.user.get_context()
     }
     return render(request, 'post-detail.html', context=context)
 
@@ -155,6 +143,8 @@ def add_comment(request: HttpRequest, post_id: int):
 
         comment = request.POST['comment']
         post.comments.create(user=request.user, content=comment)
+        post.comments_count += 1
+        post.save()
         return JsonResponse(
             data={
                 'success': True,
@@ -178,25 +168,8 @@ def add_comment(request: HttpRequest, post_id: int):
 @login_required(login_url='user-login')
 def saved_posts(request: HttpRequest):
     data = {
-        'saved_posts': [
-            {
-                'image': post.image.url,
-                'likes': post.likes.count(),
-                'dislikes': post.dislikes.count(),
-                'caption': post.caption,
-                'url': reverse('post-detail', args=[post.id]),
-                'tags': [
-                    tag.name
-                    for tag in post.tags.all()
-                ],
-                'user': {
-                    'username': post.user.username,
-                    'profile_picture': post.user.profile_picture.url if post.user.profile_picture else '',
-                    'url': reverse('profile-pages', args=[post.user.username])
-                }
-            }
-            for post in request.user.saved_posts.all()
-        ]
+        'saved_posts_row': get_saved_posts_context(request.user),
+        'logged_user': request.user.get_context()
     }
     return render(request, 'saved-posts-dashboard.html', context=data)
 
@@ -232,4 +205,10 @@ def new_post(request: HttpRequest):
             }
         )
     else:
-        return render(request, 'new-post.html')
+        return render(
+            request,
+            'new-post.html',
+            context={
+                'logged_user': request.user.get_context()
+            }
+        )

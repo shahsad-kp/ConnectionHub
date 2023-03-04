@@ -10,11 +10,16 @@
 
     </ul>
 </div>
+<div class="main-post-area">
+{% if post_updates|length > 0 %}
 {% include 'posts-list.html' with posts=post_updates%}
+{% else %}
+<div class="blank-page">No Posts to show</div>
+{% endif %}
+</div>
 {% endblock %}
 
 
 {% block scripts %}
 <script src="{% static '/js/posts.js' %}"></script>
-<script src="{% static '/js/users.js' %}"></script>
 {% endblock %}

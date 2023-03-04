@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Profile Update Settings</h1>
-</body>
-</html>
+<h3 class="text-color settings-header">Profile Settings</h3>
+<form id="file-input-form">
+    {% csrf_token %}
+    <div class="profile-picture">
+        <img src="{{ logged_user.profile_picture }}" alt="Old Profile Picture">
+        <input type="file" id="new-profile-picture" name="profile-picture" accept="image/*">
+        <label class="accent-two-bg" for="new-profile-picture">Choose new picture</label>
+    </div>
+    <div class="settings-elements">
+        <label for="fullname" class="text-color">Full name</label>
+        <input class="settings-input text-color" type="text" name="fullname" id="fullname">
+    </div>
+    <div class="settings-elements">
+        <label for="username" class="text-color">Username</label>
+        <input class="settings-input text-color" type="text" name="username" id="username">
+    </div>
+    <div class="settings-elements">
+        <label for="email-address" class="text-color">Email Address</label>
+        <input class="settings-input text-color" type="text" name="email" id="email-address">
+    </div>
+    <div class="settings-elements">
+        <label for="phone-number" class="text-color">Phone no</label>
+        <input class="settings-input text-color" type="text" name="phone" id="phone-number">
+    </div>
+
+    <div class="settings-elements">
+        <label for="bio" class="text-color">Bio</label>
+        <textarea style="height: 200px" name="bio" id="bio" class="settings-input text-color"></textarea>
+    </div>
+    <div id="error" class="error-message danger-text"></div>
+    <div id="success" class="success-message"></div>
+    <div class="settings-elements">
+        <input class="settings-submit-button accent-one-bg card" data-form-type="profile" type="submit" id="submit-button">
+    </div>
+</form>
