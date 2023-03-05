@@ -11,12 +11,50 @@
     line-height: 64px;
 }
 
-.analytics{
+.admin-data-area{
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 20px;
     gap: 10px;
+}
+
+.admin-data-area-separate{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.small-group-datas{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.admin-data-title{
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.admin-data-content{
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    word-break: break-word;
+}
+
+.admin-separate-datas{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 15px;
 }
 
 .home-data{
