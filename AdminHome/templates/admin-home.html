@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin-base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+Admin Panel
+{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="full-body">
+        <h1 class="text-color">Analytics</h1>
+        <div class="analytics secondary-background card text-color">
+            {% for analytics in analytics %}
+            <div class="home-data">
+                <span>{{ analytics.title }}</span>
+                <span>-</span>
+                <span>{{ analytics.value }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/admin.css' %}">
+{% endblock %}

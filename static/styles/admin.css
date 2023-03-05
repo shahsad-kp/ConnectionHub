@@ -1,0 +1,40 @@
+.full-body{
+    width: 100%;
+    height: 100%;
+}
+
+.full-body h1{
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 64px;
+}
+
+.analytics{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.home-data{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.home-data span{
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 51px;
+}
+
