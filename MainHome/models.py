@@ -19,13 +19,9 @@ class OtpVerification(models.Model):
     type = models.CharField(max_length=10, choices=(('email', 'Email'), ('phone', 'Phone')))
     verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField(default=timezone.now() + timedelta(minutes=5))
 
     def __str__(self):
         return f"OTP of {self.username}"
-
-    def is_valid(self):
-        return self.expires_at > datetime.now()
 
     def generate_otp(self):
         self.otp = TOTP(env('OTP_SECRET_KEY')).now()
@@ -35,7 +31,7 @@ class OtpVerification(models.Model):
         if not self.otp:
             self.generate_otp()
         subject = 'OTP Validation of ConnectionHub'
-        body = f'Dear User, use this One Time Password ({self.otp}) to verify your {self.type}' \
+        body = f'Dear @{self.username}, use this One Time Password ({self.otp}) to verify your {self.type}' \
                ' This OTP will be valid for the next 5 mins.'
         if self.type == 'email':
             message = EmailMessage(
@@ -52,9 +48,9 @@ class OtpVerification(models.Model):
                 .verifications \
                 .create(to=self.phone_number, channel="sms")
 
-    def verify_otp(self, otp):
+    def verify_otp(self):
         current_date = timezone.now()
-        if self.expires_at > current_date:
+        if (self.created_at + timedelta(minutes=5)) > current_date:
             self.verified = True
             self.save()
             return True

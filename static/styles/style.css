@@ -390,3 +390,15 @@ a{
   height: 100%;
   border-radius: i;
 }
+
+.less-action-button-corner {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.less-action-button {
+    position: absolute;
+    right: 20px;
+    top: 15px
+}

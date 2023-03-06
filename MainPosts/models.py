@@ -100,6 +100,7 @@ class Comment(models.Model):
 
     def get_context(self) -> Dict[str, str]:
         return {
+            'id': self.id,
             'user': self.user.get_context(),
             'content': self.content,
         }

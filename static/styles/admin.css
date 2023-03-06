@@ -91,6 +91,7 @@
     gap: 15px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .admin-profile-details {

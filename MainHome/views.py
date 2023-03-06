@@ -120,7 +120,6 @@ def register_view(request):
 
         email_verification = OtpVerification.objects.filter(
             username=username,
-            expires_at__gt=timezone.now()
         ).first()
         if email_verification and not email_verification.verified:
             response = JsonResponse(
