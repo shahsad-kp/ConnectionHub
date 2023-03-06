@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin-base.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block title %}Post of @{{ post.user.username }}{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="post-details-body">
+        <section class="post-details-image-section">
+            <img id="image-preview" src="{{ post.image }}" alt="Post of {{ post.user.username }}">
+        </section>
+        <section class="side-form post-side-bar">
+            <div class="post-details secondary-background">
+                <div class="post-details-user post-user-data">
+                    <div class="small-avatar">
+                        <img class="avatar" src="{{ post.user.profile_picture }}" alt="@{{ post.user.username }}">
+                    </div>
+                    <a href="{% url 'admin-profile-pages' username=post.user.username %}">
+                        <div class="post-user-name text-color">@{{ post.user.username }}</div>
+                    </a>
+                </div>
+                {% if post.caption and post.caption|length > 0 %}
+                <div class="post-details-caption post-caption text-color">{{ post.caption }}</div>
+                {% endif %}
+            </div>
+            <div class="post-details-comments scrollable">
+                {% for comment in post.comments %}
+                     <div style="width: 100%">
+                         <div class="post-details-user post-user-data">
+                             <div class="tiny-avatar">
+                                 <img class="avatar" src="{{ comment.user.profile_picture }}" alt="@{{ comment.user.username }}">
+                             </div>
+                             <a href="{% url 'profile-pages' username=comment.user.username %}"><div class="post-comment-username post-user-name text-color">@{{ comment.user.username }}</div></a>
+                         </div>
+                         <div class="post-comment text-color">{{ comment.content }}</div>
+                    </div>
+                {% empty %}
+                <div class="blank-page">No comments found..!</div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles/post-details.css' %}">
+{% endblock %}

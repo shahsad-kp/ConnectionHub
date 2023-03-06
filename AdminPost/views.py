@@ -10,26 +10,7 @@ from utils.helpers import superuser_login_required
 def admin_post_page(request: HttpRequest, post_id: int):
     post = get_object_or_404(Post, id=post_id)
     context = {
-        'post': post.image.url,
-        'likes': post.likes.count(),
-        'dislikes': post.dislikes.count(),
-        'comments': [
-            {
-                'user': comment.user.username,
-                'content': comment.content,
-                'delete_url': reverse(
-                    viewname='admin-comments-delete',
-                    args=[
-                        comment.id
-                    ]
-                )
-            }
-            for comment in post.comments.all()
-        ],
-        'tags': [
-            tag.name
-            for tag in post.tags.all()
-        ],
+        'post': post.get_context(user=request.user, comments=True)
     }
     return render(request, 'admin_post_page.html', context=context)
 
