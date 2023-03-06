@@ -1,10 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'admin-base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}{{ user.fullname }} | ConnectionHub{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar" style="display: flex; flex-direction: column; gap: 20px;">
+    <section class="admin-profile-section secondary-background card text-color">
+        <div class="admin-profile-details">
+            <div class="large-avatar">
+                <img class="avatar" src="{{ user.profile_picture }}" alt="profile-picture of @{{ user.username }}">
+            </div>
+            <div class="profile-data">
+                <span class="admin-profile-page-name">{{ user.fullname }}</span>
+                <span class="admin-profile-page-username">@{{ user.username }}</span>
+            </div>
+        </div>
+        <div class="admin-profile-description">
+            <span class="admin-user-bio">{{ user.bio }}</span>
+        </div>
+        <div class="admin-profile-data">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5Z" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span>{% if user.email %}{{ user.email }}{% else %}Not available{% endif %}</span>
+        </div>
+        <div class="admin-profile-data">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.37 19.4 21.62C18.8 21.87 18.15 22 17.45 22C16.43 22 15.34 21.76 14.19 21.27C13.04 20.78 11.89 20.12 10.75 19.29C9.6 18.45 8.51 17.52 7.47 16.49C6.44 15.45 5.51 14.36 4.68 13.22C3.86 12.08 3.2 10.94 2.72 9.81C2.24 8.67 2 7.58 2 6.54C2 5.86 2.12 5.21 2.36 4.61C2.6 4 2.98 3.44 3.51 2.94C4.15 2.31 4.85 2 5.59 2C5.87 2 6.15 2.06 6.4 2.18C6.66 2.3 6.89 2.48 7.07 2.74L9.39 6.01C9.57 6.26 9.7 6.49 9.79 6.71C9.88 6.92 9.93 7.13 9.93 7.32C9.93 7.56 9.86 7.8 9.72 8.03C9.59 8.26 9.4 8.5 9.16 8.74L8.4 9.53C8.29 9.64 8.24 9.77 8.24 9.93C8.24 10.01 8.25 10.08 8.27 10.16C8.3 10.24 8.33 10.3 8.35 10.36C8.53 10.69 8.84 11.12 9.28 11.64C9.73 12.16 10.21 12.69 10.73 13.22C11.27 13.75 11.79 14.24 12.32 14.69C12.84 15.13 13.27 15.43 13.61 15.61C13.66 15.63 13.72 15.66 13.79 15.69C13.87 15.72 13.95 15.73 14.04 15.73C14.21 15.73 14.34 15.67 14.45 15.56L15.21 14.81C15.46 14.56 15.7 14.37 15.93 14.25C16.16 14.11 16.39 14.04 16.64 14.04C16.83 14.04 17.03 14.08 17.25 14.17C17.47 14.26 17.7 14.39 17.95 14.56L21.26 16.91C21.52 17.09 21.7 17.3 21.81 17.55C21.91 17.8 21.97 18.05 21.97 18.33Z" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10"></path>
+            </svg>
+            <span>{% if user.phone %}{{ user.phone }}{% else %}Not available{% endif %}</span>
+        </div>
+        <div class="admin-profile-data">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2V5" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M16 2V5" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M20.75 17.6H3.25" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z" fill="#F2F2F2"></path>
+            </svg>
+            <span>{% if user.date_joined %}{{ user.date_joined }}{% else %}Not available{% endif %}</span>
+        </div>
+    </section>
+    <section class="admin-data-area-grid">
+        {% for post in user.posts %}
+        <a href="{% url 'admin-posts-page' post_id=post.id %}">
+            <div style="padding-bottom: 15px" class="full-post secondary-background card" id="post-{{ post.id }}">
+                <div class="post-user-data">
+                    <div class="small-avatar">
+                        <img class="avatar" src="{{ post.user.profile_picture }}" alt="@{{ post.user.username }}">
+                    </div>
+                    <div class="post-user-name text-color">@{{ post.user.username }}</div>
+                </div>
+                <div class="post-content" data-post-id="{{ post.id }}">
+                    <img class="post-image" src="{{ post.image }}" alt="Post of @{{ post.user.username }}">
+                    {% if post.caption and post.caption|length > 0 %}
+                    <div class="post-caption text-color">{{ post.caption }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div class="blank-page">No posts to show</div>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles/admin.css' %}">
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

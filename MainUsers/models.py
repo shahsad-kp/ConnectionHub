@@ -65,6 +65,7 @@ class User(AbstractUser):
             self,
             logined_user: 'User' = None,
             posts: bool = False,
+            admin_data: bool = False
     ):
         if not logined_user:
             logined_user = self
@@ -74,7 +75,7 @@ class User(AbstractUser):
         else:
             posts = []
 
-        return {
+        data = {
             'username': self.username,
             'fullname': self.full_name,
             'profile_picture': self.profile_picture.url,
@@ -85,9 +86,13 @@ class User(AbstractUser):
             'is_following': Follow.objects.filter(follower=logined_user, followee=self).exists(),
             'self': logined_user.id == self.id,
         }
+        if admin_data:
+            data['date_joined'] = self.date_joined
+            data['last_login'] = self.last_login
+            data['phone'] = self.phone_number
+            data['email'] = self.email
 
-    def get_suggestion_user_context(self):
-        return
+        return data
 
 
 class Follow(models.Model):
