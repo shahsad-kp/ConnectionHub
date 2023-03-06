@@ -318,6 +318,7 @@ a{
 }
 
 .side-form {
+    position: relative;
     width: 50%;
     height: min-content;
     display: flex;
@@ -353,6 +354,7 @@ a{
     font-weight: 400;
     font-size: 20px;
     line-height: 32px;
+    box-sizing: border-box;
 }
 
 .settings-submit-button {
@@ -401,4 +403,22 @@ a{
     position: absolute;
     right: 20px;
     top: 15px
+}
+
+#report-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#report-area {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    display: flex;
+    background-color: rgba(63, 63, 63, 0.23);
 }

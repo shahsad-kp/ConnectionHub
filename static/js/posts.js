@@ -27,6 +27,7 @@ $(document).ready(
             '                    <path d="M22 5.10999V16.47C22 17.92 20.96 18.53 19.69 17.83L16 15.77V8.98999C16 7.27999 14.6 5.88 12.89 5.88H8V5.10999C8 3.39999 9.39999 2 11.11 2H18.89C20.6 2 22 3.39999 22 5.10999Z" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>\n' +
             '                </svg>'
 
+
         function likePost(){
             const post_id = $(this).data('post-id');
             let url = '/post/' + post_id + '/like/';

@@ -3,6 +3,7 @@ $(document).ready(
         const searchBar = $('#user-search-bar');
         const searchArea = $('#'+searchBar.data('user-search-area'));
         const followButton = $('.follow-button');
+        const reportButton = $('.report-button');
 
         $('#'+searchBar.data('results-id')).hide()
         function searchUsers() {
@@ -71,6 +72,28 @@ $(document).ready(
             });
         }
 
+        function reportUser() {
+            let reason = prompt("Why you are reporting this user?", "Harry Potter");
+            if (reason !== null) {
+                let username = $(this).data('username');
+                let csrftoken = $('input[name=csrfmiddlewaretoken]').val()
+                let url = '/users/' + username + '/report/';
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': csrftoken,
+                        'reason': reason
+                    },
+                    success: function(response) {
+                        if (response['success']) {
+                            alert('User reported successfully');
+                        }
+                    }
+                });
+            }
+
+        }
 
         searchBar.on(
             'input',
@@ -86,6 +109,10 @@ $(document).ready(
 
         followButton.click(
             followUser
+        )
+
+        reportButton.click(
+            reportUser
         )
     }
 )
