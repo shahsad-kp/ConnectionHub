@@ -54,8 +54,9 @@ class User(AbstractUser):
         return list_of_followers
 
     def get_suggestions(self):
-        followed_user_ids = self.followers.all().values_list('id', flat=True)
-        users_not_followed = User.objects.exclude(Q(id=self.id) | Q(id__in=followed_user_ids))
+        users_not_followed = User.objects.exclude(
+            Q(username=self.username) | Q(followers__follower=self)
+        ).order_by('-followers_count')[:10]
         return users_not_followed
 
     def get_posts(self):

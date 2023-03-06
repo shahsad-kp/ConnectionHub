@@ -1,22 +1,22 @@
-
-
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils import timezone
 
 from MainHome.models import OtpVerification
 from MainUsers.models import User
 from utils.posts import get_suggested_posts
-from utils.users import get_suggestion_users_context, get_following_users_context
+from utils.users import get_following_users_context
 
 
 @login_required(login_url='user-login')
 def home_view(request):
     user = User.objects.get(username=request.user.username)
-    user_suggestions = get_suggestion_users_context(user)
+    user_suggestions = [
+        suggestion_user.get_context(user)
+        for suggestion_user in user.get_suggestions()
+    ]
     followings = get_following_users_context(user)
     suggested_posts = get_suggested_posts(user)
     suggested_posts = [

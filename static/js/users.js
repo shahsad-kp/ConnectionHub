@@ -73,7 +73,7 @@ $(document).ready(
         }
 
         function reportUser() {
-            let reason = prompt("Why you are reporting this user?", "Harry Potter");
+            let reason = prompt("Why you are reporting this user?");
             if (reason !== null) {
                 let username = $(this).data('username');
                 let csrftoken = $('input[name=csrfmiddlewaretoken]').val()

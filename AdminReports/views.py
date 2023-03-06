@@ -13,31 +13,13 @@ def admin_report_page(request: HttpRequest):
         'reports': [
             {
                 'id': report.id,
-                'user': {
-                    'username': report.user.username,
-                    'profile_picture': report.user.profile_picture.url,
-                    'url': reverse(
-                        viewname='admin-profile-pages',
-                        args=[
-                            report.user.username
-                        ]
-                    )
-                },
-                'reported_user': {
-                    'username': report.reported_user.username,
-                    'profile_picture': report.reported_user.profile_picture.url,
-                    'url': reverse(
-                        viewname='admin-profile-pages',
-                        args=[
-                            report.reported_user.username
-                        ]
-                    )
-                },
+                'user': report.user.get_context(),
+                'reported_user': report.reported_user.get_context(),
+                'reason': report.reason,
                 'date_created': report.date_created,
             }
             for report in reports
-        ],
-        'number_of_reports': reports.count()
+        ]
     }
     return render(request, 'admin_report_page.html', context=context)
 

@@ -16,7 +16,10 @@ def home_view(request: HttpRequest, username: str):
 
     context = {
         'user': user.get_context(logined_user, True),
-        'suggestions': get_suggestion_users_context(logined_user),
+        'suggestions': [
+            user.get_context(logined_user)
+            for user in logined_user.get_suggestions()
+        ],
         'followings': get_following_users_context(logined_user),
         'logged_user': request.user.get_context()
     }

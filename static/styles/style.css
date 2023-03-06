@@ -397,12 +397,14 @@ a{
     position: absolute;
     right: 20px;
     top: 20px;
+    cursor: pointer;
 }
 
 .less-action-button {
     position: absolute;
     right: 20px;
-    top: 15px
+    top: 15px;
+    cursor: pointer;
 }
 
 #report-popup {
