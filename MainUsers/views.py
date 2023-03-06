@@ -5,8 +5,6 @@ from django.urls import reverse
 
 from AdminReports.models import Report
 from MainUsers.models import User, Follow
-from utils.posts import get_posts_context
-from utils.users import get_suggestion_users_context, get_following_users_context
 
 
 @login_required(login_url='user-login')
@@ -20,7 +18,10 @@ def home_view(request: HttpRequest, username: str):
             user.get_context(logined_user)
             for user in logined_user.get_suggestions()
         ],
-        'followings': get_following_users_context(logined_user),
+        'followings': [
+            user.get_context(logined_user)
+            for user in logined_user.get_all_followings()
+        ],
         'logged_user': request.user.get_context()
     }
     return render(

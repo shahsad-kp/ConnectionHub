@@ -7,7 +7,6 @@ from django.urls import reverse
 from MainHome.models import OtpVerification
 from MainUsers.models import User
 from utils.posts import get_suggested_posts
-from utils.users import get_following_users_context
 
 
 @login_required(login_url='user-login')
@@ -17,7 +16,10 @@ def home_view(request):
         suggestion_user.get_context(user)
         for suggestion_user in user.get_suggestions()
     ]
-    followings = get_following_users_context(user)
+    followings = [
+        following_user.get_context(user)
+        for following_user in user.get_all_followings()
+    ]
     suggested_posts = get_suggested_posts(user)
     suggested_posts = [
         post.get_context(user)

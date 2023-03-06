@@ -4,8 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from MainPosts.models import Post, Reaction, Tag
-from MainUsers.models import User
-from utils.posts import get_saved_posts_context, get_posts_context
+from utils.posts import get_saved_posts_context
 
 
 @login_required(login_url='user-login')
