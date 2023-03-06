@@ -51,7 +51,7 @@
             <span>{% if user.date_joined %}{{ user.date_joined }}{% else %}Not available{% endif %}</span>
         </div>
     </section>
-    {% if posts|length > 0 %}
+    {% if user.posts|length != 0 %}
     <section class="admin-data-area-grid">
         {% for post in user.posts %}
         <a href="{% url 'admin-posts-page' post_id=post.id %}">
