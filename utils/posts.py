@@ -1,10 +1,10 @@
 from typing import List
 
-from MainPosts.models import Post
-from MainUsers.models import User
+from Posts.models import Post
+from Users.models import User
 
 
-def get_suggested_posts(user: User) -> List[Post]:
+def get_suggested_post(user: User) -> List[Post]:
     followings = user.get_all_followings()
     suggested_posts = []
     for following_user in followings:

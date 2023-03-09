@@ -30,7 +30,8 @@ $(document).ready(
 
         function likePost(){
             const post_id = $(this).data('post-id');
-            let url = '/post/' + post_id + '/like/';
+            let url = likePostUrl.replace('0', post_id)
+
             likesAjax(
                 url,
                 post_id,
@@ -42,7 +43,7 @@ $(document).ready(
 
         function dislikePost(){
             const post_id = $(this).data('post-id');
-            let url = '/post/' + post_id + '/dislike/';
+            let url = dislikePostUrl.replace('0', post_id)
             likesAjax(
                 url,
                 post_id,
@@ -54,7 +55,7 @@ $(document).ready(
 
         function savePost(){
             const post_id = $(this).data('post-id');
-            let url = '/post/' + post_id + '/save/';
+            let url = savePostUrl.replace('0', post_id);
             likesAjax(
                 url,
                 post_id,

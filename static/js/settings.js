@@ -109,18 +109,18 @@ $(document).ready(function() {
             return false;
         }
         clearError('#email-address');
-        checkAvailablity(email)
+        checkAvailability(email)
         return true;
 
         function checkEmail(email) {
             const re = /\S+@\S+\.\S+/;
             return re.test(email);
         }
-        function checkAvailablity(email){
+        function checkAvailability(email){
             $.ajax(
                 {
                     type: 'GET',
-                    url: '/check_email/',
+                    url: checkEmailUrl,
                     data: {
                         q: email,
                     },
@@ -147,18 +147,18 @@ $(document).ready(function() {
             return false;
         }
         clearError('#username');
-        checkAvailablity(username)
+        checkAvailability(username)
         return true;
 
         function checkPattern(username) {
             const re = /^[a-zA-Z0-9_]+$/;
             return re.test(username);
         }
-        function checkAvailablity(username) {
+        function checkAvailability(username) {
             $.ajax(
                 {
                     type: 'GET',
-                    url: '/check_username/',
+                    url: checkUsernameUrl,
                     data: {
                         q: username,
                     },
@@ -231,7 +231,7 @@ $(document).ready(function() {
         form.append('profile-picture', profileInput[0].files[0]);
 
         $.ajax({
-            url: '/settings/updateprofile/',
+            url: updateProfileUrl,
             type: 'POST',
             data: form,
             processData: false,
@@ -261,7 +261,7 @@ $(document).ready(function() {
         form.append('new-password', newPasswordInput.val());
 
         $.ajax({
-            url: '/settings/updatepassword/',
+            url: updatePasswordUrl,
             type: 'POST',
             data: form,
             processData: false,
@@ -288,7 +288,7 @@ $(document).ready(function() {
         form.append('message', helpMessageInput.val());
 
         $.ajax({
-            url: '/settings/helpcenter/',
+            url: helpUrl,
             type: 'POST',
             data: form,
             processData: false,
@@ -310,7 +310,7 @@ $(document).ready(function() {
         form.append('csrfmiddlewaretoken', csrfToken);
         form.append('password', passwordInput.val());
         $.ajax({
-            url: '/settings/deleteaccount/',
+            url: deleteAccountUrl,
             type: 'POST',
             data: form,
             processData: false,

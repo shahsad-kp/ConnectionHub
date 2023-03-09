@@ -20,7 +20,7 @@ $(document).ready(
             $.ajax(
                 {
                     type: 'POST',
-                    url: '/admin/login/',
+                    url: adminLoginUrl,
                     data: {
                         username: username,
                         password: password,

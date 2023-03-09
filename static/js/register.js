@@ -55,7 +55,7 @@ $(document).ready(
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/send-otp/',
+                            url: sendOtpUrl,
                             data: {
                                 username: username,
                                 email: email,
@@ -82,7 +82,7 @@ $(document).ready(
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/verify-otp/',
+                            url: verifyOtpUrl,
                             data: {
                                 otp: otp_input.val(),
                                 email: email,
@@ -92,7 +92,7 @@ $(document).ready(
                                 $.ajax(
                                     {
                                         type: 'POST',
-                                        url: '/register/',
+                                        url: registerUrl,
                                         data: {
                                             username: username,
                                             email: email,
@@ -148,18 +148,18 @@ $(document).ready(
                 return false;
             }
             clearError('#username');
-            checkAvailablity(username)
+            checkAvailability(username)
             return true;
 
             function checkPattern(username) {
                 const re = /^[a-zA-Z0-9_]+$/;
                 return re.test(username);
             }
-            function checkAvailablity(username) {
+            function checkAvailability(username) {
                 $.ajax(
                     {
                         type: 'GET',
-                        url: '/check_username/',
+                        url: checkUsernameUrl,
                         data: {
                             q: username,
                         },
@@ -183,18 +183,18 @@ $(document).ready(
                 return false;
             }
             clearError('#email-address');
-            checkAvailablity(email)
+            checkAvailability(email)
             return true;
 
             function checkEmail(email) {
                 const re = /\S+@\S+\.\S+/;
                 return re.test(email);
             }
-            function checkAvailablity(email){
+            function checkAvailability(email){
                 $.ajax(
                     {
                         type: 'GET',
-                        url: '/check_email/',
+                        url: checkEmailUrl,
                         data: {
                             q: email,
                         },

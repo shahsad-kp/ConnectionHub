@@ -1,0 +1,42 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+
+{% block title %}
+Messages
+{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="full-body">
+        <h1 class="text-color">Help Messages</h1>
+        <div class="admin-data-area-separate">
+            {% for message in messages %}
+            <div class="admin-separate-datas secondary-background card">
+                <div class="right-bar-user-data">
+                    <div class="small-avatar">
+                        <img class="avatar" src="{{ message.user.profile_picture }}" alt="Avatar">
+                    </div>
+                    <div class="right-bar-content-text">
+                        <div class="right-bar-content-text-name text-color">{{ message.user.fullname }}</div>
+                        <a href="{% url 'admin-profile-pages' username=message.user.username %}"><div class="right-bar-content-text-username text-color">@{{ message.user.username }}</div></a>
+                    </div>
+                </div>
+                <div class="small-group-datas">
+                    <span class="admin-data-title text-color">Subject</span>
+                    <span class="admin-data-content text-color">{{ message.subject }}</span>
+                </div>
+                <div class="small-group-datas">
+                    <span class="admin-data-title text-color">Message</span>
+                    <span class="admin-data-content text-color">{{ message.message }}</span>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/admin.css' %}">
+{% endblock %}

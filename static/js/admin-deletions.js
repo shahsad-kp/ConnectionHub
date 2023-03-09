@@ -18,21 +18,21 @@ $(document).ready(
             }
             if (type === 'user'){
                 const username = $(this).data('username');
-                let url = '/admin/users/' + username + '/delete/'
+                let url = adminUserDeleteUrl.replace('-username-', username);
                 deleteData(url, function(){
-                    window.location.href = '/admin/';
+                    window.location.href = adminHomeUrl;
                 });
             }
             else if (type === 'post'){
                 const postId = $(this).data('post-id');
-                let url = '/admin/post/' + postId + '/delete/'
+                let url = adminPostDeleteUrl.replace('0', postId)
                 deleteData(url, function(){
-                    window.location.href = '/admin/';
+                    window.location.href = adminHomeUrl;
                 });
             }
             else if (type === 'comment'){
                 const commentId = $(this).data('comment-id');
-                let url = '/admin/post/comment/' + commentId + '/delete/'
+                let url = adminCommentDeleteUrl.replace('0', commentId)
                 deleteData(url, function(){
                     location.reload();
                 });

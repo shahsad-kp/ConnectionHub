@@ -7,8 +7,8 @@ Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
-    1. Add an import:  from other_app.views import Users
-    2. Add a URL to urlpatterns:  path('', Users.as_view(), name='home')
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
     1. Import to include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
@@ -19,16 +19,19 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('djangoadmin', admin.site.urls),
-    path('users/', include('MainUsers.urls')),
-    path('settings/', include('MainSettings.urls')),
-    path('post/', include('MainPosts.urls')),
-    path('admin/messages', include('AdminMessages.urls')),
-    path('admin/reports/', include('AdminReports.urls')),
-    path('admin/users/', include('AdminUsers.urls')),
-    path('admin/post/', include('AdminPost.urls')),
-    path('admin/', include('AdminHome.urls')),
-    path('', include('MainHome.urls')),
+    path('djangoadmin/', admin.site.urls),
+    path('', include('Home.urls')),
+    path('', include('Auth.urls')),
+    path('users/', include('Users.urls')),
+    path('post/', include('Posts.urls')),
+    path('post/report/', include('Reports.urls')),
+    path('comment/', include('Comments.urls')),
+    path('admin/', include('Admin.AdminHome.urls')),
+    path('admin/help/', include('Admin.AdminHelp.urls')),
+    path('admin/post/', include('Admin.AdminPost.urls')),
+    path('admin/reports/', include('Admin.AdminReports.urls')),
+    path('admin/users/', include('Admin.AdminUsers.urls')),
+    path('help/', include('Help.urls')),
 ]
 
 urlpatterns = urlpatterns + static(

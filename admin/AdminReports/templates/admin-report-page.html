@@ -1,0 +1,53 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+
+{% block title %}
+Reports
+{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="full-body">
+        <h1 class="text-color">Reports</h1>
+        <div class="admin-data-area-separate" style="gap: 20px">
+            {% for report in reports %}
+            <div class="admin-separate-datas secondary-background card">
+                <div class="small-group-datas">
+                    <span class="admin-data-title text-color">User :</span>
+                    <div class="right-bar-user-data">
+                        <div class="small-avatar">
+                            <img class="avatar" src="{{ report.user.profile_picture }}" alt="Avatar">
+                        </div>
+                        <div class="right-bar-content-text">
+                            <div class="right-bar-content-text-name text-color">{{ report.user.fullname }}</div>
+                            <a href="{% url 'admin-profile-pages' username=report.user.username %}"><div class="right-bar-content-text-username text-color">@{{ report.user.username }}</div></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="small-group-datas">
+                    <span class="admin-data-title text-color">Reported by : </span>
+                    <div class="right-bar-user-data">
+                        <div class="small-avatar">
+                            <img class="avatar" src="{{ report.reported_user.profile_picture }}" alt="Avatar">
+                        </div>
+                        <div class="right-bar-content-text">
+                            <div class="right-bar-content-text-name text-color">{{ report.reported_user.fullname }}</div>
+                            <a href="{% url 'admin-profile-pages' username=report.reported_user.username %}"><div class="right-bar-content-text-username text-color">@{{ report.reported_user.username }}</div></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="small-group-datas">
+                    <span class="admin-data-title text-color">Reason : </span>
+                    <span class="admin-data-content text-color">{{ report.reason }}</span>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/admin.css' %}">
+{% endblock %}

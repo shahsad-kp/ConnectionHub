@@ -15,30 +15,25 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/media" />
-      <excludeFolder url="file://$MODULE_DIR$/test_files" />
-      <excludeFolder url="file://$MODULE_DIR$/AdminHome/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/AdminMessages/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/AdminPost/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/AdminReports/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/AdminUsers/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/MainHome/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/MainPosts/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/MainSettings/migrations" />
-      <excludeFolder url="file://$MODULE_DIR$/MainUsers/migrations" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11 (ConnectionHub)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jquery" level="application" />
-    <orderEntry type="library" name="geticons" level="application" />
-    <orderEntry type="library" name="style" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../ConnectionHub\templates" />
+        <option value="$MODULE_DIR$/templates" />
+        <option value="$MODULE_DIR$/Home/templates" />
+        <option value="$MODULE_DIR$/Posts/templates" />
+        <option value="$MODULE_DIR$/Users/templates" />
+        <option value="$MODULE_DIR$/Auth/templates" />
+        <option value="$MODULE_DIR$/Admin/AdminHome/templates" />
+        <option value="$MODULE_DIR$/Admin/AdminHelp/templates" />
+        <option value="$MODULE_DIR$/Admin/AdminPost/templates" />
+        <option value="$MODULE_DIR$/Admin/AdminUsers/templates" />
+        <option value="$MODULE_DIR$/Help/templates" />
       </list>
     </option>
   </component>

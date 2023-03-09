@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import environ
+
+from environ import environ
 
 # Initialise environment variables
 env = environ.Env()
@@ -29,8 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -41,15 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MainUsers.apps.UsersConfig',
-    'MainHome.apps.HomeConfig',
-    'MainPosts.apps.PostsConfig',
-    'AdminReports.apps.ReportsConfig',
-    'MainSettings.apps.MainsettingsConfig',
-    'AdminMessages.apps.AdminmessagesConfig',
-    'AdminHome.apps.AdminhomeConfig',
-    'AdminUsers.apps.AdminusersConfig',
-    'AdminPost.apps.AdminpostConfig',
+    'Home.apps.HomeConfig',
+    'Users.apps.UsersConfig',
+    'Posts.apps.PostsConfig',
+    'Reports.apps.ReportsConfig',
+    'Auth.apps.AuthConfig',
+    'Comments.apps.CommentsConfig',
+    'Help.apps.HelpConfig',
+    'Admin.AdminHome.apps.AdminhomeConfig',
+    'Admin.AdminHelp.apps.AdminhelpConfig',
+    'Admin.AdminPost.apps.AdminpostConfig',
+    'Admin.AdminReports.apps.AdminreportsConfig',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +69,8 @@ ROOT_URLCONF = 'ConnectionHub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates']
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ConnectionHub.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -94,9 +96,8 @@ DATABASES = {
         'PASSWORD': env('DATABASE_PASSWORD'),
         'HOST': env('DATABASE_HOST'),
         'POST': env('DATABASE_PORT')
-    }
+    },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -116,26 +117,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = int(env('EMAIL_PORT'))
@@ -144,14 +137,23 @@ EMAIL_HOST_USER = env('EMAIL_ADDRESS')
 EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
+AUTH_USER_MODEL = 'Users.User'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+STATIC_URL = 'static/'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom user model
-AUTH_USER_MODEL = 'MainUsers.User'
+# Static files (CSS, JavaScript, Images)
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
+# Media files
+MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
-
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_URL = '/static/'

@@ -22,7 +22,7 @@ $(document).ready(
             form.append('csrfmiddlewaretoken', csrfTokken);
 
             $.ajax({
-                url: '/post/new/',
+                url: newPostUrl,
                 type: 'POST',
                 data: form,
                 processData: false,

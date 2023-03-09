@@ -1,0 +1,71 @@
+{% extends 'admin-base.html' %}
+
+{% load static %}
+
+{% block title %}Post of @{{ post.user.username }}{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="post-details-body">
+        <section class="post-details-image-section">
+            <img id="image-preview" src="{{ post.image }}" alt="Post of {{ post.user.username }}">
+        </section>
+        <section class="side-form post-side-bar">
+            <div class="post-details secondary-background">
+                <div class="less-action-button-corner delete-button" data-type="post" data-post-id="{{ post.id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M18.85 9.14001L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79002C6.00002 22 5.91002 20.78 5.80002 19.21L5.15002 9.14001" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.33 16.5H13.66" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M9.5 12.5H14.5" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <div class="post-details-user post-user-data">
+                    <div class="small-avatar">
+                        <img class="avatar" src="{{ post.user.profile_picture }}" alt="@{{ post.user.username }}">
+                    </div>
+                    <a href="{% url 'admin-profile-pages' username=post.user.username %}">
+                        <div class="post-user-name text-color">@{{ post.user.username }}</div>
+                    </a>
+                </div>
+                {% if post.caption and post.caption|length > 0 %}
+                <div class="post-details-caption post-caption text-color">{{ post.caption }}</div>
+                {% endif %}
+            </div>
+            <div class="post-details-comments scrollable">
+                {% for comment in post.comments %}
+                     <div style="width: 100%; position: relative;">
+                        <div class="less-action-button delete-button" data-type="comment" data-comment-id="{{ comment.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M18.85 9.14001L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79002C6.00002 22 5.91002 20.78 5.80002 19.21L5.15002 9.14001" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M10.33 16.5H13.66" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M9.5 12.5H14.5" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                         <div class="post-details-user post-user-data">
+                             <div class="tiny-avatar">
+                                 <img class="avatar" src="{{ comment.user.profile_picture }}" alt="@{{ comment.user.username }}">
+                             </div>
+                             <a href="{% url 'profile-pages' username=comment.user.username %}"><div class="post-comment-username post-user-name text-color">@{{ comment.user.username }}</div></a>
+                         </div>
+                         <div class="post-comment text-color">{{ comment.content }}</div>
+                    </div>
+                {% empty %}
+                <div class="blank-page">No comments found..!</div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static '/styles/post-details.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static '/js/admin-deletions.js' %}"></script>
+{% endblock %}

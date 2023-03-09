@@ -1,0 +1,29 @@
+{% extends 'users-base.html' %}
+{% load static %}
+
+{% block title %}Saved Posts{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static '/styles/saved-posts.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    {% if saved_posts_row.0|length > 0 %}
+    <div class="saved-post-body">
+        {% for row in saved_posts_row %}
+        <div class="saved-post-row">
+            {% include 'posts-list.html' with posts=row %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="blank-page">No Posts saved</div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/saved-posts.js' %}"></script>
+{% endblock %}

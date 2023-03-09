@@ -1,7 +1,7 @@
 $(document).ready(
     function() {
         const searchBar = $('#user-search-bar');
-        const searchArea = $('#'+searchBar.data('user-search-area'));
+        const searchArea = $('#' + searchBar.data('user-search-area'));
         const followButton = $('.follow-button');
         const reportButton = $('.report-button');
 
@@ -11,7 +11,7 @@ $(document).ready(
             const text = $(this).val();
             if (text.length > 0) {
                 $.ajax({
-                    url: '/users/search',
+                    url: searchUsersUrl,
                     type: 'GET',
                     data: {
                         'q': text
@@ -29,7 +29,8 @@ $(document).ready(
 
                         for (let i = 0; i < results.length; i++) {
                             let result = results[i];
-                            htmlText += '<a href="/users/'+ result['username'] +'">' +
+                            let profileUrl = profilePageUrl.replace('-username-', result['username']);
+                            htmlText += '<a href="'+ profileUrl +'">' +
                                 '<li class="search-result">\n' +
                         '            <div class="small-avatar">\n' +
                         '                <img class="avatar" src="' + result['profile_picture'] + '" alt="@' + result['username'] + '">' +
@@ -56,10 +57,10 @@ $(document).ready(
             let following = !!$(this).hasClass('following');
             let url;
             if (following) {
-                url = '/users/' + username + '/unfollow/';
+                url = followUserUrl.replace('-username-', username);
             }
             else {
-                url = '/users/' + username + '/follow/';
+                url = unfollowUserUrl.replace('-username-', username);
             }
             $.ajax({
                 url: url,
@@ -77,7 +78,7 @@ $(document).ready(
             if (reason !== null) {
                 let username = $(this).data('username');
                 let csrftoken = $('input[name=csrfmiddlewaretoken]').val()
-                let url = '/users/' + username + '/report/';
+                let url = reportUserUrl.replace('-username-', username)
                 $.ajax({
                     url: url,
                     type: 'POST',

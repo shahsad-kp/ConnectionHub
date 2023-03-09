@@ -1,0 +1,30 @@
+{% extends 'right-bar-base.html' %}
+{% load static %}
+
+{% block title %}ConnectionHub{% endblock %}
+
+{% block center-portion %}
+<div class="search-area" id="user-search-area">
+    <input id="user-search-bar" type="text" class="search-bar secondary-background card text-color" placeholder="Search an user.." data-results-id="user-search-results" data-parent-id="user-search-area">
+    <ul id="user-search-results" class="search-results card secondary-background">
+
+    </ul>
+</div>
+<div class="main-post-area">
+{% if post_updates|length > 0 %}
+{% include 'posts-list.html' with posts=post_updates%}
+{% else %}
+<div class="blank-page">No Posts to show</div>
+{% endif %}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static '/js/posts.js' %}"></script>
+{% endblock %}
+
+{% block urls %}
+
+{% endblock %}
+{% url 'like-post' post_id=0 %}
