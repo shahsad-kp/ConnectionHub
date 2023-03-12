@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 from Posts.models import Post
 from Users.models import User
@@ -18,7 +18,7 @@ def get_suggested_post(user: User) -> List[Post]:
     return suggested_posts
 
 
-def get_saved_posts_context(user: User) -> list[list[dict[str, str]]]:
+def get_saved_posts_context(user: User) -> list[list[Dict[str, str]]]:
     saved_posts = user.saved_posts.all().order_by('-saved_at')
     post_rows = [[], []]
     for index, saved_post in enumerate(
@@ -26,4 +26,5 @@ def get_saved_posts_context(user: User) -> list[list[dict[str, str]]]:
             start=0
     ):
         post_rows[index % 2].append(saved_post.post.get_context(user))
+
     return post_rows

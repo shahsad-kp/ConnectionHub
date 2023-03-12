@@ -1,0 +1,188 @@
+.secondary-background{
+    background: #1C1C1C;
+}
+
+.card{
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.text-color{
+    color: #F2F2F2;
+}
+
+.text-color-disabled{
+    color: #757575 !important;
+}
+
+.main-background{
+    background: #121212;
+}
+
+.main-background-disabled{
+    background: #3f3f3f !important;
+}
+
+.accent-two-bg{
+    background: #4C4CFF;
+}
+
+.accent-two{
+    color: #4C4CFF;
+}
+
+.accent-one-bg{
+    background: #F8E71C;
+}
+
+.accent-one{
+    color: #F8E71C;
+}
+
+.accent-three-bg{
+    background: #C74CD2;
+}
+
+.accent-three{
+    color: #C74CD2;
+}
+
+.padding-10{
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.padding-20{
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.padding-30{
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.padding-40{
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.padding-50{
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.gap-5{
+    display: flex;
+    gap: 5px;
+}
+
+.gap-10{
+    display: flex;
+    gap: 10px;
+}
+
+.gap-20{
+    display: flex;
+    gap: 20px;
+}
+
+.gap-30{
+    display: flex;
+    gap: 30px;
+}
+
+.dis-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.dis-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.algn-cent{
+    align-items: center;
+    display: flex;
+}
+
+.just-cent{
+    display: flex;
+    justify-content: center;
+}
+
+.just-sb{
+    display: flex;
+    justify-content: space-between;
+}
+
+.just-sa{
+    display: flex;
+    justify-content: space-around;
+}
+
+.brand-color{
+    color: #F8E71C;
+}
+
+.text-weight-400{
+    font-weight: 400;
+}
+
+.width-max{
+    width: 100%;
+}
+
+.text-weight-500{
+    font-weight: 500;
+}
+
+.text-weight-600{
+    font-weight: 600;
+}
+
+.text-weight-700{
+    font-weight: 700;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.half-width{
+    width: 50%;
+}
+
+.max-full-width{
+    max-width: 100%;
+}
+
+.position-rel{
+    position: relative;
+}
+
+.position-abs{
+    position: absolute;
+}
+
+.position-fix{
+    position: fixed;
+}
+
+.position-sticky{
+    position: sticky;
+}
+
+.align-center{
+    align-items: center;
+}
+
+.danger-text-color{
+    color: #FF0000 !important;
+}
+
+.danger-bg{
+    background: #FF0000 !important;
+    color: #121212 !important;
+}

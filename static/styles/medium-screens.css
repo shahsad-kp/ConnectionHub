@@ -1,0 +1,43 @@
+.left-bar-elements label{
+    display: none;
+}
+
+.left-bar-elements{
+    padding: 10px;
+}
+
+.left-bar-logo{
+    display: none;
+}
+
+.left-bar{
+    min-width: fit-content;
+}
+
+.left-bar-except-root{
+    width: 100%;
+    max-width: 100%;
+    margin-left: 40px;
+    display: flex;
+    padding: 30px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.right-bar {
+    min-width: 250px;
+}
+
+.posts-area{
+    max-width: 440px;
+    width: 100%;
+}
+
+.page-divider {
+    flex-direction: row;
+    height: 100vh;
+}
+
+.saved-post-width {
+    width: 100%;
+}

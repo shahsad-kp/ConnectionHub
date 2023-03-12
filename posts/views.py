@@ -108,9 +108,10 @@ def save_post(request: HttpRequest, post_id: int):
 @login_required(login_url='user-login')
 def saved_posts(request: HttpRequest):
     data = {
-        'saved_posts_row': get_saved_posts_context(request.user),
+        'saved_posts_rows': get_saved_posts_context(request.user),
         'logged_user': request.user.get_context()
     }
+    data['number_of_saved_posts'] = len(data['saved_posts_rows'][0]) + len(data['saved_posts_rows'][1])
     return render(request, 'saved-posts-dashboard.html', context=data)
 
 
@@ -121,6 +122,7 @@ def new_post(request: HttpRequest):
             image = request.FILES['image']
             caption = request.POST['caption']
             tags = request.POST['tags']
+            location = request.POST['location']
         except KeyError:
             response = JsonResponse(
                 data={
@@ -132,7 +134,8 @@ def new_post(request: HttpRequest):
         post = Post.objects.create(
             user=request.user,
             image=image,
-            caption=caption
+            caption=caption,
+            location=location
         )
         for tag_name in str(tags).split(','):
             tag, _ = Tag.objects.get_or_create(name=tag_name)

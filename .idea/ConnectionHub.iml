@@ -34,6 +34,7 @@
         <option value="$MODULE_DIR$/Admin/AdminPost/templates" />
         <option value="$MODULE_DIR$/Admin/AdminUsers/templates" />
         <option value="$MODULE_DIR$/Help/templates" />
+        <option value="$MODULE_DIR$/Comments/templates" />
       </list>
     </option>
   </component>

@@ -1,0 +1,41 @@
+{% extends 'users-base.html' %}
+{% load static %}
+
+{% block title %}Post of @{{ post.user.username }}{% endblock %}
+
+{% block content %}
+<div class="page-divider gap-10">
+    <div class="full-width algn-cent">
+        <div class="full-width">
+            <div class="width-max">
+                <img id="image-preview" src="{{ post.image }}" alt="Upload Image">
+            </div>
+        </div>
+    </div>
+    <div class="comment-section full-width dis-col gap-10 position-rel">
+        <div class="dis-col gap-10 secondary-background card padding-10">
+            {% include 'user-small-data.html' with user=post.user %}
+            {% if post.caption %}
+            <div class="bio text-color">{{ post.caption }}</div>
+            {% endif %}
+            {% include 'post-actions.html' %}
+        </div>
+        <div class="new-comment width-max card">
+            <form id="comment-form" action="{% url 'comments-view' %}">
+                <input type="text" placeholder="Add a comment..." class="secondary-background text-color">
+            </form>
+        </div>
+        <div class="dis-col padding-10">
+            {% for comment in post.comments %}
+            {% include 'comment.html' with comment=comment %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/post-details.js' %}"></script>
+{% endblock %}

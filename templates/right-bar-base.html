@@ -2,49 +2,30 @@
 {% load static %}
 
 {% block content %}
-<div class="body-div-with-right-bar">
-    {% block center-portion %}
-    {% endblock %}
-</div>
-<div class="right-bar">
-    {% if suggestions %}
-    <div class="right-bar-part">
-        <div class="right-bar-head card secondary-background text-color">Suggestions</div>
-        <div class="right-bar-contents card secondary-background">
+{% block center-portion %}
+{% endblock %}
+<div class="right-bar gap-30">
+    {% if suggestions|length > 0 %}
+    <div class="dis-col gap-20 width-max">
+        <div class="dis-row just-cent card secondary-background padding-10 text-color">Suggestions</div>
+        <div class="dis-col gap-10 card secondary-background padding-10">
             {% for suggestion in suggestions %}
-            <div class="right-bar-content" id="suggestion-{{ suggestion.id }}">
-                <div class="right-bar-user-data">
-                    <div class="small-avatar">
-                        <img class="avatar" src="{{ suggestion.profile_picture }}" alt="Avatar">
-                    </div>
-                    <div class="right-bar-content-text">
-                        <div class="right-bar-content-text-name text-color">{{ suggestion.fullname }}</div>
-                        <a href="{% url 'profile-pages' username=suggestion.username %}"><div class="right-bar-content-text-username text-color">@{{ suggestion.username }}</div></a>
-                    </div>
-                </div>
-                <button class="follow-button page-button accent-two-bg text-color" data-username="{{ suggestion.username }}" data-remove-data="suggestion-{{ suggestion.id }}">Follow</button>
+            <div class="dis-row just-sb padding-10" id="suggestion-{{ suggestion.id }}">
+                {% include 'user-small-data.html' with user=suggestion %}
+                <button class="follow-button accent-two-bg text-color" data-username="{{ suggestion.username }}" data-remove-data="suggestion-{{ suggestion.id }}">Follow</button>
             </div>
             {% endfor %}
         </div>
     </div>
     {% endif %}
 
-    {% if followings %}
-    <div class="right-bar-part">
-        <div class="right-bar-head card secondary-background text-color">Followings</div>
-        <div class="right-bar-contents card secondary-background">
+    {% if followings|length > 0 %}
+    <div class="dis-col gap-20 width-max">
+        <div class="dis-row just-cent card secondary-background padding-10 text-color">Followings</div>
+        <div class="dis-col gap-10 card secondary-background padding-10">
             {% for following in followings %}
-            <div class="right-bar-content">
-                <div class="right-bar-user-data">
-                    <div class="small-avatar">
-                        <img class="avatar" src="{{ following.profile_picture }}" alt="Avatar">
-                    </div>
-                    <div class="right-bar-content-text">
-                        <div class="right-bar-content-text-name text-color">{{ following.fullname }}</div>
-                        <div class="right-bar-content-text-username text-color">@{{ following.username }}</div>
-                    </div>
-                </div>
-                <a href="{% url 'profile-pages' username=following.username %}"><button class="page-button accent-two-bg text-color">View</button></a>
+            <div class="dis-row just-sb padding-10" id="following-{{ following.id }}">
+                {% include 'user-small-data.html' with user=following %}
             </div>
             {% endfor %}
         </div>

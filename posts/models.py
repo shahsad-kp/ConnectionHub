@@ -19,7 +19,8 @@ def generate_filename(instance: 'Post', filename):
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     image = models.ImageField(upload_to=generate_filename)
-    caption = models.CharField(max_length=255)
+    caption = models.CharField(max_length=255, blank=True)
+    location = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     likes_count = models.IntegerField(default=0)
     dislikes_count = models.IntegerField(default=0)
@@ -53,6 +54,7 @@ class Post(models.Model):
             'user': self.user.get_context(),
             'image': self.image.url,
             'caption': self.caption,
+            'location': self.location,
             'likes': self.likes_count,
             'dislikes': self.dislikes_count,
             'liked': self.reactions.filter(user=user, reaction='like').exists(),

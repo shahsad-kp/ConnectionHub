@@ -1,0 +1,363 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #121212;
+}
+
+.root{
+    background: #121212;
+    font-family: 'MuseoModerno', cursive !important;
+    font-style: normal;
+    min-height: 100vh;
+}
+
+a{
+    text-decoration: none;
+    color: #F2F2F2;
+}
+
+.view-body{
+    width: 100vw;
+    height: 100vh;
+}
+
+.center-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.min-space{
+    width: fit-content;
+    height: fit-content;
+}
+
+.welcome{
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-size: 48px;
+    line-height: 55px;
+}
+
+.brand-text{
+    font-size: 32px;
+    line-height: 51px;
+}
+
+.login-center-portion {
+    width: fit-content;
+    height: fit-content;
+}
+
+input[type='text'] {
+    height: 50px;
+    border-color: transparent;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    padding-left: 20px;
+    border-radius: 20px;
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+input[type='password'] {
+    height: 50px;
+    border-color: transparent;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    padding-left: 20px;
+    border-radius: 20px;
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 50px;
+    border-color: transparent;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    padding-left: 20px;
+    border-radius: 20px;
+    min-width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+}
+
+button[type='submit'] {
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    border-radius: 20px;
+    padding: 5px 20px;
+    border: 0 transparent;
+}
+
+input::placeholder{
+    color: #646464;
+    opacity: 1;
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.left-bar{
+    position: fixed;
+    height: 100vh;
+    box-sizing: border-box;
+    padding-right: 10px;
+    z-index: 999;
+}
+
+.left-bar-elements{
+    padding: 10px 50px 10px 10px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.left-bar-logo{
+    position: absolute;
+    top: 10%;
+    justify-content: center;
+    display: flex;
+}
+
+.left-bar-except-root{
+    width: 100%;
+    margin-left: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.small-avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.large-avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.fullname{
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.username{
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    border-radius: 20px;
+    border-width: 0;
+}
+
+.post-caption {
+    word-break: break-word;
+}
+
+.search-results{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    gap: 10px;
+}
+
+#user-search-results{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.bio{
+    font-family: 'Arial', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.blank-page{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F2F2F2;
+}
+
+.less-action-button-corner {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.location {
+    font-weight: 400;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #949494;
+}
+
+.page-divider{
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.image-upload{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#image-preview {
+    object-fit: contain;
+    width: 100%;
+}
+
+#file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+
+.comment-section {
+}
+
+.new-comment {
+    position: absolute;
+    bottom: 0;
+}
+
+.comment {
+    padding-left: 10px;
+    font-family: 'Arial', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    word-break: break-word;
+}
+
+.saved-posts-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post-image {
+    width: 100%;
+}
+
+.settings-options {
+    padding: 20px 100px 20px 20px;;
+    background: #1C1C1C;
+    color: #F2F2F2;
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.selected-settings{
+    background: #F8E71C !important;
+    color: #121212 !important;
+}
+
+.profile-picture {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-picture input[type="file"] {
+  display: none;
+}
+
+.profile-picture label {
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error-message{
+    font-family: 'MuseoModerno', cursive;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #FF4136;
+    width: 100%;
+}
+
+.error-message-each{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.success-message {
+    color: #13a804;
+    padding: 10px;
+}

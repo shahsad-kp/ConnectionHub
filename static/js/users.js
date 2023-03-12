@@ -31,16 +31,16 @@ $(document).ready(
                             let result = results[i];
                             let profileUrl = profilePageUrl.replace('-username-', result['username']);
                             htmlText += '<a href="'+ profileUrl +'">' +
-                                '<li class="search-result">\n' +
-                        '            <div class="small-avatar">\n' +
-                        '                <img class="avatar" src="' + result['profile_picture'] + '" alt="@' + result['username'] + '">' +
-                        '            </div>\n' +
-                        '            <div class="right-bar-content-text">\n' +
-                        '                <div class="right-bar-content-text-name text-color">'+ result['fullname'] +'</div>\n' +
-                        '                <div class="right-bar-content-text-username text-color">@' + result['username'] + '</div>\n' +
-                        '            </div>\n' +
-                        '        </li>' +
-                                '</a>'
+                            '   <div class="dis-row gap-10"> \n' +
+                            '       <div class="small-avatar"> \n' +
+                            '           <img class="avatar" src="'+  result['profile_picture'] +'" alt="Avatar">' +
+                            '        </div>' +
+                            '        <div class="dis-col">' +
+                            '            <div class="fullname text-color">' + result['fullname'] + '</div>' +
+                            '            <div class="username text-color">@' + result['username'] + '</div>' +
+                            '        </div>' +
+                            '    </div>' +
+                            '</a>'
                         }
                         $('#' + search_results).html(htmlText).show();
 

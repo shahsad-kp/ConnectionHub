@@ -1,39 +1,31 @@
 {% extends 'users-base.html' %}
 {% load static %}
 
-{% block title %}
-Settings
-{% endblock %}
+{% block title %}Settings{% endblock %}
 
 {% block content %}
-<div class="body-div-without-right-bar">
-    <div class="settings-body">
-        <div class="settings-chooser">
-            <a class="settings-options card{% if profile_settings %} selected-settings{% endif %}" href="{% url 'update-profile' %}">Profile Settings</a>
-            <a class="settings-options card{% if update_password %} selected-settings{% endif %}" href="{% url 'change-password' %}">Change Password</a>
-            <a class="settings-options card{% if help_center %} selected-settings{% endif %}" href="{% url 'help-center' %}">Help Center</a>
-            <a class="settings-options card danger-text-color{% if delete_account %} danger-bg{% endif %}" href="{% url 'user-home' %}">Delete Account</a>
-        </div>
-        <div class="side-form">
-            {% if profile_settings %}
-                {% include 'profile-update-settings.html' %}
-            {% elif update_password %}
-                {% include 'profile-change-password.html' %}
-            {% elif help_center %}
-                {% include 'help-center.html' %}
-            {% elif delete_account %}
-                {% include 'profile-delete-account.html' %}
-            {% endif %}
-        </div>
+<div class="page-divider">
+    <div class="{% if selector %}settings-selector{% endif %} full-width algn-cent dis-col gap-10 padding-10">
+        <a class="settings-options card{% if profile_settings %} selected-settings{% endif %}" href="{% url 'update-profile' %}">Profile Settings</a>
+        <a class="settings-options card{% if update_password %} selected-settings{% endif %}" href="{% url 'change-password' %}">Change Password</a>
+        <a class="settings-options card{% if help_center %} selected-settings{% endif %}" href="{% url 'help-center' %}">Help Center</a>
+        <a class="settings-options card danger-text-color{% if delete_account %} danger-bg{% endif %}" href="{% url 'delete-profile' %}">Delete Account</a>
+    </div>
+    <div class="full-width algn-cent dis-col gap-10 padding-10">
+        {% if profile_settings %}
+            {% include 'profile-update-settings.html' %}
+        {% elif update_password %}
+            {% include 'profile-change-password.html' %}
+        {% elif help_center %}
+            {% include 'help-center.html' %}
+        {% elif delete_account %}
+            {% include 'profile-delete-account.html' %}
+        {% endif %}
     </div>
 </div>
-
-{% endblock %}
-
-{% block styles %}
-<link type="text/css" rel="stylesheet" href="{% static '/styles/settings.css' %}">
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static '/js/settings.js' %}"></script>
+<script src="{% static 'js/settings.js' %}"></script>
 {% endblock %}
+

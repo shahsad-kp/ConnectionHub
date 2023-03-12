@@ -3,33 +3,33 @@
 
 {% block title %}Register Now{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static '/styles/login-register.css' %}">
-{% endblock %}
-
-
 {% block body %}
-<div class="main-group secondary-background card">
-    <div class="form-header">
-        <div class="welcome">WELCOME</div>
-        <div class="brand-logo">ConnectionHub</div>
+    <div class="view-body center-group gap-20">
+        <div class="login-center-portion secondary-background card padding-50 dis-col gap-10">
+            <div class="algn-cent dis-col text-color gap-10">
+                <div class="welcome text-weight-700">WELCOME</div>
+                <div class="brand-color text-weight-400 brand-text">ConnectionHub</div>
+            </div>
+            <form id="login-form" method="post" action="" class="dis-col gap-10 algn-cent just-cent">
+                <span class="sign-in-text text-color">Register Now</span>
+                {% csrf_token %}
+                <input id="fullname" class="main-background text-color" type="text" placeholder="Fullname">
+                <input id="email-address" class="main-background text-color" type="text" placeholder="Email Address">
+                <input id="username" class="main-background text-color" type="text" placeholder="Username">
+                <input id="password" class="main-background text-color" type="password" placeholder="Password">
+                <input id="otp-input" class="main-background text-color" style="display: none" type="text"
+                       placeholder="Enter OTP" readonly>
+                <div id="error" class="error-message danger-text"></div>
+                <button type="submit" id="submit-button" class="accent-two-bg text-color card full-width">Send OTP
+                </button>
+                <div class="register-text text-color">Already have an account? <a href="{% url 'user-login' %}">Log
+                    In</a></div>
+            </form>
+        </div>
     </div>
-    <form id="login-form" method="post" action="">
-        <span class="sign-in-text text-color">Register Now</span>
-        {% csrf_token %}
-        <input id="fullname" class="main-background input-field card text-color" type="text" placeholder="Fullname">
-        <input id="email-address" class="main-background input-field card text-color" type="text" placeholder="Email Address">
-        <input id="username" class="main-background input-field card text-color" type="text" placeholder="Username">
-        <input id="password" class="main-background input-field card text-color" type="password" placeholder="Password">
-        <input id="otp-input" class="main-background-disabled main-background input-field card text-color" style="display: none" type="text" placeholder="Enter OTP" readonly>
-        <div id="error" class="error-message danger-text"></div>
-        <button type="submit" id="submit-button" class="accent-two-bg text-color login-form-button card" type="submit">Send OTP</button>
-        <div class="register-text text-color">Already have an account? <a href="{% url 'user-login' %}">Log In</a></div>
-    </form>
-</div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/register.js' %}"></script>
+    <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
 

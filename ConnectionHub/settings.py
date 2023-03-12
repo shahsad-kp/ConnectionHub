@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'Auth.apps.AuthConfig',
     'Comments.apps.CommentsConfig',
     'Help.apps.HelpConfig',
+    'Notifications.apps.NotificationsConfig',
     'Admin.AdminHome.apps.AdminhomeConfig',
     'Admin.AdminHelp.apps.AdminhelpConfig',
     'Admin.AdminPost.apps.AdminpostConfig',
     'Admin.AdminReports.apps.AdminreportsConfig',
+    'Admin.AdminUsers.apps.AdminusersConfig',
 ]
 
 MIDDLEWARE = [

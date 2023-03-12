@@ -1,0 +1,36 @@
+.left-bar{
+    min-width: 150px;
+}
+
+.left-bar-except-root {
+    width: 85%;
+    max-width: 100%;
+    margin-left: 150px;
+    display: flex;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.right-bar {
+    min-width: 300px;
+}
+
+.posts-area{
+    min-width: 453px;
+    max-width: 700px;
+    width: 60%;
+}
+
+.page-divider {
+    flex-direction: row;
+    height: 100vh;
+}
+
+.saved-posts-root {
+    display: flex;
+    flex-direction: row;
+}
+
+.saved-post{
+    flex: 1;
+}

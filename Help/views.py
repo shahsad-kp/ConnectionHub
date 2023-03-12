@@ -35,7 +35,8 @@ def help_view(request: HttpRequest):
         data = {
             'logged_user': request.user,
             'settings': True,
-            'help_center': True
+            'help_center': True,
+            'selector': True
         }
         return render(
             request=request,

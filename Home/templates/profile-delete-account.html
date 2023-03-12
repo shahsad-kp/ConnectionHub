@@ -1,12 +1,12 @@
-<h3 class="text-color settings-header">Delete Account</h3>
-<form id="file-input-form">
+<h3 class="text-color">Delete Account</h3>
+<form id="file-input-form" class="gap-10 dis-col width-max">
     {% csrf_token %}
-    <div class="settings-elements">
+    <div class="dis-col gap-5">
         <label for="password" class="text-color">Enter your Password</label>
-        <input class="settings-input text-color" type="password" name="password" id="password">
+        <input class="secondary-background card text-color" type="password" name="password" id="password">
     </div>
     <div id="error" class="error-message danger-text"></div>
-    <div class="settings-elements">
-        <input class="settings-submit-button danger-bg card" data-form-type="delete" type="submit" id="submit-button">
+    <div>
+        <button class="danger-bg card" data-form-type="delete" type="submit" id="submit-button">Submit</button>
     </div>
 </form>

@@ -189,7 +189,8 @@ def settings_update_profile(request: HttpRequest):
         data = {
             'logged_user': request.user.get_context(),
             'settings': True,
-            'profile_settings': True
+            'profile_settings': True,
+            'selector': True
         }
         return render(
             request=request,
@@ -236,7 +237,8 @@ def settings_change_password(request: HttpRequest):
         data = {
             'logged_user': request.user,
             'settings': True,
-            'update_password': True
+            'update_password': True,
+            'selector': True
         }
         return render(
             request=request,
@@ -282,7 +284,8 @@ def settings_delete_account(request: HttpRequest):
         data = {
             'logged_user': request.user,
             'settings': True,
-            'delete_account': True
+            'delete_account': True,
+            'selector': True
         }
         return render(
             request=request,

@@ -3,10 +3,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'logo/logo.png' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'logo/logo.png' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/global-datas.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/large-screens.css' %}" media="(min-width: 992px)">
+    <link rel="stylesheet" href="{% static 'styles/medium-screens.css' %}" media="(min-width: 768px) and (max-width: 991px)">
+    <link rel="stylesheet" href="{% static 'styles/small-screens.css' %}" media="(max-width: 767px) and (min-width: 576px">
+    <link rel="stylesheet" href="{% static 'styles/extra-small-screens.css' %}" media="(max-width: 575px)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     {% block styles %}
     {% endblock %}
     {% block s-styles %}
@@ -15,9 +24,10 @@
     {% include 'urls.html' %}
 </head>
 <body>
+    <div class="root">
     {% block body %}
     {% endblock %}
-
+    </div>
     <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
     {% block scripts %}
     {% endblock %}

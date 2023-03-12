@@ -1,0 +1,59 @@
+.login-center-portion {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.left-bar-elements label{
+    display: none;
+}
+
+.left-bar-elements{
+    padding: 10px;
+}
+
+.left-bar-logo{
+    display: none;
+}
+
+.left-bar{
+    min-width: fit-content;
+}
+
+.left-bar-except-root{
+    width: 90%;
+    max-width: 100%;
+    margin-left: 50px;
+    display: flex;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.right-bar {
+    display: none;
+    min-width: 0;
+}
+
+.posts-area{
+    min-width: 500px;
+    max-width: 700px;
+    width: 70%;
+}
+
+.page-divider {
+    flex-direction: column;
+    height: auto;
+}
+
+.new-comment {
+    position: relative;
+}
+
+.saved-post-width {
+    width: 100%;
+}
+
+.settings-selector{
+    display: none;
+}
