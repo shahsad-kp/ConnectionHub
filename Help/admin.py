@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from Help.models import HelpMessage
+
+admin.site.register(HelpMessage)

@@ -5,7 +5,7 @@
 .left-bar-except-root {
     width: 85%;
     max-width: 100%;
-    margin-left: 150px;
+    margin-left: 180px;
     display: flex;
     padding: 30px;
     box-sizing: border-box;
@@ -33,4 +33,15 @@
 
 .saved-post{
     flex: 1;
+}
+
+.users-list {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.admin-user-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: auto;
 }

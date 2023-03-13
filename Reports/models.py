@@ -10,3 +10,12 @@ class Report(models.Model):
 
     def __str__(self):
         return f'{self.user} reported {self.reported_user}'
+
+    def get_context(self):
+        return {
+            'id': self.id,
+            'user': self.user.get_context(),
+            'reported_user': self.reported_user.get_context(),
+            'reason': self.reason,
+            'date_created': self.date_created,
+        }

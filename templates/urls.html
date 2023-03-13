@@ -6,7 +6,7 @@ const sendOtpUrl = "{% url 'send-otp' %}";
 const verifyOtpUrl = "{% url 'verify-otp' %}";
 const checkUsernameUrl = "{% url 'check-username-availability' %}";
 const checkEmailUrl = "{% url 'check-email-availability' %}";
-const commentUrl = "{% url 'comments-view' %}"
+const commentUrl = "{% url 'comments-view' post_id=0 %}"
 const helpUrl = "{% url 'help-center' %}"
 const homeUrl = "{% url 'user-home' %}"
 const savedPostsUrl = "{% url 'saved-posts-dashboards' %}"
@@ -22,7 +22,9 @@ const unfollowUserUrl = "{% url 'unfollow-user' username='-username-' %}"
 const updateProfileUrl = "{% url 'update-profile' %}"
 const updatePasswordUrl = "{% url 'change-password' %}"
 const profilePageUrl = "{% url 'profile-pages' username='-username-' %}"
+const notificationViewUrl = "{% url 'notification-viewed' notification_id=0 %}"
 const deleteAccountUrl = "{% url 'delete-profile' %}"
+const notificationUrl = "{% url 'notifications-view' %}"
 const adminMessagePageUrl = "{% url 'admin-messages-page' %}"
 const adminHomeUrl = "{% url 'admin-home' %}"
 const adminLoginUrl = "{% url 'admin-login' %}"

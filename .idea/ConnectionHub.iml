@@ -35,6 +35,8 @@
         <option value="$MODULE_DIR$/Admin/AdminUsers/templates" />
         <option value="$MODULE_DIR$/Help/templates" />
         <option value="$MODULE_DIR$/Comments/templates" />
+        <option value="$MODULE_DIR$/Admin/AdminReports/templates" />
+        <option value="$MODULE_DIR$/Notifications/templates" />
       </list>
     </option>
   </component>

@@ -10,13 +10,7 @@ def admin_report_page(request: HttpRequest):
     reports = Report.objects.all()
     context = {
         'reports': [
-            {
-                'id': report.id,
-                'user': report.user.get_context(),
-                'reported_user': report.reported_user.get_context(),
-                'reason': report.reason,
-                'date_created': report.date_created,
-            }
+            report.get_context()
             for report in reports
         ]
     }

@@ -361,3 +361,36 @@ button{
     color: #13a804;
     padding: 10px;
 }
+
+.users-list {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-data-title{
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.admin-data-content{
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    word-break: break-word;
+}
+
+.notification-head{
+    font-weight: 700;
+}
+
+.notification-time {
+    color: #7b7b7b;
+    font-weight: 300;
+}

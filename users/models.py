@@ -38,17 +38,9 @@ class User(AbstractUser):
         return self.username
 
     def follow(self, user: 'User'):
-        user.followers_count += 1
-        self.followings_count += 1
-        user.save()
-        self.save()
         Follow.objects.create(follower=self, followee=user).save()
 
     def unfollow(self, user: 'User'):
-        user.followers_count -= 1
-        self.followings_count -= 1
-        user.save()
-        self.save()
         Follow.objects.filter(follower=self, followee=user).delete()
 
     def get_all_followings(self):

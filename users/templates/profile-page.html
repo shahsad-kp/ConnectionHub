@@ -1,11 +1,10 @@
 {% extends 'right-bar-base.html' %}
 {% load static %}
 
-{% block title %}ConnectionHub{% endblock %}
+{% block title %}{{ user.fullname }} | ConnectionHub{% endblock %}
 
 {% block center-portion %}
     <div class="posts-area gap-20 dis-col">
-        {% include 'search-area.html' %}
         <section class="position-rel dis-col algn-cent padding-10 gap-10 secondary-background card text-color">
             {% if not user.self %}
                 <div class="less-action-button-corner report-button" data-username="{{ user.username }}">
@@ -60,10 +59,6 @@
 
 
 {% block scripts %}
-    <script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/users.js' %}"></script>
 {% endblock %}
-
-{% block urls %}
-
-{% endblock %}
-{% url 'like-post' post_id=0 %}

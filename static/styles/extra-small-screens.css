@@ -28,6 +28,22 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.users-list {
+    grid-template-columns: 1fr;
+}
+
+.admin-user-data {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+
+.posts-area{
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+}
+
 .left-bar-logo{
     display: none;
 }
@@ -40,12 +56,6 @@
 
 .right-bar {
     display: none;
-}
-
-.posts-area{
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
 }
 
 .page-divider {

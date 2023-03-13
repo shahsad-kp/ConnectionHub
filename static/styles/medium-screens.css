@@ -41,3 +41,15 @@
 .saved-post-width {
     width: 100%;
 }
+
+.users-list {
+    grid-template-columns: 1fr 1fr;
+}
+
+.admin-user-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: auto;
+}
+

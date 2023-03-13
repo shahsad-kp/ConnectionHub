@@ -1,0 +1,39 @@
+{% extends 'users-base.html' %}
+{% load static %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="width-max padding-10 dis-col gap-10">
+    {% if notifications|length > 0 %}
+    {% for notification in notifications %}
+    <div class="notification dis-col secondary-background padding-10 card width-max" data-type="{{ notification.type }}" data-arg="{{ notification.arg_value }}" data-id="{{ notification.id }}">
+        <div class="text-color notification-head">
+            {% if notification.type == 'like' %}
+            New like on your post
+            {% elif notification.type == 'comment' %}
+            New comment on your post
+            {% elif notification.type == 'follow' %}
+            New follower
+            {% elif notification.type == 'welcome' %}
+            Welcome
+            {% else %}
+            New notification
+            {% endif %}
+        </div>
+        <div class="text-color">{{ notification.content }}</div>
+        <div class="notification-time">{{ notification.timestamp }}</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="blank-page">No new notifications..</div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/saved-posts.js' %}"></script>
+<script src="{% static '/js/notification.js' %}"></script>
+{% endblock %}

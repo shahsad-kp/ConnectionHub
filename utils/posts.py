@@ -11,6 +11,9 @@ def get_suggested_post(user: User) -> List[Post]:
         suggested_posts.extend(
             following_user.get_posts()
         )
+    suggested_posts.extend(
+        user.get_posts()
+    )
     suggested_posts.sort(
         key=lambda x: x.created_at,
         reverse=True

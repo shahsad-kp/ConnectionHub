@@ -44,6 +44,7 @@ def settings_home(request: HttpRequest) -> HttpResponse:
         'update_password': False,
         'delete_account': False,
         'help_center': False,
+        'settings': True,
     }
     return render(
         request=request,

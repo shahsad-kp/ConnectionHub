@@ -23,15 +23,16 @@ urlpatterns = [
     path('', include('Home.urls')),
     path('', include('Auth.urls')),
     path('users/', include('Users.urls')),
-    path('post/', include('Posts.urls')),
     path('post/report/', include('Reports.urls')),
-    path('comment/', include('Comments.urls')),
+    path('post/comment/', include('Comments.urls')),
+    path('post/', include('Posts.urls')),
     path('admin/', include('Admin.AdminHome.urls')),
     path('admin/help/', include('Admin.AdminHelp.urls')),
     path('admin/post/', include('Admin.AdminPost.urls')),
     path('admin/reports/', include('Admin.AdminReports.urls')),
     path('admin/users/', include('Admin.AdminUsers.urls')),
     path('help/', include('Help.urls')),
+    path('notifications/', include('Notifications.urls')),
 ]
 
 urlpatterns = urlpatterns + static(

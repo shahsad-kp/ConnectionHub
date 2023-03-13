@@ -1,0 +1,39 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+
+{% block title %}
+Users
+{% endblock %}
+
+{% block content %}
+<div class="body-div-without-right-bar">
+    <div class="full-body">
+        <h1 class="text-color">Users</h1>
+        {% if users|length > 0 %}
+        <div class="admin-data-area-grid">
+            {% for user in users %}
+            <a href="{% url 'admin-profile-pages' username=user.username %}">
+                <div class="admin-separate-datas secondary-background card">
+                    <div class="right-bar-user-data">
+                        <div class="small-avatar">
+                            <img class="avatar" src="{{ user.profile_picture }}" alt="Avatar">
+                        </div>
+                        <div class="right-bar-content-text">
+                            <div class="right-bar-content-text-name text-color">{{ user.fullname }}</div>
+                            <div class="right-bar-content-text-username text-color">@{{ user.username }}</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="blank-page">No users to show</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/admin.css' %}">
+{% endblock %}
