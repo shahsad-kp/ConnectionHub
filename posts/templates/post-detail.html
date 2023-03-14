@@ -14,7 +14,7 @@
     </div>
     <div class="comment-section full-width dis-col gap-10 position-rel">
         <div class="dis-col gap-10 secondary-background card padding-10">
-            {% include 'user-small-data.html' with user=post.user %}
+            {% include 'user-small-data.html' with user=post.user location=post.location %}
             {% if post.caption %}
             <div class="bio text-color">{{ post.caption }}</div>
             {% endif %}

@@ -118,5 +118,12 @@ $(document).ready(
         $('.save-button').click(savePost);
         $('.post-share-button').click(sharePost);
         $('.post-content').dblclick(likePost);
+        $('.admin-posts').click(
+            function(){
+                let postId = $(this).data('post-id');
+                let url = adminPostDetailUrl.replace('0', postId);
+                location.href = url;
+            }
+        )
     }
 )

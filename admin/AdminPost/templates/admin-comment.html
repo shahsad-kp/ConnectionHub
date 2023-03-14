@@ -1,18 +1,6 @@
-{% extends 'admin-base.html' %}
-{% load static %}
-
-{% block title %}Post of @{{ post.user.username }}{% endblock %}
-
-{% block content %}
-<div class="page-divider gap-10">
-    <div class="full-width algn-cent">
-        <div class="full-width">
-            <div class="width-max">
-                <img id="image-preview" src="{{ post.image }}" alt="Upload Image">
-            </div>
-        </div>
-    </div>
-    <div class="comment-section full-width dis-col gap-10 position-rel">
+<div class="dis-col padding-10 gap-5">
+    <div class="dis-row position-rel">
+        {% include 'admin-user-small-data.html' with user=comment.user %}
         <div class="less-action-button-corner report-button" data-username="{{ user.username }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
@@ -27,23 +15,6 @@
                       stroke-linejoin="round"></path>
             </svg>
         </div>
-        <div class="dis-col gap-10 secondary-background card padding-10">
-            {% include 'admin-user-small-data.html' with user=post.user %}
-            {% if post.caption %}
-            <div class="bio text-color">{{ post.caption }}</div>
-            {% endif %}
-        </div>
-        <div class="dis-col padding-10">
-            {% for comment in post.comments %}
-            {% include 'admin-comment.html' with comment=comment %}
-            {% endfor %}
-        </div>
     </div>
+    <div class="dis-row text-color comment">{{ comment.content }}</div>
 </div>
-{% endblock %}
-
-
-{% block scripts %}
-<script src="{% static '/js/posts.js' %}"></script>
-<script src="{% static '/js/post-details.js' %}"></script>
-{% endblock %}

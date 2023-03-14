@@ -1,0 +1,12 @@
+<div class="admin-posts dis-col secondary-background card gap-10" id="post-{{ post.id }}" data-post-id="{{ post.id }}">
+    <div class="padding-10 dis-row gap-10">
+        {% include 'admin-user-small-data.html' with user=post.user location=post.location %}
+    </div>
+    <div class="dis-col gap-10 post-content" data-post-id="{{ post.id }}">
+        <img class="post-image" src="{{ post.image }}"
+             alt="Post of @{{ post.user.username }}">
+        {% if post.caption and post.caption|length > 0 %}
+            <div class="post-caption dis-row padding-10 text-color">{{ post.caption }}</div>
+        {% endif %}
+    </div>
+</div>

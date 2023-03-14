@@ -1,7 +1,11 @@
+from datetime import datetime
 from typing import Type
 
-from django.db.models.signals import post_save
+from django.contrib.auth.password_validation import password_changed
+from django.core.mail import send_mail, EmailMessage
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.http import HttpRequest
 
 from Notifications.models import Notification
 from Users.models import Follow, User
@@ -31,3 +35,41 @@ def follow_signal(sender: Type[Follow], instance: Follow, created: bool, **kwarg
             content=f'@{instance.follower} started following you',
             arg_value=str(instance.follower.username)
         )
+
+
+@receiver(pre_save, sender=User)
+def user_updated(sender, **kwargs):
+    user = kwargs.get('instance', None)
+    if user:
+        new_password = user.password
+        try:
+            old_password = User.objects.get(pk=user.pk).password
+        except User.DoesNotExist:
+            old_password = None
+        if new_password != old_password:
+            message = EmailMessage(
+                subject='Password Changed Successfully',
+                body=f"""Dear @{user.username},
+
+We are writing to inform you that your password for ConnectionHub account has been successfully changed.
+
+We understand that changing your password can be an inconvenience, but it is an important security measure that helps 
+protect your account from unauthorized access. If you did not initiate this change or suspect any unauthorized access 
+to your account, please contact our customer support team immediately.
+
+Please remember to keep your new password secure and confidential. Avoid using easily guessable information such as 
+your name or date of birth, and ensure that your password is a combination of letters, numbers, and special characters.
+
+If you experience any difficulties accessing your account with the new password, please let us know and we will be 
+happy to assist you.
+
+Thank you for using ConnectionHub. We appreciate your continued trust and support.
+
+Best regards,
+
+Customer Support
+
+ConnectionHub""",
+                to=[user.email]
+            )
+            message.send(fail_silently=True)

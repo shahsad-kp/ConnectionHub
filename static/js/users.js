@@ -54,9 +54,9 @@ $(document).ready(
 
         function followUser() {
             let username = $(this).data('username');
-            let following = !!$(this).hasClass('following');
+            let following = $(this).hasClass('following');
             let url;
-            if (following) {
+            if (following===false){
                 url = followUserUrl.replace('-username-', username);
             }
             else {

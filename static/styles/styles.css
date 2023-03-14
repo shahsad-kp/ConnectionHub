@@ -144,13 +144,13 @@ input::placeholder{
 }
 
 .small-avatar {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 
 .large-avatar {
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
 }
 
 .avatar {
@@ -164,7 +164,7 @@ input::placeholder{
     font-family: 'Arial', serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 21px;
 }
 
@@ -213,7 +213,7 @@ button{
     font-family: 'Arial', serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 17px;
     display: flex;
     align-items: center;
@@ -302,15 +302,16 @@ button{
 }
 
 .settings-options {
-    padding: 20px 100px 20px 20px;;
+    padding: 10px 0 10px 20px;
     background: #1C1C1C;
     color: #F2F2F2;
     font-family: 'MuseoModerno', serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 16px;
     width: 100%;
     box-sizing: border-box;
+    max-width: 400px;
 }
 
 .selected-settings{
@@ -393,4 +394,13 @@ button{
 .notification-time {
     color: #7b7b7b;
     font-weight: 300;
+}
+
+.follow-button{
+    height: fit-content;
+    padding: 10px;
+}
+
+.admin-posts {
+    cursor: pointer;
 }
