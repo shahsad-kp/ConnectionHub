@@ -37,6 +37,7 @@
         <option value="$MODULE_DIR$/Comments/templates" />
         <option value="$MODULE_DIR$/Admin/AdminReports/templates" />
         <option value="$MODULE_DIR$/Notifications/templates" />
+        <option value="$MODULE_DIR$/Communications/templates" />
       </list>
     </option>
   </component>

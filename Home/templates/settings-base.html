@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="page-divider">
-    <div class="{% if selector %}settings-selector{% endif %} full-width algn-cent dis-col gap-10 padding-10">
+    <div class="{% if selector %}small-screen-hider{% endif %} full-width algn-cent dis-col gap-10 padding-10">
         <a class="settings-options card{% if profile_settings %} selected-settings{% endif %}" href="{% url 'update-profile' %}">Profile Settings</a>
         <a class="settings-options card{% if update_password %} selected-settings{% endif %}" href="{% url 'change-password' %}">Change Password</a>
         <a class="settings-options card{% if help_center %} selected-settings{% endif %}" href="{% url 'help-center' %}">Help Center</a>

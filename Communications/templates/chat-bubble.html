@@ -1,0 +1,41 @@
+{% if not message.is_sender %}
+    <div class="msg left-msg">
+        <div
+                class="msg-img"
+                style="background-image: url({{ message.sender.profile_picture }})"
+        ></div>
+
+        <div class="msg-bubble accent-three-bg">
+            <div class="msg-info">
+                <div class="msg-info-name">@{{ message.sender.username }}</div>
+                <div class="msg-info-time time" data-time="{{ message.timestamp }}">{% if message.time > now|date:"Y-m-d H:i:s" %}
+                    {{ message.time|date:"F jS, Y" }}
+                {% else %}
+                    {{ message.time|timesince }} ago
+                {% endif %}</div>
+            </div>
+
+            <div class="msg-text">{{ message.text }}</div>
+        </div>
+    </div>
+{% else %}
+    <div class="msg right-msg">
+        <div
+                class="msg-img"
+                style="background-image: url({{ message.sender.profile_picture }})"
+        ></div>
+
+        <div class="msg-bubble secondary-background">
+            <div class="msg-info">
+                <div class="msg-info-name">You</div>
+                <div class="msg-info-time time" data-time="{{ message.timestamp }}">{% if message.time > now|date:"Y-m-d H:i:s" %}
+                    {{ message.time|date:"F jS, Y" }}
+                {% else %}
+                    {{ message.time|timesince }} ago
+                {% endif %}</div>
+            </div>
+
+            <div class="msg-text">{{ message.text }}</div>
+        </div>
+    </div>
+{% endif %}

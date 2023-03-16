@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django.core.mail import EmailMessage
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils import timezone
 from pyotp import TOTP
 from twilio.rest import Client
@@ -29,14 +30,20 @@ class OtpVerification(models.Model):
         if not self.otp:
             self.generate_otp()
         subject = 'OTP Validation of ConnectionHub'
-        body = f'Dear @{self.username}, use this One Time Password ({self.otp}) to verify your {self.type}' \
-               ' This OTP will be valid for the next 5 mins.'
+        html_message = render_to_string(
+            'otp-email.html',
+            {
+                'otp': self.otp,
+                'name': self.username
+            }
+        )
         if self.type == 'email':
             message = EmailMessage(
                 subject=subject,
-                body=body,
+                body=html_message,
                 to=[self.email],
             )
+            message.content_subtype = 'html'
             message.send()
         else:
             TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')

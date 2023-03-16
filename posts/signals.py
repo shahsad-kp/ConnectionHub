@@ -27,7 +27,7 @@ def post_like_dislike(sender: Type[Reaction], instance: Reaction, created: bool,
 @receiver(post_delete, sender=Reaction)
 def post_like_dislike(sender: Type[Reaction], instance: Reaction, **kwargs):
     if instance.reaction == 'like':
-        instance.post.likes_count -= 1
+        instance.post.likes_count = instance.post.likes_count - 1
     else:
-        instance.post.dislikes_count -= 1
+        instance.post.dislikes_count = instance.post.dislikes_count - 1
     instance.post.save()

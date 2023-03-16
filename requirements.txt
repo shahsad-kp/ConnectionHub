@@ -1,5 +1,7 @@
-django
+django~=4.1.7
 psycopg2
 pillow
-twilio
-pyotp
+twilio~=7.16.4
+pyotp~=2.8.0
+channels~=4.0.0
+cryptography~=39.0.2

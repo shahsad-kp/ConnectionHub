@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 from environ import environ
+from cryptography.fernet import Fernet
+import os
 
 # Initialise environment variables
 env = environ.Env()
@@ -48,12 +50,14 @@ INSTALLED_APPS = [
     'Auth.apps.AuthConfig',
     'Comments.apps.CommentsConfig',
     'Help.apps.HelpConfig',
+    'Communications.apps.CommunicationsConfig',
     'Notifications.apps.NotificationsConfig',
     'Admin.AdminHome.apps.AdminhomeConfig',
     'Admin.AdminHelp.apps.AdminhelpConfig',
     'Admin.AdminPost.apps.AdminpostConfig',
     'Admin.AdminReports.apps.AdminreportsConfig',
     'Admin.AdminUsers.apps.AdminusersConfig',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -85,7 +89,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ConnectionHub.wsgi.application'
+# WSGI_APPLICATION = 'ConnectionHub.wsgi.application'
+ASGI_APPLICATION = 'ConnectionHub.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -159,3 +164,11 @@ STATICFILES_DIRS = [
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    }
+}
+#
+# cipher_suite = Fernet(SECRET_KEY)

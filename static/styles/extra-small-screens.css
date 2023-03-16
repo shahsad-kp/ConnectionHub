@@ -71,6 +71,22 @@
     width: 100%;
 }
 
-.settings-selector{
+.small-screen-hider{
     display: none;
+}
+
+.hide-chat-side{
+    display: none;
+}
+
+.msg .msg-img{
+    display: none;
+}
+
+.chat-root {
+    height: 100%;
+    box-sizing: border-box;
+}
+.chat-button {
+    bottom: 80px;
 }

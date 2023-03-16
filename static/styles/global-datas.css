@@ -82,6 +82,11 @@
     gap: 10px;
 }
 
+.gap-15{
+    display: flex;
+    gap: 15px;
+}
+
 .gap-20{
     display: flex;
     gap: 20px;

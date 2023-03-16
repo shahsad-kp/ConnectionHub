@@ -48,7 +48,7 @@
     width: 100%;
 }
 
-.settings-selector{
+.small-screen-hider{
     display: none;
 }
 
@@ -66,5 +66,9 @@
     min-width: 0;
     width: 100%;
     max-width: 100%;
+}
+
+.hide-chat-side{
+    display: none;
 }
 

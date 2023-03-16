@@ -53,3 +53,6 @@
     width: auto;
 }
 
+.hide-chat-side{
+    display: none;
+}
