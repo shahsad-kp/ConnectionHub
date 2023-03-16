@@ -72,3 +72,10 @@
     display: none;
 }
 
+.chat-side-bar{
+    width: 100%;
+}
+
+#chat-search-box input{
+    width: 100%;
+}

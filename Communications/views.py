@@ -11,16 +11,40 @@ def chat_list(request, username=None):
     if 'q' in request.GET and request.GET['q']:
         search = request.GET['q']
         users = User.objects.filter(username__icontains=search)
+
     else:
-        users = request.user.get_all_followings()
+        messages = Message.objects.filter(
+            Q(sender=request.user) | Q(receiver=request.user)
+        ).order_by('-timestamp')
+        users = [
+            message.sender if message.sender != request.user else message.receiver
+            for message in messages
+        ]
+
+    # remove duplicates without changing the order
+    interacted_users = []
+
+    for user in users:
+        if user.get_context() not in [i['user'] for i in interacted_users]:
+            interacted_users.append(
+                {
+                    'user': user.get_context(),
+                    'unviewed_messages': Message.objects.filter(
+                        sender=user, receiver=request.user, viewed=False
+                    ).exists()
+                }
+            )
 
     context = {
         'logged_user': request.user.get_context(),
-        'users_followed': [user.get_context() for user in users],
+        'interacted_users': interacted_users,
     }
     if username:
         try:
             selected_user = User.objects.get(username=username)
+            Message.objects.filter(
+                sender=selected_user, receiver=request.user, viewed=False
+            ).update(viewed=True)
             messages = Message.objects.filter(
                 Q(sender=request.user, receiver=selected_user) |
                 Q(sender=selected_user, receiver=request.user)

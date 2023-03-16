@@ -9,18 +9,11 @@ class ChatConsumer(AsyncConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user: Optional['User'] = None
-        self.second_user: Optional['User'] = None
         self.chat_room = None
-        self.other_user_chat_room = None
 
     async def websocket_connect(self, event):
-        username = self.scope['url_route']['kwargs']['username']
-
-        self.second_user = await self.get_user_object(username)
         self.user = self.scope['user']
-
         self.chat_room = f'user_chatroom_{self.user.id}'
-        self.other_user_chat_room = f'user_chatroom_{self.second_user.id}'
 
         await self.channel_layer.group_add(
             self.chat_room,
@@ -33,23 +26,29 @@ class ChatConsumer(AsyncConsumer):
     async def websocket_receive(self, event):
         received_data = json.loads(event['text'])
         message_text = received_data.get('message')
+        username = received_data.get('username')
+
+        other_user = await self.get_user_object(username)
+        if not other_user:
+            return False
+        other_user_chat_room = f'user_chatroom_{other_user.id}'
 
         if not message_text:
             return False
 
-        message = await self.create_chat_message(message_text)
+        message = await self.create_chat_message(message_text, other_user)
 
         response = {
             'message': message.message,
             'sender': {
                 'username': message.sender.username,
-                'fullname': message.sender.full_name,
+                'fullname': message.sender.full_name or message.sender.username,
                 'avatar': message.sender.profile_picture.url,
                 'id': message.sender.id
             },
             'receiver': {
                 'username': message.receiver.username,
-                'fullname': message.receiver.full_name,
+                'fullname': message.receiver.full_name or message.receiver.username,
                 'avatar': message.receiver.profile_picture.url,
                 'id': message.receiver.id
             },
@@ -57,7 +56,7 @@ class ChatConsumer(AsyncConsumer):
         }
 
         await self.channel_layer.group_send(
-            self.other_user_chat_room,
+            other_user_chat_room,
             {
                 'type': 'chat_message',
                 'text': json.dumps(response)
@@ -101,11 +100,11 @@ class ChatConsumer(AsyncConsumer):
         return obj
 
     @database_sync_to_async
-    def create_chat_message(self, message: str):
+    def create_chat_message(self, message: str, other_user: 'Users.User'):
         from .models import Message
         obj = Message.objects.create(
             message=message,
             sender=self.user,
-            receiver=self.second_user
+            receiver=other_user
         )
         return obj

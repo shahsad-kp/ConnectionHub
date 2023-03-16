@@ -493,7 +493,7 @@ button{
 }
 
 .chat-msg-section {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 240px);
     overflow-y: auto;
     width: 100%;
 }
@@ -508,4 +508,26 @@ button{
     background-color: #4C4CFF;
     right: 30px;
     bottom: 30px;
+}
+
+.msgs-section {
+    height: calc(100vh - 100px);
+}
+
+.chat-root{
+    padding-left: 0;
+}
+
+.badge {
+    border-radius: 50%;
+    width: 10px;
+    display: none;
+    height: 10px;
+    align-items: center;
+    color: #3f3f3f;
+    font-weight: bold;
+}
+
+.showing-badge{
+    display: flex;
 }

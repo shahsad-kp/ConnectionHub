@@ -1,18 +1,20 @@
 $(document).ready(
     function () {
-        const endpoint = 'ws://' + window.location.host + window.location.pathname;
-        let socket = new WebSocket(endpoint)
         let send_message_form = $('#message-bar')
         let input_message = $('#message-input')
         let message_body = $('#message-body')
+        const endpoint = 'ws://' + window.location.host + '/chat/';
+        let socket = new WebSocket(endpoint)
 
         socket.onopen = async function (e) {
             send_message_form.on('submit', function (e) {
                 e.preventDefault()
                 let message = input_message.val()
+                let username = $(this).data('username')
 
                 let data = {
                     'message': message,
+                    'username': username
                 }
                 data = JSON.stringify(data)
                 socket.send(data)
@@ -36,6 +38,10 @@ $(document).ready(
 
         function newMessage(data) {
             let message_element;
+            let ownUsername = $('#msgs-section').data('own-username')
+            let otherUsername = $('#message-bar').data('username')
+            let senderUsername = data['sender']['username']
+            let receiverUsername = data['receiver']['username']
             if (data['is_sender'] === true) {
                 message_element = "<div class=\"msg right-msg\">\n" +
                     "        <div\n" +
@@ -70,9 +76,51 @@ $(document).ready(
                     "        </div>\n" +
                     "    </div>"
             }
+            if (
+                (otherUsername===senderUsername&&ownUsername===receiverUsername) ||
+                (otherUsername===receiverUsername&&ownUsername===senderUsername)
+            ){
+                message_body.append(message_element)
+                $('#no-chat').remove()
+                message_body.scrollTop(message_body[0].scrollHeight);
+            }
 
-            message_body.append(message_element)
-            message_body.scrollTop(message_body[0].scrollHeight);
+            updateUserToFront(data)
+        }
+
+        function updateUserToFront(data) {
+            let ownUsername = $('#msgs-section').data('own-username')
+            let senderUsername = data['sender']['username']
+            let userdata = data['sender']
+            if (senderUsername === ownUsername){
+                userdata = data['receiver']
+            }
+            let username = userdata['username']
+            let userData = $('#chat-user-' + username)
+
+            if (userData.length === 0) {
+                userData = '<a href="/chat/'+ username +'/" id="chat-user-'+ username +'">\n' +
+                    '    <div class="dis-row gap-10" style="align-items: center">\n' +
+                    '        <div class="small-avatar">\n' +
+                    '            <img class="avatar" src="'+ userdata['avatar'] +'" alt="Avatar">\n' +
+                    '        </div>\n' +
+                    '        <div class="dis-col just-cent">\n' +
+                    '            <div class="fullname text-color">'+ userdata['fullname'] +'</div>\n' +
+                    '            <div class="username text-color">@' + userdata['username'] + '</div>' +
+                    '        </div>\n' +
+                    '        <span class="badge accent-one-bg ' + (senderUsername !== ownUsername? 'showing-badge': '') + '" id="badge-' + userdata['username'] + '"></span>\n' +
+                    '    </div>\n' +
+                    '</a>'
+                $('#chat-users-list').prepend(userData)
+                $('.no-chats-available').remove()
+            }
+            else{
+                userData.prependTo('#chat-users-list')
+                let badge = $('#badge-' + senderUsername)
+                if (!badge.hasClass('showing-badge')){
+                    badge.addClass('showing-badge')
+                }
+            }
 
         }
 
@@ -111,7 +159,7 @@ $(document).ready(
                 $(this).text(timeSince);
             });
         }
-
+        message_body.scrollTop(message_body[0].scrollHeight);
         updateDisplayedTime();
         setInterval(updateDisplayedTime, 1000);
     }

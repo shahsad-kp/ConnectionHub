@@ -13,7 +13,7 @@ Chat center
         <div class="max-full-width dis-col gap-10 chat-side-bar {% if selected_user %}hide-chat-side{% endif %}">
             <form id="chat-search-box" class="chat-search-box dis-row max-full-width gap-10">
                 <input type="text" name="q" id="search-bar" placeholder="Search here.."
-                       class="text-color secondary-background">
+                       class="text-color secondary-background" autocomplete="off">
                 <button type="submit" id="search-button" class="secondary-background accent-two-bg text-color">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#F2F2F2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -21,30 +21,31 @@ Chat center
                     </svg>
                 </button>
             </form>
-            <div class="chat-users-list secondary-background card padding-10 dis-col gap-15">
-                {% for followed_user in users_followed %}
-                <div>
-                    {% include 'user-small-data.html' with user=followed_user %}
+            <div class="chat-users-list secondary-background card padding-10 dis-col gap-15" id="chat-users-list">
+                {% for interacted_user in interacted_users %}
+                <div id="chat-user-{{ interacted_user.user.username }}">
+                    {% include 'user-chat-data.html' with user=interacted_user.user unviewed=interacted_user.unviewed_messages %}
                 </div>
+                {% empty %}
+                    <div class="blank-page no-chats-available">No chats available..</div>
                 {% endfor %}
             </div>
         </div>
-        <div class="width-max dis-col position-rel gap-10 {% if not selected_user %}hide-chat-side{% endif %}">
+        <div id="msgs-section" class="msgs-section width-max dis-col position-rel gap-10{% if not selected_user %} hide-chat-side{% endif %}" data-own-username="{{ logged_user.username }}">
             {% if selected_user %}
             <div class="dis-row just-sb card secondary-background padding-10">
                 {% include 'chat-user-list.html' with user=selected_user %}
             </div>
-            <div class="chat-msg-section" id="message-body">
+            <div class="chat-msg-section" id="message-body" data-username="{{ selected_user.username }}">
                 {% for message in messages %}
                 {% include 'chat-bubble.html' with message=message %}
                 {% empty %}
-                <div class="blank-page">Send any messages..</div>
+                <div class="blank-page" id="no-chat">Send any messages..</div>
                 {% endfor %}
-                
             </div>
-            <form class="msg-input-area dis-row position-abs width-max gap-20" id="message-bar">
+            <form class="msg-input-area dis-row position-abs width-max gap-20" id="message-bar" data-username="{{ selected_user.username }}">
                 <input type="text" class="msger-input secondary-background card text-color"
-                       placeholder="Enter your message..." id="message-input">
+                       placeholder="Enter your message..." id="message-input" autocomplete="off">
                 <button type="submit" class="msger-send-btn accent-one-bg">Send</button>
             </form>
             {% else %}

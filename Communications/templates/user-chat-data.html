@@ -1,5 +1,5 @@
-<a href="{% url 'profile-pages' username=user.username %}">
-    <div class="dis-row gap-10">
+<a href="{% url 'chat-room' username=user.username %}">
+    <div class="dis-row gap-10" style="align-items: center">
         <div class="small-avatar">
             <img class="avatar" src="{{ user.profile_picture }}" alt="Avatar">
         </div>
@@ -11,5 +11,6 @@
             <div class="username text-color">@{{ user.username }}</div>
             {% endif %}
         </div>
+        <span class="badge accent-one-bg{% if unviewed %} showing-badge{% endif %}" id="badge-{{ user.username }}"></span>
     </div>
 </a>

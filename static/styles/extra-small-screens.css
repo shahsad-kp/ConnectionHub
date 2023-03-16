@@ -87,6 +87,15 @@
     height: 100%;
     box-sizing: border-box;
 }
+
 .chat-button {
     bottom: 80px;
+}
+
+.chat-side-bar{
+    width: 100%;
+}
+
+#chat-search-box input{
+    width: 100%;
 }
