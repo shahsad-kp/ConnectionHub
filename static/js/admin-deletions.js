@@ -1,6 +1,25 @@
 $(document).ready(
     function (){
         const deleteButton = $('.delete-button')
+        const banButton = $('.ban-button')
+
+        function banUser(){
+            let username = $(this).data('username');
+            let url;
+            if ($(this).hasClass('banned')){
+                url = adminUserUnbanUrl.replace('-username-', username);
+            }
+            else{
+                url = adminUserBanUrl.replace('-username-', username);
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (){
+                    location.reload();
+                }
+            })
+        }
 
         function deleteData(url, successCallback){
             $.ajax({
@@ -41,6 +60,7 @@ $(document).ready(
         }
 
         deleteButton.click(showConfirmation);
+        banButton.click(banUser);
 
     }
 )

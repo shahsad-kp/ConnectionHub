@@ -10,11 +10,12 @@ from Users.models import User
 def chat_list(request, username=None):
     if 'q' in request.GET and request.GET['q']:
         search = request.GET['q']
-        users = User.objects.filter(username__icontains=search)
+        users = User.objects.filter(username__icontains=search, is_banned=False)
 
     else:
         messages = Message.objects.filter(
-            Q(sender=request.user) | Q(receiver=request.user)
+            (Q(sender=request.user) | Q(receiver=request.user)) &
+            (Q(sender__is_banned=False) & Q(receiver__is_banned=False))
         ).order_by('-timestamp')
         users = [
             message.sender if message.sender != request.user else message.receiver
@@ -42,6 +43,13 @@ def chat_list(request, username=None):
     if username:
         try:
             selected_user = User.objects.get(username=username)
+            if selected_user.is_banned:
+                context['selected_user'] = None
+                return render(
+                    request=request,
+                    template_name='chat-list.html',
+                    context=context
+                )
             Message.objects.filter(
                 sender=selected_user, receiver=request.user, viewed=False
             ).update(viewed=True)

@@ -39,7 +39,7 @@ $(document).ready(
         function newMessage(data) {
             let message_element;
             let ownUsername = $('#msgs-section').data('own-username')
-            let otherUsername = $('#message-bar').data('username')
+            let otherUsername = send_message_form.data('username')
             let senderUsername = data['sender']['username']
             let receiverUsername = data['receiver']['username']
             if (data['is_sender'] === true) {

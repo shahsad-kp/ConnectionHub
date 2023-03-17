@@ -70,7 +70,30 @@ def admin_profile_pages(request, username):
 
 
 @superuser_login_required(login_url='admin-login')
-def admin_profile_delete(request, username):
+def admin_profile_ban(request, username):
     user = get_object_or_404(User, username=username)
-    user.delete()
+    if user.is_banned:
+        return JsonResponse(
+            data={
+                'error': 'User is already banned'
+            },
+            status=405
+        )
+    user.is_banned = True
+    user.save()
+    return redirect('admin-users')
+
+
+@superuser_login_required(login_url='admin-login')
+def admin_profile_unban(request, username):
+    user = get_object_or_404(User, username=username)
+    if not user.is_banned:
+        return JsonResponse(
+            data={
+                'error': 'User is not banned'
+            },
+            status=405
+        )
+    user.is_banned = False
+    user.save()
     return redirect('admin-users')

@@ -1,45 +1,45 @@
-body{
+body {
     margin: 0;
     padding: 0;
     background: #121212;
 }
 
-.root{
+.root {
     background: #121212;
     font-family: 'MuseoModerno', cursive !important;
     font-style: normal;
     min-height: 100vh;
 }
 
-a{
+a {
     text-decoration: none;
     color: #F2F2F2;
 }
 
-.view-body{
+.view-body {
     width: 100vw;
     height: 100vh;
 }
 
-.center-group{
+.center-group {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.min-space{
+.min-space {
     width: fit-content;
     height: fit-content;
 }
 
-.welcome{
+.welcome {
     font-family: 'Arial', serif;
     font-style: normal;
     font-size: 48px;
     line-height: 55px;
 }
 
-.brand-text{
+.brand-text {
     font-size: 32px;
     line-height: 51px;
 }
@@ -104,7 +104,7 @@ button[type='submit'] {
     border: 0 transparent;
 }
 
-input::placeholder{
+input::placeholder {
     color: #646464;
     opacity: 1;
     font-family: 'MuseoModerno', cursive;
@@ -114,7 +114,7 @@ input::placeholder{
     line-height: 32px;
 }
 
-.left-bar{
+.left-bar {
     position: fixed;
     height: 100vh;
     box-sizing: border-box;
@@ -122,20 +122,20 @@ input::placeholder{
     z-index: 999;
 }
 
-.left-bar-elements{
+.left-bar-elements {
     padding: 10px 50px 10px 10px;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
 }
 
-.left-bar-logo{
+.left-bar-logo {
     position: absolute;
     top: 10%;
     justify-content: center;
     display: flex;
 }
 
-.left-bar-except-root{
+.left-bar-except-root {
     width: 100%;
     margin-left: 150px;
     display: flex;
@@ -160,7 +160,7 @@ input::placeholder{
     border-radius: 50%;
 }
 
-.fullname{
+.fullname {
     font-family: 'Arial', serif;
     font-style: normal;
     font-weight: 700;
@@ -168,7 +168,7 @@ input::placeholder{
     line-height: 21px;
 }
 
-.username{
+.username {
     font-family: 'Arial', serif;
     font-style: normal;
     font-weight: 400;
@@ -176,7 +176,7 @@ input::placeholder{
     line-height: 18px;
 }
 
-button{
+button {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -194,14 +194,14 @@ button{
     word-break: break-word;
 }
 
-.search-results{
+.search-results {
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
     gap: 10px;
 }
 
-#user-search-results{
+#user-search-results {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -209,7 +209,7 @@ button{
     padding: 10px;
 }
 
-.bio{
+.bio {
     font-family: 'Arial', serif;
     font-style: normal;
     font-weight: 400;
@@ -220,7 +220,7 @@ button{
     text-align: center;
 }
 
-.blank-page{
+.blank-page {
     width: 100%;
     height: 100%;
     display: flex;
@@ -246,13 +246,13 @@ button{
     color: #949494;
 }
 
-.page-divider{
+.page-divider {
     display: flex;
     width: 100%;
     box-sizing: border-box;
 }
 
-.image-upload{
+.image-upload {
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -264,13 +264,13 @@ button{
 }
 
 #file-input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 
@@ -314,36 +314,36 @@ button{
     max-width: 400px;
 }
 
-.selected-settings{
+.selected-settings {
     background: #F8E71C !important;
     color: #121212 !important;
 }
 
 .profile-picture {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .profile-picture img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .profile-picture input[type="file"] {
-  display: none;
+    display: none;
 }
 
 .profile-picture label {
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.error-message{
+.error-message {
     font-family: 'MuseoModerno', cursive;
     font-style: normal;
     font-weight: 400;
@@ -352,7 +352,7 @@ button{
     width: 100%;
 }
 
-.error-message-each{
+.error-message-each {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -368,7 +368,7 @@ button{
     gap: 10px;
 }
 
-.admin-data-title{
+.admin-data-title {
     font-family: 'MuseoModerno', serif;
     font-style: normal;
     font-weight: 600;
@@ -376,7 +376,7 @@ button{
     line-height: 25px;
 }
 
-.admin-data-content{
+.admin-data-content {
     font-family: 'MuseoModerno', serif;
     font-style: normal;
     font-weight: 400;
@@ -387,7 +387,7 @@ button{
     word-break: break-word;
 }
 
-.notification-head{
+.notification-head {
     font-weight: 700;
 }
 
@@ -396,7 +396,7 @@ button{
     font-weight: 300;
 }
 
-.follow-button{
+.follow-button {
     height: fit-content;
     padding: 10px;
 }
@@ -436,50 +436,53 @@ button{
 }
 
 .msg-bubble {
-  max-width: 450px;
-  padding: 15px;
-  border-radius: 15px;
+    max-width: 450px;
+    padding: 15px;
+    border-radius: 15px;
+    word-break: break-word;
 }
 
 .msg-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .msg-info-name {
-  margin-right: 10px;
-  font-weight: bold;
+    margin-right: 10px;
+    font-weight: bold;
 }
 
 .msg-info-time {
-  font-size: 0.85em;
+    font-size: 0.85em;
 }
 
 .msg:last-of-type {
-  margin: 0;
+    margin: 0;
 }
 
 .msg {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
 }
 
 .left-msg .msg-bubble {
-  border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .right-msg {
-  flex-direction: row-reverse;
+    flex-direction: row-reverse;
 }
+
 .right-msg .msg-bubble {
-  color: #fff;
-  border-bottom-right-radius: 0;
+    color: #fff;
+    border-bottom-right-radius: 0;
 }
+
 .right-msg .msg-img {
-  margin: 0 0 0 10px;
+    margin: 0 0 0 10px;
 }
 
 .msg-input-area {
@@ -514,7 +517,7 @@ button{
     height: calc(100vh - 100px);
 }
 
-.chat-root{
+.chat-root {
     padding-left: 0;
 }
 
@@ -528,6 +531,26 @@ button{
     font-weight: bold;
 }
 
-.showing-badge{
+.showing-badge {
     display: flex;
+}
+
+.menu-bar {
+    right: 100%;
+    top: 100%;
+    border-radius: 5px !important;
+    display: none;
+    cursor: pointer;
+}
+
+.menu-active {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-bar ul {
+    width: max-content;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }

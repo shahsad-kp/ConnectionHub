@@ -33,6 +33,7 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=False)
     followers_count = models.IntegerField(default=0)
     followings_count = models.IntegerField(default=0)
+    is_banned = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username
@@ -44,16 +45,19 @@ class User(AbstractUser):
         Follow.objects.filter(follower=self, followee=user).delete()
 
     def get_all_followings(self):
-        list_of_followings = [following.followee for following in self.followings.all()]
+        list_of_followings = [following.followee for following in self.followings.filter(followee__is_banned=False)]
         return list_of_followings
 
     def get_all_followers(self):
-        list_of_followers = [follower.follower for follower in self.followers.all()]
+        list_of_followers = [follower.follower for follower in self.followers.filter(follower__is_banned=False)]
         return list_of_followers
 
     def get_suggestions(self):
-        users_not_followed = User.objects.exclude(
-            Q(username=self.username) | Q(followers__follower=self)
+        users_not_followed = User.objects.filter(is_banned=False).exclude(
+            (
+                    Q(username=self.username) |
+                    Q(followers__follower=self)
+            )
         ).order_by('-followers_count')[:10]
         return users_not_followed
 
@@ -64,13 +68,14 @@ class User(AbstractUser):
             self,
             logined_user: 'User' = None,
             posts: bool = False,
-            admin_data: bool = False
+            admin_data: bool = False,
+            extra_data: dict = None
     ):
         if not logined_user:
             logined_user = self
 
         if posts:
-            posts = [post.get_context(logined_user) for post in self.get_posts()]
+            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in self.get_posts()]
         else:
             posts = []
 
@@ -84,13 +89,30 @@ class User(AbstractUser):
             'number_of_followings': self.followings_count,
             'is_following': Follow.objects.filter(follower=logined_user, followee=self).exists(),
             'self': logined_user.id == self.id,
+            'is_banned': self.is_banned,
         }
+        if (not admin_data) and self.is_banned:
+            data = {
+                'username': self.username,
+                'fullname': 'Not Available',
+                'profile_picture': '/media/profile_pictures/avatar-alt.svg',
+                'bio': None,
+                'posts': [],
+                'number_of_followers': 0,
+                'number_of_followings': 0,
+                'is_following': Follow.objects.filter(follower=logined_user, followee=self).exists(),
+                'self': logined_user.id == self.id,
+                'is_banned': self.is_banned,
+            }
         if admin_data:
             data['date_joined'] = self.date_joined
             data['last_login'] = self.last_login
             data['phone'] = self.phone_number
             data['email'] = self.email
+            data['banned'] = self.is_banned
 
+        if extra_data:
+            data.update(extra_data)
         return data
 
 
