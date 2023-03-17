@@ -48,6 +48,7 @@
                 <span id="followings-count">{{ user.number_of_followings }} Followings</span>
             </div>
             {% if not user.self %}
+            {% if not user.is_banned %}
             <div>
                 <button class="follow-button accent-two-bg text-color{% if user.is_following %} following{% endif %}"
                         data-username="{{ user.username }}">
@@ -58,6 +59,7 @@
                     {% endif %}
                 </button>
             </div>
+            {% endif %}
             {% endif %}
         </section>
         <div class="gap-20 dis-col">

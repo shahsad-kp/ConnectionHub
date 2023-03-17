@@ -43,7 +43,7 @@ def search_users(request: HttpRequest):
         return response
 
     query = request.GET['q']
-    results = User.objects.filter(username__icontains=query)
+    results = User.objects.filter(username__icontains=query, is_banned=False)
     data = {
         'results': [
             {

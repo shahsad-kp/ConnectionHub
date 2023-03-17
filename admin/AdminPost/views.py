@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 def admin_post_page(request: HttpRequest, post_id: int):
     post = get_object_or_404(Post, id=post_id)
     context = {
-        'post': post.get_context(user=request.user, comments=True)
+        'post': post.get_context(user=request.user, comments=True, admin_data=True)
     }
     return render(request, 'admin-post-page.html', context=context)
 

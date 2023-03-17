@@ -40,7 +40,7 @@ class Post(models.Model):
     def dislikes(self):
         return self.reactions.filter(reaction='dislike')
 
-    def get_context(self, user: 'User', comments: bool = False) -> Dict[str, str]:
+    def get_context(self, user: 'User', comments: bool = False, admin_data: bool = False) -> Dict[str, str]:
         if comments:
             comments = [
                 comment.get_context()
@@ -51,7 +51,7 @@ class Post(models.Model):
 
         return {
             'id': self.id,
-            'user': self.user.get_context(),
+            'user': self.user.get_context(admin_data=admin_data),
             'image': self.image.url,
             'caption': self.caption,
             'location': self.location,
