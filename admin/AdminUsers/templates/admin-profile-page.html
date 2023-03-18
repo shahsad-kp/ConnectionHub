@@ -20,7 +20,7 @@
                     <path d="M3 12H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
                     <path d="M3 17H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
                 </svg>
-                {% include 'profile-menu-options.html' with id='menu' username=user.username banned=user.banned %}
+                {% include 'admin-profile-menu-options.html' with id='menu' username=user.username banned=user.banned %}
             </div>
             <div class="large-avatar">
                 <img class="avatar" src="{{ user.profile_picture }}" alt="profile-picture of @{{ user.username }}">

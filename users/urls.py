@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import home_view, search_users, follow_user, unfollow_user, settings_update_profile, \
-    settings_change_password, settings_delete_account
+    settings_change_password, settings_delete_account, block_user, unblock_user
 
 urlpatterns = [
     path('search', search_users, name='search-users'),
@@ -10,5 +10,7 @@ urlpatterns = [
     path('delete/', settings_delete_account, name='delete-profile'),
     path('<str:username>/follow/', follow_user, name='follow-user'),
     path('<str:username>/unfollow/', unfollow_user, name='unfollow-user'),
+    path('<str:username>/block/', block_user, name='block-user'),
+    path('<str:username>/unblock/', unblock_user, name='unblock-user'),
     path('<str:username>/', home_view, name='profile-pages'),
 ]

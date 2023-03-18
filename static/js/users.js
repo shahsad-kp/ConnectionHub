@@ -3,6 +3,7 @@ $(document).ready(
         const searchBar = $('#user-search-bar');
         const searchArea = $('#' + searchBar.data('user-search-area'));
         const followButton = $('.follow-button');
+        const blockButton = $('.block-button');
         const reportButton = $('.report-button');
 
         $('#'+searchBar.data('results-id')).hide()
@@ -96,6 +97,27 @@ $(document).ready(
 
         }
 
+        function blockUser(){
+            let username = $(this).data('username');
+            let blocked = $(this).hasClass('blocked');
+            let url;
+            if (blocked===false){
+                url = blockUserUrl.replace('-username-', username);
+            }
+            else {
+                url = unblockUserUrl.replace('-username-', username);
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    if (response['success']) {
+                        location.reload()
+                    }
+                }
+            });
+        }
+
         searchBar.on(
             'input',
             searchUsers
@@ -114,6 +136,10 @@ $(document).ready(
 
         reportButton.click(
             reportUser
+        )
+
+        blockButton.click(
+            blockUser
         )
     }
 )

@@ -1,16 +1,20 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest, JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, Follow
+from .models import User, Follow, Blocks
 
 
 @login_required(login_url='user-login')
 def home_view(request: HttpRequest, username: str):
     logined_user = User.objects.get(pk=request.user.pk)
     user = get_object_or_404(User, username=username)
+    if user.blocked_users.filter(user=logined_user).exists():
+        raise Http404(
+            "No %s matches the given query."
+        )
 
     context = {
         'user': user.get_context(logined_user, True),
@@ -41,9 +45,9 @@ def search_users(request: HttpRequest):
         )
         response.status_code = 401
         return response
-
+    user = User.objects.get(pk=request.user.pk)
     query = request.GET['q']
-    results = User.objects.filter(username__icontains=query, is_banned=False)
+    results = user.search_users(query)
     data = {
         'results': [
             {
@@ -115,6 +119,50 @@ def unfollow_user(request: HttpRequest, username: str):
         )
         response.status_code = 400
     return response
+
+
+@login_required(login_url='user-login')
+def block_user(request: HttpRequest, username: str):
+    user = get_object_or_404(User, username=username)
+    org_user = User.objects.get(username=request.user.username)
+    if Blocks.objects.filter(user=user, blocked_by=org_user).exists():
+        return JsonResponse(
+            data={
+                'success': False,
+                'error': 'Already blocked'
+            },
+            status=400
+        )
+    else:
+        org_user.block(user)
+        return JsonResponse(
+            {
+                'success': True,
+                'blocked': True,
+            }
+        )
+
+
+@login_required(login_url='user-login')
+def unblock_user(request: HttpRequest, username: str):
+    user = get_object_or_404(User, username=username)
+    org_user = User.objects.get(username=request.user.username)
+    if not Blocks.objects.filter(user=user, blocked_by=org_user).exists():
+        return JsonResponse(
+            data={
+                'success': False,
+                'error': 'This user was not blocked'
+            },
+            status=400
+        )
+    else:
+        org_user.unblock(user)
+        return JsonResponse(
+            data={
+                'success': True,
+                'blocked': False
+            }
+        )
 
 
 @login_required(login_url='user-login')
