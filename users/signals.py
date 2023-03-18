@@ -1,11 +1,8 @@
-from datetime import datetime
 from typing import Type
 
-from django.contrib.auth.password_validation import password_changed
-from django.core.mail import send_mail, EmailMessage
-from django.db.models.signals import post_save, pre_save
+from django.core.mail import EmailMessage
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
-from django.http import HttpRequest
 
 from Notifications.models import Notification
 from Users.models import Follow, User
@@ -35,6 +32,14 @@ def follow_signal(sender: Type[Follow], instance: Follow, created: bool, **kwarg
             content=f'@{instance.follower} started following you',
             arg_value=str(instance.follower.username)
         )
+
+
+@receiver(post_delete, sender=Follow)
+def unfollow_signal(sender: Type[Follow], instance: Follow, **kwargs):
+    instance.followee.followers_count -= 1
+    instance.follower.followings_count -= 1
+    instance.followee.save()
+    instance.follower.save()
 
 
 @receiver(pre_save, sender=User)
