@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 
 @superuser_login_required(login_url='admin-login')
 def admin_post_page(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post.admin_objects, id=post_id)
     context = {
         'post': post.get_context(user=request.user, comments=True, admin_data=True)
     }
@@ -16,7 +16,7 @@ def admin_post_page(request: HttpRequest, post_id: int):
 
 @superuser_login_required(login_url='admin-login')
 def admin_post_delete(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post.admin_objects, id=post_id)
     post.delete()
     return JsonResponse(
         data={
@@ -27,7 +27,7 @@ def admin_post_delete(request: HttpRequest, post_id: int):
 
 @superuser_login_required(login_url='admin-login')
 def admin_comment_delete(request: HttpRequest, comment_id: int):
-    comment = get_object_or_404(Comment, id=comment_id)
+    comment = get_object_or_404(Comment.admin_objects, id=comment_id)
     comment.delete()
     return JsonResponse(
         data={

@@ -10,8 +10,8 @@ from Users.models import User
 def admin_users(request):
     data = {
         'users': [
-            user.get_context()
-            for user in User.objects.all().order_by('-date_joined')
+            user.get_context(full_data=True)
+            for user in User.admin_objects.all().order_by('-date_joined')
         ],
     }
     return render(
@@ -33,7 +33,7 @@ def admin_search_users(request):
         return response
 
     query = request.GET['q']
-    results = User.objects.filter(username__icontains=query)
+    results = User.admin_objects.filter(username__icontains=query)
     data = {
         'results': [
             {
@@ -58,7 +58,7 @@ def admin_search_users(request):
 
 @superuser_login_required(login_url='admin-login')
 def admin_profile_pages(request, username):
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User.admin_objects, username=username)
     context = {
         'user': user.get_context(admin_data=True, posts=True)
     }
@@ -71,7 +71,7 @@ def admin_profile_pages(request, username):
 
 @superuser_login_required(login_url='admin-login')
 def admin_profile_ban(request, username):
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User.admin_objects, username=username)
     if user.is_banned:
         return JsonResponse(
             data={
@@ -86,7 +86,7 @@ def admin_profile_ban(request, username):
 
 @superuser_login_required(login_url='admin-login')
 def admin_profile_unban(request, username):
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User.admin_objects, username=username)
     if not user.is_banned:
         return JsonResponse(
             data={

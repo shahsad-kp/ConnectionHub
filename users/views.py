@@ -28,13 +28,8 @@ def home_view(request: HttpRequest, username: str):
         ],
         'logged_user': request.user.get_context()
     }
-    if user.is_banned:
-        return render(
-            request=request,
-            template_name='banned-user.html',
-            context=context
-        )
-    elif user.settings.private_account and not user.followers.filter(follower=logined_user).exists():
+
+    if user.settings.private_account and not user.followers.filter(follower=logined_user).exists():
         return render(
             request=request,
             template_name='private-account.html',

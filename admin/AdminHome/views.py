@@ -16,11 +16,11 @@ def admin_home(request):
     analytics = [
         {
             'title': 'No. of Users',
-            'value': User.objects.all().count()
+            'value': User.admin_objects.all().count()
         },
         {
             'title': 'No. of Posts',
-            'value': Post.objects.all().count()
+            'value': Post.admin_objects.all().count()
         },
         {
             'title': 'No. of Reports',
@@ -32,7 +32,7 @@ def admin_home(request):
         },
         {
             'title': 'No. of Comments',
-            'value': Comment.objects.all().count()
+            'value': Comment.admin_objects.all().count()
         }
     ]
     data = {

@@ -16,6 +16,11 @@ def generate_filename(instance: 'Post', filename):
     return f"posts/{user_id}/{random_id}{ext}"
 
 
+class PostsUserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(user__is_banned=True)
+
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     image = models.ImageField(upload_to=generate_filename)
@@ -26,11 +31,11 @@ class Post(models.Model):
     dislikes_count = models.IntegerField(default=0)
     comments_count = models.IntegerField(default=0)
 
+    objects = PostsUserManager()
+    admin_objects = models.Manager()
+
     def __str__(self):
         return f"Post {self.id} of {self.user}"
-
-    def __repr__(self):
-        return f'<Post {self.id}>'
 
     @property
     def likes(self):
@@ -41,6 +46,12 @@ class Post(models.Model):
         return self.reactions.filter(reaction='dislike')
 
     def get_context(self, user: 'User', comments: bool = False, admin_data: bool = False) -> Dict[str, str]:
+        if admin_data:
+            from Comments.models import Comment
+            comments = [
+                comment.get_context()
+                for comment in Comment.admin_objects.filter(post=self).order_by('-created_at')
+            ]
         if comments:
             comments = [
                 comment.get_context(logined_user=user)
@@ -52,8 +63,8 @@ class Post(models.Model):
         return {
             'id': self.id,
             'user': self.user.get_context(
-                logined_user=user,
-                admin_data=admin_data
+                logined_user=user if not admin_data else None,
+                full_data=True
             ),
             'image': self.image.url,
             'caption': self.caption,
