@@ -30,7 +30,7 @@ class User(AbstractUser):
     is_banned = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.username
+        return '@' + self.username
 
     def follow(self, user: 'User'):
         Follow.objects.create(follower=self, followee=user).save()
@@ -93,7 +93,8 @@ class User(AbstractUser):
             'is_following': Follow.objects.filter(follower=logined_user, followee=self).exists(),
             'self': logined_user.id == self.id,
             'is_banned': self.is_banned,
-            'blocked': self.blockers.filter(blocked_by=logined_user).exists()
+            'blocked': self.blockers.filter(blocked_by=logined_user).exists(),
+            'private': self.settings.private_account
         }
         if (not admin_data) and self.is_banned:
             data = {
@@ -139,3 +140,11 @@ class Blocks(models.Model):
 
     def __str__(self):
         return f'{self.blocked_by} blocks {self.user}'
+
+
+class FollowRequest(models.Model):
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests')
+    followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests_to')
+
+    def __str__(self):
+        return f'{self.follower} requested to follow {self.followee}'

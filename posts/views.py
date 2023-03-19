@@ -11,6 +11,18 @@ from .models import Post, Reaction, Tag
 def post_detail_page(request: HttpRequest, post_id: int):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
+    if post.user.settings.private_account and not user.followers.filter(follower=user).exists():
+        return render(
+            request=request,
+            template_name='banned-user.html',
+            context={
+                'logged_user': request.user.get_context(),
+                'private_account': True,
+                'user': post.user.get_context(user),
+                'follow': True
+            }
+        )
+
     context = {
         'post': post.get_context(user, True),
         'logged_user': request.user.get_context()

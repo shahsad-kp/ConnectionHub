@@ -10,10 +10,17 @@
         <div class="dis-row just-cent card secondary-background padding-10 text-color">Suggestions</div>
         <div class="dis-col gap-10 card secondary-background padding-10">
             {% for suggestion in suggestions %}
+            {% if suggestion.private %}
+            <div class="dis-row just-sb padding-10" id="suggestion-{{ suggestion.id }}">
+                {% include 'user-small-data.html' with user=suggestion %}
+                <button class="request-button accent-two-bg text-color" data-username="{{ suggestion.username }}" data-remove-data="suggestion-{{ suggestion.id }}">Request</button>
+            </div>
+            {% else %}
             <div class="dis-row just-sb padding-10" id="suggestion-{{ suggestion.id }}">
                 {% include 'user-small-data.html' with user=suggestion %}
                 <button class="follow-button accent-two-bg text-color" data-username="{{ suggestion.username }}" data-remove-data="suggestion-{{ suggestion.id }}">Follow</button>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

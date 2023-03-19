@@ -402,6 +402,11 @@ button {
     padding: 10px;
 }
 
+.request-button {
+    height: fit-content;
+    padding: 10px;
+}
+
 .admin-posts {
     cursor: pointer;
 }

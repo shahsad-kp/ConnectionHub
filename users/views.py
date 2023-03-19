@@ -28,11 +28,24 @@ def home_view(request: HttpRequest, username: str):
         ],
         'logged_user': request.user.get_context()
     }
-    return render(
-        request=request,
-        template_name='profile-page.html',
-        context=context,
-    )
+    if user.is_banned:
+        return render(
+            request=request,
+            template_name='banned-user.html',
+            context=context
+        )
+    elif user.settings.private_account and not user.followers.filter(follower=logined_user).exists():
+        return render(
+            request=request,
+            template_name='private-account.html',
+            context=context
+        )
+    else:
+        return render(
+            request=request,
+            template_name='profile-page.html',
+            context=context,
+        )
 
 
 @login_required(login_url='user-login')
@@ -82,6 +95,14 @@ def follow_user(request: HttpRequest, username: str):
             }
         )
         user.save()
+        response.status_code = 400
+    elif user.settings.private_account:
+        response = JsonResponse(
+            {
+                'success': False,
+                'error': 'User has private account'
+            }
+        )
         response.status_code = 400
     else:
         org_user.follow(user)
