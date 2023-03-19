@@ -145,3 +145,23 @@ def new_post(request: HttpRequest):
                 'logged_user': request.user.get_context()
             }
         )
+
+
+@login_required(login_url='user-login')
+def delete_post(request: HttpRequest, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if not post.user == request.user:
+        return JsonResponse(
+            data={
+                'success': False,
+                'error': 'You are not allowed to do this'
+            },
+            status=403
+        )
+
+    post.delete()
+    return JsonResponse(
+        data={
+            'success': True
+        }
+    )

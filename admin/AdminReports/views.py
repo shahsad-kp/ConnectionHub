@@ -7,7 +7,7 @@ from Reports.models import Report
 
 @superuser_login_required(login_url='admin-login')
 def admin_report_page(request: HttpRequest):
-    reports = Report.objects.all()
+    reports = Report.objects.all().order_by('-date_created')
     context = {
         'reports': [
             report.get_context()
