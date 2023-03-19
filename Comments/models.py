@@ -18,9 +18,11 @@ class Comment(models.Model):
     def __repr__(self):
         return f'<Comment {self.id}>'
 
-    def get_context(self) -> Dict[str, str]:
+    def get_context(self, **kwargs) -> Dict[str, str]:
         return {
             'id': self.id,
-            'user': self.user.get_context(),
+            'user': self.user.get_context(
+                **kwargs
+            ),
             'content': self.content,
         }

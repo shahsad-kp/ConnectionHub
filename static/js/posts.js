@@ -113,11 +113,35 @@ $(document).ready(
             navigator.clipboard.writeText(window.location.href + 'post/' + post_id + '/').then(r => {alert('Link copied to clipboard')});
         }
 
+        function deletePost(){
+            let dataType = $(this).data('type')
+            let url;
+            if (dataType === 'post'){
+                let postId = $(this).data('post-id')
+                url = deletePostUrl.replace('0', postId)
+
+            }
+            else if (dataType === 'comment'){
+                let comment_id = $(this).data('comment-id')
+                url = deleteCommentUrl.replace('0', comment_id)
+            }
+            $.ajax(
+                {
+                    url: url,
+                    type: 'GET',
+                    success: function () {
+                        location.reload()
+                    }
+                }
+            );
+        }
+
         $('.like-button').click(likePost);
         $('.dislike-button').click(dislikePost);
         $('.save-button').click(savePost);
         $('.post-share-button').click(sharePost);
         $('.post-content').dblclick(likePost);
+        $('.delete-button').click(deletePost)
         $('.admin-posts').click(
             function(){
                 let postId = $(this).data('post-id');

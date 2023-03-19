@@ -43,7 +43,7 @@ class Post(models.Model):
     def get_context(self, user: 'User', comments: bool = False, admin_data: bool = False) -> Dict[str, str]:
         if comments:
             comments = [
-                comment.get_context()
+                comment.get_context(logined_user=user)
                 for comment in self.comments.all().order_by('-created_at')
             ]
         else:
@@ -51,7 +51,10 @@ class Post(models.Model):
 
         return {
             'id': self.id,
-            'user': self.user.get_context(admin_data=admin_data),
+            'user': self.user.get_context(
+                logined_user=user,
+                admin_data=admin_data
+            ),
             'image': self.image.url,
             'caption': self.caption,
             'location': self.location,

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import get_object_or_404
 
+from Comments.models import Comment
 from Posts.models import Post
 
 
@@ -40,5 +41,25 @@ def comments(request: HttpRequest, post_id: int):
                 comment.get_context()
                 for comment in post.comments.all()
             ],
+        }
+    )
+
+
+@login_required(login_url='user-login')
+def delete_comment(request: HttpRequest, comment_id: int):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if not comment.user.id == request.user.id:
+        return JsonResponse(
+            data={
+                'success': False,
+                'error': 'Not authorized person'
+            },
+            status=403
+        )
+
+    comment.delete()
+    return JsonResponse(
+        data={
+            'success': True
         }
     )
