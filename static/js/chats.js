@@ -159,7 +159,9 @@ $(document).ready(
                 $(this).text(timeSince);
             });
         }
-        message_body.scrollTop(message_body[0].scrollHeight);
+        if (message_body){
+            message_body.scrollTop(message_body[0].scrollHeight);
+        }
         updateDisplayedTime();
         setInterval(updateDisplayedTime, 1000);
     }

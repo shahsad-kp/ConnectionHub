@@ -541,6 +541,7 @@ button {
     border-radius: 5px !important;
     display: none;
     cursor: pointer;
+    min-width: 100px;
 }
 
 .menu-active {
@@ -553,4 +554,7 @@ button {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

@@ -13,11 +13,11 @@ $(document).ready(
                 }
             )
             if (type==='like'){
-                let url = postDetailUrl.replace('0', id);
+                let url = postDetailUrl.replace('0', arg);
                 location.href = url;
             }
             else if (type==='comment'){
-                let url = postDetailUrl.replace('0', id);
+                let url = postDetailUrl.replace('0', arg);
                 location.href = url;
             }
             else if (type==='follow'){
