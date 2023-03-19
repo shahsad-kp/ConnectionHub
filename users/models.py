@@ -1,9 +1,11 @@
 import os
 import uuid
 
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import Q
+
 
 
 def generate_filename(instance: 'User', filename):
@@ -12,6 +14,26 @@ def generate_filename(instance: 'User', filename):
     user_id = instance.id
     random_id = str(uuid.uuid4())
     return f"profile_pictures/{user_id}/{random_id}{ext}"
+
+
+class UsersUserManager(BaseUserManager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(is_banned=True)
+
+
+class FollowsUserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(followee__is_banned=True).exclude(follower__is_banned=True)
+
+
+class BlocksUserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(user__is_banned=True).exclude(blocked_by__is_banned=True)
+
+
+class FollowRequestUserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(followee__is_banned=True).exclude(follower__is_banned=True)
 
 
 class User(AbstractUser):
@@ -28,6 +50,9 @@ class User(AbstractUser):
     followers_count = models.IntegerField(default=0)
     followings_count = models.IntegerField(default=0)
     is_banned = models.BooleanField(default=False)
+
+    objects = UsersUserManager()
+    admin_objects = models.Manager()
 
     def __str__(self):
         return '@' + self.username
@@ -46,15 +71,15 @@ class User(AbstractUser):
         Blocks.objects.filter(user=user, blocked_by=self).delete()
 
     def get_all_followings(self):
-        list_of_followings = [following.followee for following in self.followings.filter(followee__is_banned=False)]
+        list_of_followings = [following.followee for following in self.followings.all()]
         return list_of_followings
 
     def get_all_followers(self):
-        list_of_followers = [follower.follower for follower in self.followers.filter(follower__is_banned=False)]
+        list_of_followers = [follower.follower for follower in self.followers.all()]
         return list_of_followers
 
     def get_suggestions(self):
-        users_not_followed = User.objects.filter(is_banned=False).exclude(
+        users_not_followed = User.objects.exclude(
             (
                     Q(username=self.username) |
                     Q(followers__follower=self) |
@@ -70,6 +95,7 @@ class User(AbstractUser):
     def get_context(
             self,
             logined_user: 'User' = None,
+            full_data: bool = False,
             posts: bool = False,
             admin_data: bool = False,
             extra_data: dict = None
@@ -77,8 +103,11 @@ class User(AbstractUser):
         if not logined_user:
             logined_user = self
 
-        if posts:
-            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in self.get_posts()]
+        if admin_data:
+            from Posts.models import Post
+            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in Post.admin_objects.filter(user=self)]
+        elif posts:
+            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in self.posts.all()]
         else:
             posts = []
 
@@ -96,7 +125,7 @@ class User(AbstractUser):
             'blocked': self.blockers.filter(blocked_by=logined_user).exists(),
             'private': self.settings.private_account
         }
-        if (not admin_data) and self.is_banned:
+        if (not (admin_data or full_data)) and self.is_banned:
             data = {
                 'username': self.username,
                 'fullname': 'Not Available',
@@ -130,6 +159,9 @@ class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followings')
     followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
 
+    objects = FollowsUserManager()
+    admin_objects = models.Manager()
+
     def __str__(self):
         return f'{self.followee} follows {self.follower}'
 
@@ -138,6 +170,9 @@ class Blocks(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blockers')
     blocked_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blocked_users')
 
+    objects = BlocksUserManager()
+    admin_objects = models.Manager()
+
     def __str__(self):
         return f'{self.blocked_by} blocks {self.user}'
 
@@ -145,6 +180,9 @@ class Blocks(models.Model):
 class FollowRequest(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests')
     followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests_to')
+
+    objects = FollowRequestUserManager()
+    admin_objects = models.Manager()
 
     def __str__(self):
         return f'{self.follower} requested to follow {self.followee}'

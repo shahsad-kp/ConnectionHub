@@ -14,8 +14,8 @@ def chat_list(request, username=None):
 
     else:
         messages = Message.objects.filter(
-            (Q(sender=request.user) | Q(receiver=request.user)) &
-            (Q(sender__is_banned=False) & Q(receiver__is_banned=False))
+            Q(sender=request.user) |
+            Q(receiver=request.user)
         ).order_by('-timestamp')
         users = [
             message.sender if message.sender != request.user else message.receiver

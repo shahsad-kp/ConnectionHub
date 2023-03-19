@@ -1,7 +1,11 @@
 from django.db import models
 
-# from ConnectionHub.settings import cipher_suite
 from Users.models import User
+
+
+class MessageUserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(sender__is_banned=True).exclude(receiver__is_banned=True)
 
 
 class Message(models.Model):
@@ -11,12 +15,11 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     viewed = models.BooleanField(default=False)
 
+    objects = MessageUserManager()
+    admin_objects = models.Manager()
+
     def __str__(self):
         return f'{self.sender.username} -> {self.receiver.username}'
-
-    # def save(self, *args, **kwargs):
-    #     self.content = cipher_suite.encrypt(self.message.encode()).decode()
-    #     super(Message, self).save(*args, **kwargs)
 
     def get_context(self, logined_user: 'User'):
         return {

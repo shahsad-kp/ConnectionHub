@@ -68,7 +68,7 @@ def register_view(request):
             return response
         username = username.lower()
         email = email.lower()
-        if User.objects.filter(username=username).exists():
+        if User.admin_objects.filter(username=username).exists():
             response = JsonResponse(
                 data={
                     'success': False,
@@ -78,7 +78,7 @@ def register_view(request):
             response.status_code = 400
             return response
 
-        if User.objects.filter(email=email).exists():
+        if User.admin_objects.filter(email=email).exists():
             response = JsonResponse(
                 data={
                     'success': False,
@@ -111,7 +111,7 @@ def register_view(request):
             )
             response.status_code = 400
             return response
-        user = User.objects.create_user(
+        user = User.admin_objects.create_user(
             username=username,
             password=password,
             email=email,
@@ -280,7 +280,7 @@ def check_username_availability(request: HttpRequest):
         return response
 
     query = request.GET['q']
-    if User.objects.filter(username=query).exists():
+    if User.admin_objects.filter(username=query).exists():
         response = JsonResponse(
             data={
                 'available': False
@@ -306,7 +306,7 @@ def check_email_availability(request: HttpRequest):
         return response
 
     query = request.GET['q']
-    if User.objects.filter(email=query).exists():
+    if User.admin_objects.filter(email=query).exists():
         response = JsonResponse(
             data={
                 'available': False

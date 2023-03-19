@@ -9,10 +9,10 @@ def get_suggested_post(user: User) -> List[Post]:
     suggested_posts = []
     for following_user in followings:
         suggested_posts.extend(
-            following_user.get_posts()
+            following_user.posts.all()
         )
     suggested_posts.extend(
-        user.get_posts()
+        user.posts.all()
     )
     suggested_posts.sort(
         key=lambda x: x.created_at,
