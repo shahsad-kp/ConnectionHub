@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     const profileInput = $('#new-profile-picture')
     const profileImage = $('.profile-picture img')
     const fullNameInput = $('#fullname')
@@ -13,31 +13,31 @@ $(document).ready(function() {
     const confirmPasswordInput = $('#confirm-password')
     const helpSubjectInput = $('#subject')
     const helpMessageInput = $('#message')
+    const accountTypeInput = $('#private-account')
     const errorMessages = {};
 
 
     function checkEmpty(element, name) {
         const id = element.attr('id');
         if (element.val() === '') {
-            showError('#' + id,  name + ' field can not be empty');
+            showError('#' + id, name + ' field can not be empty');
             return false;
-        }
-        else {
+        } else {
             clearError('#' + id);
             return true;
         }
     }
 
-    function checkEmptyAuto(){
+    function checkEmptyAuto() {
         const element = $(this);
         const name = element.attr('name');
         return checkEmpty(element, name);
 
     }
 
-    function passwordValidation(){
+    function passwordValidation() {
         const password = passwordInput.val();
-        if (password === ''){
+        if (password === '') {
             showError('#password', 'Password can not be empty');
             return false;
         }
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
     function newPasswordValidation() {
         const password = newPasswordInput.val();
-        if (password === ''){
+        if (password === '') {
             showError('#new-password', 'Password can not be empty');
             return false;
         }
@@ -81,7 +81,7 @@ $(document).ready(function() {
 
     function phoneValidation() {
         const phone = phoneInput.val();
-        if (phone === ''){
+        if (phone === '') {
             clearError('#phone-number');
             return true;
         }
@@ -94,13 +94,14 @@ $(document).ready(function() {
             const re = /^\+\d{1,3}\d{6,14}$/;
             return re.test(phone);
         }
+
         clearError('#phone-number');
         return true;
     }
 
     function emailValidation() {
         const email = emailInput.val();
-        if (email === ''){
+        if (email === '') {
             clearError('#email-address');
             return true;
         }
@@ -116,7 +117,8 @@ $(document).ready(function() {
             const re = /\S+@\S+\.\S+/;
             return re.test(email);
         }
-        function checkAvailability(email){
+
+        function checkAvailability(email) {
             $.ajax(
                 {
                     type: 'GET',
@@ -124,7 +126,7 @@ $(document).ready(function() {
                     data: {
                         q: email,
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response['available'] === false) {
                             showError('#email-address', 'Email address already in use');
                         }
@@ -137,7 +139,7 @@ $(document).ready(function() {
 
     function usernameValidation() {
         const username = usernameInput.val();
-        if (username === ''){
+        if (username === '') {
             clearError('#username');
             return true;
         }
@@ -154,6 +156,7 @@ $(document).ready(function() {
             const re = /^[a-zA-Z0-9_]+$/;
             return re.test(username);
         }
+
         function checkAvailability(username) {
             $.ajax(
                 {
@@ -162,11 +165,10 @@ $(document).ready(function() {
                     data: {
                         q: username,
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response['available'] === false) {
                             showError('#username', 'Username already in use');
-                        }
-                        else {
+                        } else {
                             clearError('#username');
                         }
                     }
@@ -182,13 +184,12 @@ $(document).ready(function() {
         errorMessages[field] = message;
         let errorMessage = '';
         for (let key in errorMessages) {
-            errorMessage += ('<div class="error-message-each">' +  errorMessages[key] + '</div>');
+            errorMessage += ('<div class="error-message-each">' + errorMessages[key] + '</div>');
             $(key).addClass('is-invalid');
         }
         if (errorMessage === '') {
             $('#error').hide();
-        }
-        else {
+        } else {
             $('#error').html(errorMessage).show();
         }
     }
@@ -200,13 +201,12 @@ $(document).ready(function() {
         $(field).removeClass('is-invalid');
         let errorMessage = '';
         for (let key in errorMessages) {
-            errorMessage += ('<div class="error-message-each">' +  errorMessages[key] + '</div>');
+            errorMessage += ('<div class="error-message-each">' + errorMessages[key] + '</div>');
             $(key).addClass('is-invalid');
         }
         if (errorMessage === '') {
             $('#error').hide();
-        }
-        else {
+        } else {
             $('#error').html(errorMessage).show();
         }
     }
@@ -236,10 +236,11 @@ $(document).ready(function() {
             data: form,
             processData: false,
             contentType: false,
-            success: function(response) {
-                $('#success').text('Your profile was updated successfully..').show();;
+            success: function (response) {
+                $('#success').text('Your profile was updated successfully..').show();
+                ;
             },
-            error: function(error) {
+            error: function (error) {
                 showError('#undefined', response.responseJSON['error']);
             }
         });
@@ -266,10 +267,10 @@ $(document).ready(function() {
             data: form,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 $('#success').text('Password updated successfully..').show();
             },
-            error: function(response) {
+            error: function (response) {
                 showError('#password', response.responseJSON['error']);
             }
         });
@@ -293,10 +294,10 @@ $(document).ready(function() {
             data: form,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 $('#success').text('Your message has been sent').show();
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
@@ -315,29 +316,39 @@ $(document).ready(function() {
             data: form,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 location.reload()
             },
-            error: function(response) {
+            error: function (response) {
                 showError('#password', response.responseJSON['error']);
             }
         });
     }
 
+    function updateAccountType() {
+        let turned = this.checked;
+        $.ajax(
+            {
+                url: updateAccTypeUrl,
+                data: {
+                    'type': turned,
+                },
+                type: 'GET',
+            }
+        )
+    }
+
     submitButton.click(
-        function(event) {
+        function (event) {
             event.preventDefault();
             let formType = $(this).data('form-type');
             if (formType === 'profile') {
                 updateProfile();
-            }
-            else if (formType === 'password') {
+            } else if (formType === 'password') {
                 updatePassword();
-            }
-            else if (formType === 'help') {
+            } else if (formType === 'help') {
                 sendHelp();
-            }
-            else if (formType === 'delete') {
+            } else if (formType === 'delete') {
                 deleteAccount();
             }
         }
@@ -373,14 +384,14 @@ $(document).ready(function() {
         passwordValidation
     )
 
-    profileImage.click(function() {
+    profileImage.click(function () {
         $('input[type="file"]').click();
     });
 
-    profileInput.change(function() {
+    profileInput.change(function () {
         const file = $(this)[0].files[0];
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('.profile-picture img').attr('src', e.target.result);
         }
         reader.readAsDataURL(file);
@@ -394,5 +405,9 @@ $(document).ready(function() {
     helpMessageInput.on(
         'input',
         checkEmptyAuto
+    )
+
+    accountTypeInput.change(
+        updateAccountType
     )
 });

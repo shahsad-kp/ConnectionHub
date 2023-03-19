@@ -27,6 +27,7 @@ urlpatterns = [
     path('post/comment/', include('Comments.urls')),
     path('post/', include('Posts.urls')),
     path('chat/', include('Communications.urls')),
+    path('users/settings/', include('UsersSettings.urls')),
     path('admin/', include('Admin.AdminHome.urls')),
     path('admin/help/', include('Admin.AdminHelp.urls')),
     path('admin/post/', include('Admin.AdminPost.urls')),

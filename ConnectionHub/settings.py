@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'Comments.apps.CommentsConfig',
     'Help.apps.HelpConfig',
     'Communications.apps.CommunicationsConfig',
+    'UsersSettings.apps.UserssettingsConfig',
     'Notifications.apps.NotificationsConfig',
     'Admin.AdminHome.apps.AdminhomeConfig',
     'Admin.AdminHelp.apps.AdminhelpConfig',

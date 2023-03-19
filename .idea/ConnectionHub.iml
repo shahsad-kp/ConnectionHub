@@ -38,6 +38,7 @@
         <option value="$MODULE_DIR$/Admin/AdminReports/templates" />
         <option value="$MODULE_DIR$/Notifications/templates" />
         <option value="$MODULE_DIR$/Communications/templates" />
+        <option value="$MODULE_DIR$/UsersSettings/templates" />
       </list>
     </option>
   </component>
