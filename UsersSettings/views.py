@@ -12,7 +12,9 @@ def privacy_settings(request: HttpRequest) -> HttpResponse:
         'logged_user': request.user.get_context(),
         'privacy_settings': True,
         'settings': True,
-        'private_account': request.user.settings.private_account
+        'private_account': request.user.settings.private_account,
+        'blocked_users': [blocks.user.get_context() for blocks in request.user.blocked_users.all()],
+        'selector': True
     }
     return render(
         request=request,

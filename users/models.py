@@ -7,7 +7,6 @@ from django.db import models
 from django.db.models import Q
 
 
-
 def generate_filename(instance: 'User', filename):
     """Generates a filename for the uploaded image based on the user's username and a random UUID."""
     ext = os.path.splitext(filename)[1]
@@ -105,7 +104,8 @@ class User(AbstractUser):
 
         if admin_data:
             from Posts.models import Post
-            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in Post.admin_objects.filter(user=self)]
+            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in
+                     Post.admin_objects.filter(user=self)]
         elif posts:
             posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in self.posts.all()]
         else:

@@ -1,12 +1,29 @@
-<h3 class="text-color">Privacy Settings</h3>
-<form id="file-input-form" class="gap-10 dis-col width-max">
-    {% csrf_token %}
-    <div class="dis-row just-sb">
-        <label class="text-color">Private Account</label>
-        <label class="switch">
-            <input id="private-account" type="checkbox"{% if private_account %} checked{% endif %}>
-            <span class="slider round"></span>
-        </label>
+<div class="width-max">
+    <h3 class="text-color">Privacy Settings</h3>
+    <form id="file-input-form" class="gap-10 dis-col width-max">
+        {% csrf_token %}
+        <div class="dis-row just-sb">
+            <label class="text-color">Private Account</label>
+            <label class="switch">
+                <input id="private-account" type="checkbox"{% if private_account %} checked{% endif %}>
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div id="error" class="error-message danger-text"></div>
+    </form>
+</div>
+{% if blocked_users %}
+<div class="width-max">
+    <h3 class="text-color">Blocked users</h3>
+    <div class="dis-col gap-10">
+        {% for blocked_user in blocked_users %}
+        <div class="width-max just-sb">
+            {% include 'user-small-data.html' with user=blocked_user %}
+            <button class="danger-btn block-button blocked"
+            data-username='{{ blocked_user.username }}' onclick="unblockUser('{{ blocked_user.username }}')">Unblock</button>
+        </div>
+        {% endfor %}
+
     </div>
-    <div id="error" class="error-message danger-text"></div>
-</form>
+</div>
+{% endif %}

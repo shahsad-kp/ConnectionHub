@@ -627,3 +627,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.danger-btn {
+    font-weight: bold;
+    color: #F2F2F2 !important;
+    padding: 10px;
+    height: min-content;
+    background-color: #FF0000 !important;
+}
