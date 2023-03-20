@@ -11,11 +11,13 @@ from Users.models import Follow, User
 @receiver(post_save, sender=User)
 def welcome_notification(sender: Type[User], instance: User, created: bool, **kwargs):
     if created:
+        from UsersSettings.models import UserSettings
         Notification.create_notification(
             recipient=instance,
             notification_type='welcome',
             content='Welcome to our community!'
         )
+        UserSettings.objects.create(user=instance)
 
 
 @receiver(post_save, sender=Follow)
