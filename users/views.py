@@ -1,23 +1,26 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, JsonResponse, Http404
+from django.http import HttpRequest, JsonResponse, Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, Follow, Blocks
+from .models import User, Follow, Blocks, FollowRequest
 
 
 @login_required(login_url='user-login')
 def home_view(request: HttpRequest, username: str):
     logined_user = User.objects.get(pk=request.user.pk)
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User.not_blocked_users(logined_user), username=username)
     if user.blocked_users.filter(user=logined_user).exists():
         raise Http404(
             "No %s matches the given query."
         )
 
     context = {
-        'user': user.get_context(logined_user, True),
+        'user': user.get_context(
+            logined_user=logined_user,
+            posts=True,
+        ),
         'suggestions': [
             user.get_context(logined_user)
             for user in logined_user.get_suggestions()
@@ -29,7 +32,10 @@ def home_view(request: HttpRequest, username: str):
         'logged_user': request.user.get_context()
     }
 
-    if user.settings.private_account and not user.followers.filter(follower=logined_user).exists():
+    if (
+            user.settings.private_account and
+            not user.followers.filter(follower=logined_user).exists()
+    ) and not logined_user == user:
         return render(
             request=request,
             template_name='private-account.html',
@@ -80,8 +86,8 @@ def search_users(request: HttpRequest):
 
 @login_required(login_url='user-login')
 def follow_user(request: HttpRequest, username: str):
-    user = get_object_or_404(User, username=username)
     org_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(org_user), username=username)
     if Follow.objects.filter(follower=org_user, followee=user).exists():
         response = JsonResponse(
             {
@@ -114,8 +120,8 @@ def follow_user(request: HttpRequest, username: str):
 
 @login_required(login_url='user-login')
 def unfollow_user(request: HttpRequest, username: str):
-    user = get_object_or_404(User, username=username)
     org_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(org_user), username=username)
     if Follow.objects.filter(follower=org_user, followee=user).exists():
         org_user.unfollow(user)
         response = JsonResponse(
@@ -138,9 +144,166 @@ def unfollow_user(request: HttpRequest, username: str):
 
 
 @login_required(login_url='user-login')
+def send_follow_request(request: HttpRequest, username: str):
+    logined_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(logined_user), username=username)
+    if not user.settings.private_account:
+        response = JsonResponse(
+            {
+                'success': False,
+                'requested': False,
+                'error': 'User has public account'
+            }
+        )
+        response.status_code = 400
+    elif Follow.objects.filter(follower=logined_user, followee=user).exists():
+        response = JsonResponse(
+            {
+                'success': False,
+                'requested': False,
+                'error': 'Already followed'
+            }
+        )
+        response.status_code = 400
+    elif FollowRequest.objects.filter(follower=logined_user, followee=user).exists():
+        response = JsonResponse(
+            {
+                'success': False,
+                'requested': True,
+                'error': 'Already requested'
+            }
+        )
+        response.status_code = 400
+    else:
+        FollowRequest.objects.create(
+            follower=logined_user,
+            followee=user,
+        )
+        response = JsonResponse(
+            {
+                'success': True,
+                'requested': True,
+            }
+        )
+    return response
+
+
+@login_required(login_url='user-login')
+def cancel_follow_request(request: HttpRequest, username: str):
+    logined_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(logined_user), username=username)
+    if FollowRequest.objects.filter(follower=logined_user, followee=user).exists():
+        FollowRequest.objects.filter(follower=logined_user, followee=user).delete()
+        response = JsonResponse(
+            {
+                'success': True,
+                'requested': False,
+            }
+        )
+    else:
+        response = JsonResponse(
+            {
+                'success': False,
+                'requested': False,
+                'error': 'Not requested'
+            }
+        )
+        response.status_code = 400
+
+    return response
+
+
+@login_required(login_url='user-login')
+def respond_follow_request(request: HttpRequest, username: str, action: str):
+    logined_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(logined_user), username=username)
+    if not logined_user.settings.private_account:
+        response = JsonResponse(
+            {
+                'success': False,
+                'followed': False,
+                'error': 'User has public account'
+            }
+        )
+        response.status_code = 400
+    elif not FollowRequest.objects.filter(follower=user, followee=logined_user).exists():
+        response = JsonResponse(
+            {
+                'success': False,
+                'followed': False,
+                'error': 'Not requested'
+            }
+        )
+        response.status_code = 400
+    elif action == 'accept':
+        response = accept_follow_request(
+            request=request,
+            user=user,
+            logined_user=logined_user,
+        )
+
+    elif action == 'reject':
+        response = reject_follow_request(
+            request=request,
+            user=user,
+            logined_user=logined_user,
+        )
+    else:
+        response = JsonResponse(
+            {
+                'success': False,
+                'followed': False,
+                'error': 'Invalid action'
+            }
+        )
+        response.status_code = 400
+
+    return response
+
+
+def accept_follow_request(request: HttpRequest, user: 'User', logined_user: 'User') -> HttpResponse:
+    if Follow.objects.filter(follower=user, followee=logined_user).exists():
+        response = JsonResponse(
+            {
+                'success': False,
+                'error': 'Already followed'
+            }
+        )
+        response.status_code = 400
+
+    else:
+        request = FollowRequest.objects.filter(follower=user, followee=logined_user).first()
+        request.accept()
+        response = JsonResponse(
+            {
+                'success': True,
+                'followed': True,
+                'followers': user.followers_count,
+                'followings': user.followings_count,
+            }
+        )
+    return response
+
+
+def reject_follow_request(request: HttpRequest, user: 'User', logined_user: 'User'):
+    request = FollowRequest.objects.filter(follower=user, followee=logined_user).first()
+    request.decline()
+    response = JsonResponse(
+        {
+            'success': True,
+            'followed': False,
+            'followers': user.followers_count,
+            'followings': user.followings_count,
+        }
+    )
+
+    return response
+
+
+@login_required(login_url='user-login')
 def block_user(request: HttpRequest, username: str):
-    user = get_object_or_404(User, username=username)
     org_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(org_user), username=username)
     if Blocks.objects.filter(user=user, blocked_by=org_user).exists():
         return JsonResponse(
             data={
@@ -161,8 +324,8 @@ def block_user(request: HttpRequest, username: str):
 
 @login_required(login_url='user-login')
 def unblock_user(request: HttpRequest, username: str):
-    user = get_object_or_404(User, username=username)
     org_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(org_user), username=username)
     if not Blocks.objects.filter(user=user, blocked_by=org_user).exists():
         return JsonResponse(
             data={

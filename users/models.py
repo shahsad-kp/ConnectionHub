@@ -1,8 +1,7 @@
 import os
 import uuid
 
-from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.db.models import Q
 
@@ -15,7 +14,7 @@ def generate_filename(instance: 'User', filename):
     return f"profile_pictures/{user_id}/{random_id}{ext}"
 
 
-class UsersUserManager(BaseUserManager):
+class UsersUserManager(UserManager):
     def get_queryset(self):
         return super().get_queryset().exclude(is_banned=True)
 
@@ -56,6 +55,10 @@ class User(AbstractUser):
     def __str__(self):
         return '@' + self.username
 
+    @classmethod
+    def not_blocked_users(cls, logined_user: 'User'):
+        return cls.objects.exclude(blocked_users__user=logined_user)
+
     def follow(self, user: 'User'):
         Follow.objects.create(follower=self, followee=user).save()
 
@@ -78,12 +81,10 @@ class User(AbstractUser):
         return list_of_followers
 
     def get_suggestions(self):
-        users_not_followed = User.objects.exclude(
+        users_not_followed = User.not_blocked_users(logined_user=self).exclude(
             (
                     Q(username=self.username) |
-                    Q(followers__follower=self) |
-                    Q(blocked_users__user=self) |
-                    Q(blockers__blocked_by=self)
+                    Q(followers__follower=self)
             )
         ).order_by('-followers_count')[:10]
         return users_not_followed
@@ -151,7 +152,7 @@ class User(AbstractUser):
         return data
 
     def search_users(self, query: str):
-        results = User.objects.filter(username__icontains=query, is_banned=False).exclude(blocked_users__user=self)
+        results = User.not_blocked_users(logined_user=self).filter(username__icontains=query, is_banned=False)
         return results
 
 
@@ -180,9 +181,19 @@ class Blocks(models.Model):
 class FollowRequest(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests')
     followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests_to')
+    accepted = models.BooleanField(default=False)
 
     objects = FollowRequestUserManager()
     admin_objects = models.Manager()
 
     def __str__(self):
         return f'{self.follower} requested to follow {self.followee}'
+
+    def accept(self):
+        self.accepted = True
+        self.save()
+        self.followee.follow(self.follower)
+        self.delete()
+
+    def decline(self):
+        self.delete()

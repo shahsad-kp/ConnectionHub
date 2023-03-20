@@ -9,15 +9,17 @@ from .models import Post, Reaction, Tag
 
 @login_required(login_url='user-login')
 def post_detail_page(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post, id=post_id)
-    user = request.user
     logined_user = request.user
-    if post.user.settings.private_account and not user.followers.filter(follower=user).exists():
+    post = get_object_or_404(Post.not_blocked_posts(logined_user), id=post_id)
+    if post.user.settings.private_account and not post.user.followers.filter(follower=logined_user).exists():
         return render(
             request=request,
             template_name='private-account.html',
             context={
-                'user': user.get_context(logined_user, True),
+                'user': post.user.get_context(
+                    logined_user=logined_user,
+                    full_data=True,
+                ),
                 'suggestions': [
                     user.get_context(logined_user)
                     for user in logined_user.get_suggestions()
@@ -31,7 +33,7 @@ def post_detail_page(request: HttpRequest, post_id: int):
         )
 
     context = {
-        'post': post.get_context(user, True),
+        'post': post.get_context(logined_user, True),
         'logged_user': request.user.get_context()
     }
     return render(request, 'post-detail.html', context=context)
@@ -39,7 +41,7 @@ def post_detail_page(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def like_post(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
     like = post.likes.filter(user=request.user)
     dislike = post.dislikes.filter(user=request.user)
     if like.exists():
@@ -69,7 +71,7 @@ def like_post(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def dislike_post(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
     like = Reaction.objects.filter(user=request.user, post=post, reaction='like')
     dislike = Reaction.objects.filter(user=request.user, post=post, reaction='dislike')
     if dislike.exists():
@@ -99,7 +101,7 @@ def dislike_post(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def save_post(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
     if post.saved_by.filter(user=request.user).exists():
         post.saved_by.filter(user=request.user).delete()
         saved = False

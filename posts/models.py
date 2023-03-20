@@ -37,6 +37,10 @@ class Post(models.Model):
     def __str__(self):
         return f"Post {self.id} of {self.user}"
 
+    @classmethod
+    def not_blocked_posts(cls, logined_user: 'User'):
+        return cls.objects.exclude(user__blocked_users__user=logined_user)
+
     @property
     def likes(self):
         return self.reactions.filter(reaction='like')

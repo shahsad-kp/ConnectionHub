@@ -111,7 +111,7 @@ def register_view(request):
             )
             response.status_code = 400
             return response
-        user = User.admin_objects.create_user(
+        user = User.objects.create_user(
             username=username,
             password=password,
             email=email,

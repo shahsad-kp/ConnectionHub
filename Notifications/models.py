@@ -26,8 +26,9 @@ class Notification(models.Model):
             recipient=recipient,
             notification_type=notification_type,
             content=content,
-            arg_value=arg_value
         )
+        if arg_value:
+            notification.arg_value = arg_value
         notification.save()
         return notification
 
