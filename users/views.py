@@ -35,7 +35,11 @@ def home_view(request: HttpRequest, username: str):
     if (
             user.settings.private_account and
             not user.followers.filter(follower=logined_user).exists()
-    ) and not logined_user == user:
+    ) and logined_user != user:
+        context['requested'] = FollowRequest.objects.filter(
+            follower=logined_user,
+            followee=user,
+        ).exists()
         return render(
             request=request,
             template_name='private-account.html',

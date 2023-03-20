@@ -11,7 +11,10 @@ from .models import Post, Reaction, Tag
 def post_detail_page(request: HttpRequest, post_id: int):
     logined_user = request.user
     post = get_object_or_404(Post.not_blocked_posts(logined_user), id=post_id)
-    if post.user.settings.private_account and not post.user.followers.filter(follower=logined_user).exists():
+    if (
+            post.user.settings.private_account and
+            not post.user.followers.filter(follower=logined_user).exists()
+    ) and not logined_user == post.user:
         return render(
             request=request,
             template_name='private-account.html',

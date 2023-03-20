@@ -10,10 +10,15 @@ def notification_view(request):
         recipient=request.user,
         viewed=False
     ).order_by('-timestamp')
+    follow_requests = request.user.follow_requests.all().order_by('-created_at')
     context = {
         'notifications': [
             notification.get_context()
             for notification in notifications
+        ],
+        'requests': [
+            follow_request.get_context(request.user)
+            for follow_request in follow_requests
         ],
         'logged_user': request.user.get_context(),
     }

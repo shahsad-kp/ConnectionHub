@@ -5,6 +5,9 @@ $(document).ready(
         const followButton = $('.follow-button');
         const blockButton = $('.block-button');
         const reportButton = $('.report-button');
+        const sendRequestButton = $('.request-button');
+        const acceptRequestButton = $('.request-accept');
+        const rejectRequestButton = $('.request-reject');
 
         $('#'+searchBar.data('results-id')).hide()
         function searchUsers() {
@@ -74,6 +77,26 @@ $(document).ready(
             });
         }
 
+        function sendRequest() {
+            let username = $(this).data('username');
+            let url
+            if ($(this).hasClass('requested')){
+                url = cancelFollowRequestUrl.replace('-username-', username);
+            }
+            else {
+                url = sendFollowRequestUrl.replace('-username-', username);
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    if (response['success']) {
+                        location.reload()
+                    }
+                }
+            });
+        }
+
         function reportUser() {
             let reason = prompt("Why you are reporting this user?");
             if (reason !== null) {
@@ -118,6 +141,27 @@ $(document).ready(
             });
         }
 
+        function respondRequest() {
+            let username = $(this).data('username');
+            let accept = $(this).hasClass('request-accept');
+            let url = respondFollowRequestUrl.replace('-username-', username);
+            if (accept===true){
+                url = url.replace('-action-', 'accept');
+            }
+            else {
+                url = url.replace('-action-', 'reject');
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    if (response['success']) {
+                        location.reload()
+                    }
+                }
+            });
+        }
+
         searchBar.on(
             'input',
             searchUsers
@@ -140,6 +184,18 @@ $(document).ready(
 
         blockButton.click(
             blockUser
+        )
+
+        sendRequestButton.click(
+            sendRequest
+        )
+
+        acceptRequestButton.click(
+            respondRequest
+        )
+
+        rejectRequestButton.click(
+            respondRequest
         )
     }
 )

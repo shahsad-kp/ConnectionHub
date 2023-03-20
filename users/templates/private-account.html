@@ -46,9 +46,9 @@
             </div>
             {% if not user.self and not user.is_banned and not user.blocked %}
             <div>
-                <button class="request-button accent-two-bg text-color"
+                <button class="request-button accent-two-bg text-color{% if requested %} requested{% endif %}"
                         data-username="{{ user.username }}">
-                    Send Request
+                    {% if requested %}Cancel Request{% else %}Send Request{% endif %}
                 </button>
             </div>
             {% elif user.blocked %}
@@ -65,4 +65,5 @@
 
 {% block scripts %}
 <script src="{% static '/js/posts.js' %}"></script>
+<script src="{% static '/js/users.js' %}"></script>
 {% endblock %}

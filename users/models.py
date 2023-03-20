@@ -179,9 +179,9 @@ class Blocks(models.Model):
 
 
 class FollowRequest(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests')
-    followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests_to')
-    accepted = models.BooleanField(default=False)
+    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests_to')
+    followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow_requests')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     objects = FollowRequestUserManager()
     admin_objects = models.Manager()
@@ -190,10 +190,14 @@ class FollowRequest(models.Model):
         return f'{self.follower} requested to follow {self.followee}'
 
     def accept(self):
-        self.accepted = True
-        self.save()
         self.followee.follow(self.follower)
         self.delete()
 
     def decline(self):
         self.delete()
+
+    def get_context(self, user: 'User'):
+        return {
+            'follower': self.follower.get_context(logined_user=user),
+            'followee': self.followee.get_context(logined_user=user),
+        }

@@ -3,6 +3,7 @@ import uuid
 from typing import Dict
 
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 from Users.models import User
@@ -39,7 +40,7 @@ class Post(models.Model):
 
     @classmethod
     def not_blocked_posts(cls, logined_user: 'User'):
-        return cls.objects.exclude(user__blocked_users__user=logined_user)
+        return cls.objects.exclude(Q(user__blocked_users__user=logined_user) & ~Q(user=logined_user))
 
     @property
     def likes(self):
