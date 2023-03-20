@@ -31,7 +31,7 @@ def follow_signal(sender: Type[Follow], instance: Follow, created: bool, **kwarg
         Notification.create_notification(
             recipient=instance.followee,
             notification_type='follow',
-            content=f'@{instance.follower} started following you',
+            content=f'{instance.follower} started following you',
             arg_value=str(instance.follower.username)
         )
 
