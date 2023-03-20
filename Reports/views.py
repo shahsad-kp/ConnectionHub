@@ -8,8 +8,8 @@ from Users.models import User
 
 @login_required(login_url='user-login')
 def report_user(request: HttpRequest, username: str):
-    user = get_object_or_404(User, username=username)
     org_user = User.objects.get(username=request.user.username)
+    user = get_object_or_404(User.not_blocked_users(org_user), username=username)
     if request.method == 'POST':
         if Report.objects.filter(user=user, reported_user=org_user).exists():
             response = JsonResponse(

@@ -21,6 +21,14 @@ class Message(models.Model):
     def __str__(self):
         return f'{self.sender.username} -> {self.receiver.username}'
 
+    @classmethod
+    def not_blocked_messages(cls, logined_user: 'User'):
+        return cls.objects.exclude(
+            sender__blocked_users__user=logined_user
+        ).exclude(
+            receiver__blocked_users__user=logined_user
+        )
+
     def get_context(self, logined_user: 'User'):
         return {
             'text': self.message,

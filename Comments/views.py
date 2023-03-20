@@ -10,7 +10,6 @@ from Posts.models import Post
 def comments(request: HttpRequest, post_id: int):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
-        post = get_object_or_404(Post, id=post_id)
         if ('comment' not in request.POST) or (not bool(request.POST['comment'])):
             response = JsonResponse(
                 data={
@@ -47,7 +46,7 @@ def comments(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def delete_comment(request: HttpRequest, comment_id: int):
-    comment = get_object_or_404(Comment, id=comment_id)
+    comment = get_object_or_404(Comment.admin_objects, id=comment_id)
     if not comment.user.id == request.user.id:
         return JsonResponse(
             data={
