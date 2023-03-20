@@ -29,7 +29,8 @@ def home_view(request: HttpRequest, username: str):
             user.get_context(logined_user)
             for user in logined_user.get_all_followings()
         ],
-        'logged_user': request.user.get_context()
+        'logged_user': request.user.get_context(),
+        'self_profile_tab': request.user == user,
     }
 
     if (

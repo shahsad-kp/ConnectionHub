@@ -123,7 +123,8 @@ def save_post(request: HttpRequest, post_id: int):
 def saved_posts(request: HttpRequest):
     data = {
         'saved_posts_rows': get_saved_posts_context(request.user),
-        'logged_user': request.user.get_context()
+        'logged_user': request.user.get_context(),
+        'saved_posts_tab': True
     }
     data['number_of_saved_posts'] = len(data['saved_posts_rows'][0]) + len(data['saved_posts_rows'][1])
     return render(request, 'saved-posts-dashboard.html', context=data)
@@ -166,7 +167,8 @@ def new_post(request: HttpRequest):
             request,
             'new-post.html',
             context={
-                'logged_user': request.user.get_context()
+                'logged_user': request.user.get_context(),
+                'new_post_tab': True
             }
         )
 

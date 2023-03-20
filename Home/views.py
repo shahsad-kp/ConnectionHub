@@ -27,7 +27,8 @@ def home_view(request: HttpRequest) -> HttpResponse:
         'suggestions': user_suggestions,
         'followings': followings,
         'post_updates': suggested_posts,
-        'logged_user': request.user.get_context()
+        'logged_user': request.user.get_context(),
+        'home_tab': True,
     }
     return render(
         request=request,

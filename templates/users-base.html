@@ -8,7 +8,7 @@
                 <img style="width: 40%; height: 100%" src="{% static 'logo/logo.svg' %}" alt="logo of connectionhub">
             </div>
             <a href="{% url 'user-home' %}">
-                <div id="home-left-bar" class="left-bar-elements accent-two-bg dis-row gap-20">
+                <div id="home-left-bar" class="left-bar-elements accent-two-bg{% if home_tab %}-selected{% endif %} dis-row gap-20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M9.02 2.84004L3.63 7.04004C2.73 7.74004 2 9.23004 2 10.36V17.77C2 20.09 3.89 21.99 6.21 21.99H17.79C20.11 21.99 22 20.09 22 17.78V10.5C22 9.29004 21.19 7.74004 20.2 7.05004L14.02 2.72004C12.62 1.74004 10.37 1.79004 9.02 2.84004Z"
                               stroke="#F2F2F2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -19,7 +19,7 @@
                 </div>
             </a>
             <a href="{% url 'profile-pages' username=logged_user.username %}">
-                <div id="profile-left-bar" class="left-bar-elements accent-two-bg dis-row gap-20">
+                <div id="profile-left-bar" class="left-bar-elements accent-two-bg{% if self_profile_tab %}-selected{% endif %} dis-row gap-20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
                               stroke="#F2F2F2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -30,7 +30,7 @@
                 </div>
             </a>
             <a href="{% url 'new-post' %}">
-                <div id="new-post-left-bar" class="left-bar-elements accent-two-bg dis-row gap-20">
+                <div id="new-post-left-bar" class="left-bar-elements accent-two-bg{% if new_post_tab %}-selected{% endif %} dis-row gap-20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M8 12H16" stroke="#F2F2F2" stroke-width="1.5" stroke-linecap="round"
                               stroke-linejoin="round"></path>
@@ -43,7 +43,7 @@
                 </div>
             </a>
             <a href="{% url 'notifications-view' %}">
-                <div id="notifications-left-bar" class="left-bar-elements accent-two-bg dis-row gap-20">
+                <div id="notifications-left-bar" class="left-bar-elements accent-two-bg{% if notification_tab %}-selected{% endif %} dis-row gap-20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M12.02 2.90991C8.70997 2.90991 6.01997 5.59991 6.01997 8.90991V11.7999C6.01997 12.4099 5.75997 13.3399 5.44997 13.8599L4.29997 15.7699C3.58997 16.9499 4.07997 18.2599 5.37997 18.6999C9.68997 20.1399 14.34 20.1399 18.65 18.6999C19.86 18.2999 20.39 16.8699 19.73 15.7699L18.58 13.8599C18.28 13.3399 18.02 12.4099 18.02 11.7999V8.90991C18.02 5.60991 15.32 2.90991 12.02 2.90991Z" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"></path>
                         <path d="M13.87 3.19994C13.56 3.10994 13.24 3.03994 12.91 2.99994C11.95 2.87994 11.03 2.94994 10.17 3.19994C10.46 2.45994 11.18 1.93994 12.02 1.93994C12.86 1.93994 13.58 2.45994 13.87 3.19994Z" stroke="#F2F2F2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -53,7 +53,7 @@
                 </div>
             </a>
             <a href="{% url 'saved-posts-dashboards' %}">
-                <div id="saved-left-bar" class="left-bar-elements accent-two-bg dis-row gap-20">
+                <div id="saved-left-bar" class="left-bar-elements accent-two-bg{% if saved_posts_tab %}-selected{% endif %} dis-row gap-20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M12.89 5.87988H5.10999C3.39999 5.87988 2 7.27987 2 8.98987V20.3499C2 21.7999 3.04 22.4199 4.31 21.7099L8.23999 19.5199C8.65999 19.2899 9.34 19.2899 9.75 19.5199L13.68 21.7099C14.95 22.4199 15.99 21.7999 15.99 20.3499V8.98987C16 7.27987 14.6 5.87988 12.89 5.87988Z"
                               stroke="#F2F2F2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>

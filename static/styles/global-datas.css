@@ -27,6 +27,10 @@
     background: #4C4CFF;
 }
 
+.accent-two-bg-selected{
+    background: #2f2fb0 !important;
+}
+
 .accent-two{
     color: #4C4CFF;
 }

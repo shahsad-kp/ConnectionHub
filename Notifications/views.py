@@ -21,6 +21,7 @@ def notification_view(request):
             for follow_request in follow_requests
         ],
         'logged_user': request.user.get_context(),
+        'notification_tab': True,
     }
     return render(
         request=request,
