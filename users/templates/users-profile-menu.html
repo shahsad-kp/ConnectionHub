@@ -1,5 +1,6 @@
 <div class="menu-bar padding-10 card secondary-background position-abs" id="{{ id }}">
     <ul>
+        <li class="text-color"><a href="{% url 'chat-room' username=username %}">Message</a></li>
         <li class="report-button text-color" data-username='{{ username }}'>Report</li>
         <li class="block-button{% if blocked %} blocked{% endif %} danger-text-color"
             data-username='{{ username }}'>{% if blocked %}Unblock{% else %}Block{% endif %}</li>
