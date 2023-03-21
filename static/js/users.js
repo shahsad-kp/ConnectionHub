@@ -1,5 +1,5 @@
 $(document).ready(
-    function() {
+    function () {
         const searchBar = $('#user-search-bar');
         const searchArea = $('#' + searchBar.data('user-search-area'));
         const followButton = $('.follow-button');
@@ -9,7 +9,8 @@ $(document).ready(
         const acceptRequestButton = $('.request-accept');
         const rejectRequestButton = $('.request-reject');
 
-        $('#'+searchBar.data('results-id')).hide()
+        $('#' + searchBar.data('results-id')).hide()
+
         function searchUsers() {
             const search_results = $(this).data('results-id');
             const text = $(this).val();
@@ -20,7 +21,7 @@ $(document).ready(
                     data: {
                         'q': text
                     },
-                    success: function(response) {
+                    success: function (response) {
                         let htmlText = '';
                         let results = response['results'];
                         if (results.length === 0) {
@@ -34,44 +35,56 @@ $(document).ready(
                         for (let i = 0; i < results.length; i++) {
                             let result = results[i];
                             let profileUrl = profilePageUrl.replace('-username-', result['username']);
-                            htmlText += '<a href="'+ profileUrl +'">' +
-                            '   <div class="dis-row gap-10"> \n' +
-                            '       <div class="small-avatar"> \n' +
-                            '           <img class="avatar" src="'+  result['profile_picture'] +'" alt="Avatar">' +
-                            '        </div>' +
-                            '        <div class="dis-col">' +
-                            '            <div class="fullname text-color">' + result['fullname'] + '</div>' +
-                            '            <div class="username text-color">@' + result['username'] + '</div>' +
-                            '        </div>' +
-                            '    </div>' +
-                            '</a>'
+                            htmlText += '<a href="' + profileUrl + '">' +
+                                '   <div class="dis-row gap-10"> \n' +
+                                '       <div class="small-avatar"> \n' +
+                                '           <img class="avatar" src="' + result['profile_picture'] + '" alt="Avatar">' +
+                                '        </div>' +
+                                '        <div class="dis-col">' +
+                                '            <div class="fullname text-color">' + result['fullname'] + '</div>' +
+                                '            <div class="username text-color">@' + result['username'] + '</div>' +
+                                '        </div>' +
+                                '    </div>' +
+                                '</a>'
                         }
                         $('#' + search_results).html(htmlText).show();
 
                     }
                 });
-            }
-            else {
+            } else {
                 $('#' + search_results).hide();
             }
         }
 
         function followUser() {
-            let username = $(this).data('username');
-            let following = $(this).hasClass('following');
+            let thisButton = $(this)
+            let username = thisButton.data('username');
+            let following = thisButton.hasClass('following');
             let url;
-            if (following===false){
+            if (following === false) {
                 url = followUserUrl.replace('-username-', username);
-            }
-            else {
+            } else {
                 url = unfollowUserUrl.replace('-username-', username);
             }
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     if (response['success']) {
-                        location.reload()
+                        $(thisButton.data('remove-data')).remove()
+                        if (response['followed']) {
+                            thisButton.addClass('following')
+                            thisButton.html('Unfollow')
+                            thisButton.removeAttr('data-remove-data')
+                        } else {
+                            thisButton.removeClass('following')
+                            thisButton.html('Follow')
+                            thisButton.attr(
+                                'data-remove-data',
+                                `.follow-remover-${username}`
+                            )
+                        }
+                        refreshSideBar()
                     }
                 }
             });
@@ -79,22 +92,46 @@ $(document).ready(
 
         function sendRequest() {
             let username = $(this).data('username');
+            let thisButton = $(this)
             let url
-            if ($(this).hasClass('requested')){
+            let requested = thisButton.hasClass('requested')
+            if (requested === true) {
                 url = cancelFollowRequestUrl.replace('-username-', username);
-            }
-            else {
+            } else {
                 url = sendFollowRequestUrl.replace('-username-', username);
             }
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     if (response['success']) {
-                        location.reload()
+                        $(thisButton.data('remove-data')).remove()
+                        if (response['requested']) {
+                            thisButton.addClass('requested')
+                            thisButton.html('Cancel Request')
+                            thisButton.removeAttr('remove-data')
+                        } else {
+                            thisButton.removeClass('requested')
+                            thisButton.html('Send Request')
+                            thisButton.attr(
+                                'data-remove-data',
+                                `.follow-remover-${username}`
+                            )
+                        }
+                        refreshSideBar()
                     }
                 }
             });
+        }
+
+
+        function refreshSideBar() {
+            if ($('#suggestions-list').children().length === 0) {
+                $('#suggestion-area').remove()
+            }
+            if ($('#following-list').children().length === 0) {
+                $('#following-area').remove()
+            }
         }
 
         function reportUser() {
@@ -110,7 +147,7 @@ $(document).ready(
                         'csrfmiddlewaretoken': csrftoken,
                         'reason': reason
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response['success']) {
                             alert('User reported successfully');
                         }
@@ -120,20 +157,19 @@ $(document).ready(
 
         }
 
-        function blockUser(){
+        function blockUser() {
             let username = $(this).data('username');
             let blocked = $(this).hasClass('blocked');
             let url;
-            if (blocked===false){
+            if (blocked === false) {
                 url = blockUserUrl.replace('-username-', username);
-            }
-            else {
+            } else {
                 url = unblockUserUrl.replace('-username-', username);
             }
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     if (response['success']) {
                         location.reload()
                     }
@@ -145,16 +181,15 @@ $(document).ready(
             let username = $(this).data('username');
             let accept = $(this).hasClass('request-accept');
             let url = respondFollowRequestUrl.replace('-username-', username);
-            if (accept===true){
+            if (accept === true) {
                 url = url.replace('-action-', 'accept');
-            }
-            else {
+            } else {
                 url = url.replace('-action-', 'reject');
             }
             $.ajax({
                 url: url,
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     if (response['success']) {
                         location.reload()
                     }
@@ -168,7 +203,7 @@ $(document).ready(
         )
 
         searchArea.focusout(
-            function() {
+            function () {
                 const search_results = $(this).data('results-id');
                 $('#' + search_results).hide();
             }

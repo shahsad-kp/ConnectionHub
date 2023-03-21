@@ -8,13 +8,13 @@
         <section class="position-rel dis-col algn-cent padding-10 gap-10 secondary-background card text-color">
             {% if not user.self %}
                 <div class="less-action-button-corner menu-toggle" for="#menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M3 7H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
-                    <path d="M3 12H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
-                    <path d="M3 17H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
-                </svg>
-                {% include 'users-profile-menu.html' with id='menu' username=user.username blocked=user.blocked %}
-            </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 7H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M3 12H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M3 17H21" stroke="#757575" stroke-width="1.5" stroke-linecap="round"></path>
+                    </svg>
+                    {% include 'users-profile-menu.html' with id='menu' username=user.username blocked=user.blocked %}
+                </div>
             {% else %}
                 <a href="{% url 'settings-home' %}">
                     <div class="less-action-button-corner" data-username="{{ user.username }}">
@@ -45,14 +45,15 @@
                 <span id="followings-count">{{ user.number_of_followings }} Followings</span>
             </div>
             {% if not user.self and not user.is_banned and not user.blocked %}
-            <div>
-                <button class="request-button accent-two-bg text-color{% if requested %} requested{% endif %}"
-                        data-username="{{ user.username }}">
-                    {% if requested %}Cancel Request{% else %}Send Request{% endif %}
-                </button>
-            </div>
+                <div>
+                    <button class="request-button accent-two-bg text-color{% if requested %} requested{% endif %}"
+                            data-username="{{ user.username }}"
+                            {% if not requested %}data-remove-data=".follow-remover-{{ user.username }}"{% endif %}>
+                        {% if requested %}Cancel Request{% else %}Send Request{% endif %}
+                    </button>
+                </div>
             {% elif user.blocked %}
-            <div class="danger-text-color">You blocked this user..</div>
+                <div class="danger-text-color">You blocked this user..</div>
             {% endif %}
         </section>
         <div class="gap-20 dis-col">
@@ -64,6 +65,6 @@
 
 
 {% block scripts %}
-<script src="{% static '/js/posts.js' %}"></script>
-<script src="{% static '/js/users.js' %}"></script>
+    <script src="{% static '/js/posts.js' %}"></script>
+    <script src="{% static '/js/users.js' %}"></script>
 {% endblock %}

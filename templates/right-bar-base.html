@@ -2,45 +2,51 @@
 {% load static %}
 
 {% block content %}
-{% block center-portion %}
-{% endblock %}
-<div class="right-bar dis-col gap-30">
-    {% if suggestions|length > 0 %}
-    <div class="dis-col gap-20 width-max">
-        <div class="dis-row just-cent card secondary-background padding-10 text-color">Suggestions</div>
-        <div class="dis-col gap-10 card secondary-background padding-10">
-            {% for suggestion in suggestions %}
-            {% if suggestion.private %}
-            <div class="dis-row just-sb padding-10" id="suggestion-{{ suggestion.id }}">
-                {% include 'user-small-data.html' with user=suggestion %}
-                <button class="request-button accent-two-bg text-color" data-username="{{ suggestion.username }}" data-remove-data="suggestion-{{ suggestion.id }}">Request</button>
+    {% block center-portion %}
+    {% endblock %}
+    <div class="right-bar dis-col gap-30">
+        {% if suggestions|length > 0 %}
+            <div class="dis-col gap-20 width-max" id="suggestion-area">
+                <div class="dis-row just-cent card secondary-background padding-10 text-color">Suggestions</div>
+                <div class="dis-col gap-10 card secondary-background padding-10" id="suggestions-list">
+                    {% for suggestion in suggestions %}
+                        {% if suggestion.private %}
+                            <div class="dis-row just-sb padding-10 follow-remover-{{ suggestion.username }}">
+                                {% include 'user-small-data.html' with user=suggestion %}
+                                <button class="request-button accent-two-bg text-color"
+                                        data-username="{{ suggestion.username }}"
+                                        data-remove-data=".follow-remover-{{ suggestion.username }}">Request
+                                </button>
+                            </div>
+                        {% else %}
+                            <div class="dis-row just-sb padding-10 follow-remover-{{ suggestion.username }}">
+                                {% include 'user-small-data.html' with user=suggestion %}
+                                <button class="follow-button accent-two-bg text-color"
+                                        data-username="{{ suggestion.username }}"
+                                        data-remove-data=".follow-remover-{{ suggestion.username }}">Follow
+                                </button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-            {% else %}
-            <div class="dis-row just-sb padding-10" id="suggestion-{{ suggestion.id }}">
-                {% include 'user-small-data.html' with user=suggestion %}
-                <button class="follow-button accent-two-bg text-color" data-username="{{ suggestion.username }}" data-remove-data="suggestion-{{ suggestion.id }}">Follow</button>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
+        {% endif %}
 
-    {% if followings|length > 0 %}
-    <div class="dis-col gap-20 width-max">
-        <div class="dis-row just-cent card secondary-background padding-10 text-color">Followings</div>
-        <div class="dis-col gap-10 card secondary-background padding-10">
-            {% for following in followings %}
-            <div class="dis-row just-sb padding-10" id="following-{{ following.id }}">
-                {% include 'user-small-data.html' with user=following %}
+        {% if followings|length > 0 %}
+            <div class="dis-col gap-20 width-max" id="following-area">
+                <div class="dis-row just-cent card secondary-background padding-10 text-color">Followings</div>
+                <div class="dis-col gap-10 card secondary-background padding-10" id="following-list">
+                    {% for following in followings %}
+                        <div class="dis-row just-sb padding-10" id="following-{{ following.id }}">
+                            {% include 'user-small-data.html' with user=following %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
-        </div>
+        {% endif %}
     </div>
-    {% endif %}
-</div>
 {% endblock %}
 
 {% block s-scripts %}
-<script src="{% static '/js/users.js' %}"></script>
+    <script src="{% static '/js/users.js' %}"></script>
 {% endblock %}

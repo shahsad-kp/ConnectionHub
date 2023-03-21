@@ -47,7 +47,7 @@
             {% if not user.self and not user.is_banned and not user.blocked %}
             <div>
                 <button class="follow-button accent-two-bg text-color{% if user.is_following %} following{% endif %}"
-                        data-username="{{ user.username }}">
+                        data-username="{{ user.username }}" {% if not user.following %}data-remove-data=".follow-remover-{{ user.username }}"{% endif %}>
                     {% if user.is_following %}
                     Unfollow
                     {% else %}

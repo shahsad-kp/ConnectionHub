@@ -81,12 +81,13 @@ class User(AbstractUser):
         return list_of_followers
 
     def get_suggestions(self):
-        users_not_followed = User.not_blocked_users(logined_user=self).exclude(
-            (
-                    Q(username=self.username) |
-                    Q(followers__follower=self)
-            )
-        ).order_by('-followers_count')[:10]
+        users_not_followed = User.not_blocked_users(self).filter(
+            followers__follower__followers__follower=self
+        ).exclude(
+            Q(username=self.username) |
+            Q(followers__follower=self) |
+            Q(follow_requests__follower=self)
+        ).distinct().order_by('-followers_count')[:10]
         return users_not_followed
 
     def get_posts(self):
