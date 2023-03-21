@@ -191,7 +191,7 @@ class FollowRequest(models.Model):
         return f'{self.follower} requested to follow {self.followee}'
 
     def accept(self):
-        self.followee.follow(self.follower)
+        self.follower.follow(self.followee)
         self.delete()
 
     def decline(self):
