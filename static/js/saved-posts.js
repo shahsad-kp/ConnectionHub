@@ -2,7 +2,7 @@ $(document).ready(function() {
     const saveButtons = $('.save-button')
 
     function removePost(){
-        location.reload();
+        $($(this).data('element-id')).remove()
     }
 
     saveButtons.click(removePost)

@@ -51,7 +51,7 @@
                 <input type="text" name="comment" placeholder="Add a comment..." class="secondary-background text-color">
             </form>
         </div>
-        <div class="dis-col padding-10">
+        <div class="dis-col padding-10" id="post-comments-list">
             {% for comment in post.comments %}
             {% include 'comment.html' with comment=comment %}
             {% endfor %}
@@ -63,6 +63,5 @@
 
 {% block scripts %}
 <script src="{% static '/js/posts.js' %}"></script>
-<script src="{% static '/js/post-details.js' %}"></script>
 <script src="{% static '/js/users.js' %}"></script>
 {% endblock %}

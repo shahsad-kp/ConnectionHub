@@ -21,16 +21,13 @@ def comments(request: HttpRequest, post_id: int):
             return response
 
         comment = request.POST['comment']
-        post.comments.create(user=request.user, content=comment)
+        comment = post.comments.create(user=request.user, content=comment)
         post.comments_count += 1
         post.save()
         return JsonResponse(
             data={
                 'success': True,
-                'comments': [
-                    comment.get_context()
-                    for comment in post.comments.all()
-                ],
+                'comment': comment.get_context(),
             }
         )
     return JsonResponse(

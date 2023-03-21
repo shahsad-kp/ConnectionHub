@@ -188,6 +188,12 @@ def delete_post(request: HttpRequest, post_id):
     post.delete()
     return JsonResponse(
         data={
-            'success': True
+            'success': True,
+            'redirect_url': reverse(
+                viewname='profile-pages',
+                kwargs={
+                    'username': post.user.username
+                }
+            )
         }
     )

@@ -6,13 +6,13 @@
 {% block content %}
     <div class="dis-col gap-20 width-max padding-10">
         {% if requests|length > 0 %}
-            <div class="dis-col gap-10 width-max">
+            <div class="dis-col gap-10 width-max" id="follow-requests-area">
                 <h3 class="text-color">Follow Requests</h3>
                 {% for request in requests %}
-                    <div class="width-max padding-10 just-sb secondary-background card">
+                    <div class="width-max padding-10 just-sb secondary-background card" id="follow-request-{{ request.follower.username }}">
                         {% include 'user-small-data.html' with user=request.follower %}
-                        <div class="dis-row gap-10 algn-cent">
-                            <i class="request-accept" data-username="{{ request.follower.username }}">
+                        <div class="dis-row gap-10 algn-cent" id="follow-requests-list">
+                            <i class="request-accept" data-username="{{ request.follower.username }}" data-remove-data="#follow-request-{{ request.follower.username }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                      fill="none">
                                     <path d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
@@ -21,7 +21,7 @@
                                           fill="#15850f"></path>
                                 </svg>
                             </i>
-                            <i class="request-reject" data-username="{{ request.follower.username }}">
+                            <i class="request-reject" data-username="{{ request.follower.username }}" data-remove-data="#follow-request-{{ request.follower.username }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                      fill="none">
                                     <path d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"

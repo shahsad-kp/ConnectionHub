@@ -126,9 +126,15 @@ def follow_user(request: HttpRequest, username: str):
 @login_required(login_url='user-login')
 def unfollow_user(request: HttpRequest, username: str):
     org_user = User.objects.get(username=request.user.username)
-    user = get_object_or_404(User.not_blocked_users(org_user), username=username)
+    user: User = get_object_or_404(User.not_blocked_users(org_user), username=username)
     if Follow.objects.filter(follower=org_user, followee=user).exists():
         org_user.unfollow(user)
+        user.refresh_from_db(
+            fields=[
+                'followers_count',
+                'followings_count'
+            ]
+        )
         response = JsonResponse(
             {
                 'success': True,

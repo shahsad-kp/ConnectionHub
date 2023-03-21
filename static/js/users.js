@@ -76,7 +76,8 @@ $(document).ready(
                             thisButton.addClass('following')
                             thisButton.html('Unfollow')
                             thisButton.removeAttr('data-remove-data')
-                        } else {
+                        }
+                        else {
                             thisButton.removeClass('following')
                             thisButton.html('Follow')
                             thisButton.attr(
@@ -84,6 +85,8 @@ $(document).ready(
                                 `.follow-remover-${username}`
                             )
                         }
+                        $('#followers-count').html(`${response['followers']} Followers`)
+                        $('#followings-count').html(`${response['followings']} Followings`)
                         refreshSideBar()
                     }
                 }
@@ -158,8 +161,9 @@ $(document).ready(
         }
 
         function blockUser() {
-            let username = $(this).data('username');
-            let blocked = $(this).hasClass('blocked');
+            let thisButton = $(this)
+            let username = thisButton.data('username');
+            let blocked = thisButton.hasClass('blocked');
             let url;
             if (blocked === false) {
                 url = blockUserUrl.replace('-username-', username);
@@ -171,15 +175,35 @@ $(document).ready(
                 type: 'GET',
                 success: function (response) {
                     if (response['success']) {
-                        location.reload()
+                        if (response['blocked']) {
+                            thisButton.addClass('blocked')
+                            thisButton.html('Unblock')
+                            $('#follow-button-div').replaceWith(
+                                $('<div id="blocked-text" class="danger-text-color">You blocked this user..</div>')
+                            )
+                        } else {
+                            thisButton.removeClass('blocked')
+                            thisButton.html('Block')
+                            $('#blocked-text').replaceWith(
+                                $(
+                                    `<div id="follow-button-div">
+                                        <button class="follow-button accent-two-bg text-color" data-username="${username}"
+                                         data-remove-data=".follow-remover-${username}">
+                                            Follow
+                                        </button>
+                                    </div>`
+                                )
+                            )
+                        }
                     }
                 }
             });
         }
 
         function respondRequest() {
-            let username = $(this).data('username');
-            let accept = $(this).hasClass('request-accept');
+            let thisButton = $(this)
+            let username = thisButton.data('username');
+            let accept = thisButton.hasClass('request-accept');
             let url = respondFollowRequestUrl.replace('-username-', username);
             if (accept === true) {
                 url = url.replace('-action-', 'accept');
@@ -191,7 +215,10 @@ $(document).ready(
                 type: 'GET',
                 success: function (response) {
                     if (response['success']) {
-                        location.reload()
+                        $(thisButton.data('remove-data')).remove()
+                        if ($('#follow-requests-list').children().length === 0){
+                            $('#follow-requests-area').remove()
+                        }
                     }
                 }
             });

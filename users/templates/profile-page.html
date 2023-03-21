@@ -45,7 +45,7 @@
                 <span id="followings-count">{{ user.number_of_followings }} Followings</span>
             </div>
             {% if not user.self and not user.is_banned and not user.blocked %}
-            <div>
+            <div id="follow-button-div">
                 <button class="follow-button accent-two-bg text-color{% if user.is_following %} following{% endif %}"
                         data-username="{{ user.username }}" {% if not user.following %}data-remove-data=".follow-remover-{{ user.username }}"{% endif %}>
                     {% if user.is_following %}
@@ -56,7 +56,7 @@
                 </button>
             </div>
             {% elif user.blocked %}
-            <div class="danger-text-color">You blocked this user..</div>
+            <div id="blocked-text" class="danger-text-color">You blocked this user..</div>
             {% endif %}
         </section>
         <div class="gap-20 dis-col">

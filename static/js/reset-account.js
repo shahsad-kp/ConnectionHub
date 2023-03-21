@@ -34,7 +34,7 @@ $(document).ready(
                         data: data,
                         method: 'POST',
                         success: function(response){
-                            location.reload()
+                            location.href = ''
                         },
                         error: function(response) {
                             showError(

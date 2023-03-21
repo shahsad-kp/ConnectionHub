@@ -1,9 +1,9 @@
 $(document).ready(
-    function(){
+    function () {
         let likedHtml = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-                '                        <path d="M8.39062 18.4907V8.33071C8.39062 7.93071 8.51062 7.54071 8.73062 7.21071L11.4606 3.15071C11.8906 2.50071 12.9606 2.04071 13.8706 2.38071C14.8506 2.71071 15.5006 3.81071 15.2906 4.79071L14.7706 8.06071C14.7306 8.36071 14.8106 8.63071 14.9806 8.84071C15.1506 9.03071 15.4006 9.15071 15.6706 9.15071H19.7806C20.5706 9.15071 21.2506 9.47071 21.6506 10.0307C22.0306 10.5707 22.1006 11.2707 21.8506 11.9807L19.3906 19.4707C19.0806 20.7107 17.7306 21.7207 16.3906 21.7207H12.4906C11.8206 21.7207 10.8806 21.4907 10.4506 21.0607L9.17062 20.0707C8.68062 19.7007 8.39062 19.1107 8.39062 18.4907Z" fill="#F8E71C"></path>\n' +
-                '                        <path d="M5.21 6.37891H4.18C2.63 6.37891 2 6.97891 2 8.45891V18.5189C2 19.9989 2.63 20.5989 4.18 20.5989H5.21C6.76 20.5989 7.39 19.9989 7.39 18.5189V8.45891C7.39 6.97891 6.76 6.37891 5.21 6.37891Z" fill="#F8E71C"></path>\n' +
-                '                    </svg>'
+            '                        <path d="M8.39062 18.4907V8.33071C8.39062 7.93071 8.51062 7.54071 8.73062 7.21071L11.4606 3.15071C11.8906 2.50071 12.9606 2.04071 13.8706 2.38071C14.8506 2.71071 15.5006 3.81071 15.2906 4.79071L14.7706 8.06071C14.7306 8.36071 14.8106 8.63071 14.9806 8.84071C15.1506 9.03071 15.4006 9.15071 15.6706 9.15071H19.7806C20.5706 9.15071 21.2506 9.47071 21.6506 10.0307C22.0306 10.5707 22.1006 11.2707 21.8506 11.9807L19.3906 19.4707C19.0806 20.7107 17.7306 21.7207 16.3906 21.7207H12.4906C11.8206 21.7207 10.8806 21.4907 10.4506 21.0607L9.17062 20.0707C8.68062 19.7007 8.39062 19.1107 8.39062 18.4907Z" fill="#F8E71C"></path>\n' +
+            '                        <path d="M5.21 6.37891H4.18C2.63 6.37891 2 6.97891 2 8.45891V18.5189C2 19.9989 2.63 20.5989 4.18 20.5989H5.21C6.76 20.5989 7.39 19.9989 7.39 18.5189V8.45891C7.39 6.97891 6.76 6.37891 5.21 6.37891Z" fill="#F8E71C"></path>\n' +
+            '                    </svg>'
         let normalLikeHtml = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
             '                        <path d="M7.47998 18.35L10.58 20.75C10.98 21.15 11.88 21.35 12.48 21.35H16.28C17.48 21.35 18.78 20.45 19.08 19.25L21.48 11.95C21.98 10.55 21.08 9.34997 19.58 9.34997H15.58C14.98 9.34997 14.48 8.84997 14.58 8.14997L15.08 4.94997C15.28 4.04997 14.68 3.04997 13.78 2.74997C12.98 2.44997 11.98 2.84997 11.58 3.44997L7.47998 9.54997" stroke="#F8E71C" stroke-width="1.5" stroke-miterlimit="10"></path>\n' +
             '                        <path d="M2.38 18.35V8.55002C2.38 7.15002 2.98 6.65002 4.38 6.65002H5.38C6.78 6.65002 7.38 7.15002 7.38 8.55002V18.35C7.38 19.75 6.78 20.25 5.38 20.25H4.38C2.98 20.25 2.38 19.75 2.38 18.35Z" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>\n' +
@@ -27,45 +27,46 @@ $(document).ready(
             '                    <path d="M22 5.10999V16.47C22 17.92 20.96 18.53 19.69 17.83L16 15.77V8.98999C16 7.27999 14.6 5.88 12.89 5.88H8V5.10999C8 3.39999 9.39999 2 11.11 2H18.89C20.6 2 22 3.39999 22 5.10999Z" stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>\n' +
             '                </svg>'
 
+        const commentForm = $('#comment-form');
+        const deleteButton = $('.delete-button')
 
-        function likePost(){
+        function likePost() {
             const post_id = $(this).data('post-id');
             let url = likePostUrl.replace('0', post_id)
 
             likesAjax(
                 url,
                 post_id,
-                function(response){
+                function (response) {
                     updateLikesCount(response, post_id);
                 }
             );
         }
 
-        function dislikePost(){
+        function dislikePost() {
             const post_id = $(this).data('post-id');
             let url = dislikePostUrl.replace('0', post_id)
             likesAjax(
                 url,
                 post_id,
-                function(response){
+                function (response) {
                     updateLikesCount(response, post_id);
                 }
             );
         }
 
-        function savePost(){
+        function savePost() {
             const post_id = $(this).data('post-id');
             let url = savePostUrl.replace('0', post_id);
             likesAjax(
                 url,
                 post_id,
-                function(response){
-                    if (response['success']){
+                function (response) {
+                    if (response['success']) {
                         let saved = response['saved'];
-                        if (saved){
+                        if (saved) {
                             $('#save-button-' + post_id).html(savedHtml);
-                        }
-                        else{
+                        } else {
                             $('#save-button-' + post_id).html(normalSaveHtml);
                         }
                     }
@@ -73,7 +74,7 @@ $(document).ready(
             );
         }
 
-        function likesAjax(url, post_id, callback){
+        function likesAjax(url, post_id, callback) {
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -81,59 +82,116 @@ $(document).ready(
             });
         }
 
-        function updateLikesCount(response, post_id){
-            if (response['success']){
+        function updateLikesCount(response, post_id) {
+            if (response['success']) {
                 let likes = response['likes'];
                 let dislikes = response['dislikes'];
                 let liked = response['liked'];
                 let disliked = response['disliked'];
-                if (liked){
+                if (liked) {
                     $('#like-button-' + post_id).html(likedHtml);
-                }
-                else{
+                } else {
                     $('#like-button-' + post_id).html(normalLikeHtml);
                 }
-                if (disliked){
+                if (disliked) {
                     $('#dislike-button-' + post_id).html(dislikedHtml);
-                }
-                else{
+                } else {
                     $('#dislike-button-' + post_id).html(normalDislikeHtml);
                 }
 
                 $('#like-count-' + post_id).text(likes);
                 $('#dislike-count-' + post_id).text(dislikes);
-            }
-            else{
+            } else {
                 alert('Error');
             }
         }
 
-        function sharePost(){
+        function sharePost() {
             const post_id = $(this).data('post-id');
-            navigator.clipboard.writeText(window.location.href + 'post/' + post_id + '/').then(r => {alert('Link copied to clipboard')});
+            navigator.clipboard.writeText(window.location.href + 'post/' + post_id + '/').then(r => {
+                alert('Link copied to clipboard')
+            });
         }
 
-        function deletePost(){
-            let dataType = $(this).data('type')
+        function deletePost() {
+            let thisButton = $(this)
+            let dataType = thisButton.data('type')
             let url;
-            if (dataType === 'post'){
-                let postId = $(this).data('post-id')
+            if (dataType === 'post') {
+                let postId = thisButton.data('post-id')
                 url = deletePostUrl.replace('0', postId)
 
-            }
-            else if (dataType === 'comment'){
-                let comment_id = $(this).data('comment-id')
+            } else if (dataType === 'comment') {
+                let comment_id = thisButton.data('comment-id')
                 url = deleteCommentUrl.replace('0', comment_id)
             }
             $.ajax(
                 {
                     url: url,
                     type: 'GET',
-                    success: function () {
-                        location.reload()
+                    success: function (response) {
+                        if (response['success']) {
+                            if (dataType === 'post') {
+                                location.href = response['redirect_url']
+                            } else {
+                                $(thisButton.data('element-id')).remove()
+                            }
+                        }
                     }
                 }
             );
+        }
+
+
+        function submitNewComment(event) {
+            event.preventDefault();
+            const commentText = $('#comment-input').val();
+            if (commentText === '') {
+                return;
+            }
+            const url = commentForm.attr('action');
+            const data = commentForm.serialize();
+            $.ajax({
+                    url: url,
+                    data: data,
+                    method: 'POST',
+                    success: function (response) {
+                        if (response['success']) {
+                            $('#post-comments-list').prepend(
+                                $(
+                                    `<div class="dis-col padding-10 gap-5 position-rel" id="comment-${response['comment']['id']}">
+                                        <div class="less-action-button-corner delete-button" id="comment-delete-${response['comment']['id']}" data-type="comment" data-comment-id="${response['comment']['id']}" data-element-id="#comment-${response['comment']['id']}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998" stroke="#FF4136" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M8.5 4.97L8.72 3.66C8.88 2.71 9 2 10.69 2H13.31C15 2 15.13 2.75 15.28 3.67L15.5 4.97" stroke="#FF4136" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M18.85 9.14001L18.2 19.21C18.09 20.78 18 22 15.21 22H8.79002C6.00002 22 5.91002 20.78 5.80002 19.21L5.15002 9.14001" stroke="#FF4136" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M10.33 16.5H13.66" stroke="#FF4136" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M9.5 12.5H14.5" stroke="#FF4136" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </div>
+                                        <a href="${profilePageUrl.replace('-username-', response['comment']['user']['username'])}">
+                                            <div class="dis-row gap-10">
+                                                <div class="small-avatar">
+                                                    <img class="avatar" src="${response['comment']['user']['profile_picture']}" alt="Avatar">
+                                                </div>
+                                                <div class="dis-col just-cent">
+                                                    <div class="fullname text-color">${response['comment']['user']['fullname']}</div>
+                                                    <div class="username text-color">@${response['comment']['user']['username']}</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="dis-row text-color comment">${response['comment']['content']}</div>
+                                    </div>`
+                                )
+                            )
+                            $(`#comment-delete-${response['comment']['id']}`).click(
+                                deletePost
+                            )
+                            commentForm.reset()
+                        }
+                    }
+                }
+            )
         }
 
         $('.like-button').click(likePost);
@@ -141,13 +199,14 @@ $(document).ready(
         $('.save-button').click(savePost);
         $('.post-share-button').click(sharePost);
         $('.post-content').dblclick(likePost);
-        $('.delete-button').click(deletePost)
+        deleteButton.click(deletePost);
         $('.admin-posts').click(
-            function(){
+            function () {
                 let postId = $(this).data('post-id');
                 let url = adminPostDetailUrl.replace('0', postId);
                 location.href = url;
             }
         )
+        commentForm.submit(submitNewComment);
     }
 )

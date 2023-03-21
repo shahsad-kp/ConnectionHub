@@ -317,7 +317,7 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
-                location.reload()
+                location.href = '/'
             },
             error: function (response) {
                 showError('#password', response.responseJSON['error']);
