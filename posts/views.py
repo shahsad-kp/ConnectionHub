@@ -26,7 +26,8 @@ def post_detail_page(request: HttpRequest, post_id: int):
 
     context = {
         'post': post.get_context(logined_user, True),
-        'logged_user': request.user.get_context()
+        'logged_user': request.user.get_context(),
+        'new_notifications': request.user.get_new_notifications().count()
     }
     return render(request, 'post-detail.html', context=context)
 
@@ -118,6 +119,7 @@ def saved_posts(request: HttpRequest):
         'logged_user': request.user.get_context(),
         'saved_posts_tab': True,
         'new_messages': new_messages.exists(),
+        'new_notifications': request.user.get_new_notifications().count()
     }
     data['number_of_saved_posts'] = len(data['saved_posts_rows'][0]) + len(data['saved_posts_rows'][1])
     return render(request, 'saved-posts-dashboard.html', context=data)
@@ -161,7 +163,8 @@ def new_post(request: HttpRequest):
             'new-post.html',
             context={
                 'logged_user': request.user.get_context(),
-                'new_post_tab': True
+                'new_post_tab': True,
+                'new_notifications': request.user.get_new_notifications().count()
             }
         )
 

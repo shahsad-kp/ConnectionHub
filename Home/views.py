@@ -31,6 +31,7 @@ def home_view(request: HttpRequest) -> HttpResponse:
         'logged_user': request.user.get_context(),
         'home_tab': True,
         'new_messages': new_messages.exists(),
+        'new_notifications': request.user.get_new_notifications().count()
     }
     return render(
         request=request,
@@ -48,6 +49,7 @@ def settings_home(request: HttpRequest) -> HttpResponse:
         'delete_account': False,
         'help_center': False,
         'settings': True,
+        'new_notifications': request.user.get_new_notifications().count()
     }
     return render(
         request=request,

@@ -36,7 +36,8 @@ def help_view(request: HttpRequest):
             'logged_user': request.user,
             'settings': True,
             'help_center': True,
-            'selector': True
+            'selector': True,
+            'new_notifications': request.user.get_new_notifications().count()
         }
         return render(
             request=request,

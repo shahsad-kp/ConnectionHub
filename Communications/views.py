@@ -39,6 +39,7 @@ def chat_list(request, username=None):
     context = {
         'logged_user': request.user.get_context(),
         'interacted_users': interacted_users,
+        'new_notifications': request.user.get_new_notifications().count()
     }
     if username:
         try:

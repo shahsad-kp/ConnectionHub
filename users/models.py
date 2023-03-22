@@ -93,6 +93,9 @@ class User(AbstractUser):
     def get_new_messages(self) -> QuerySet:
         return self.receiver_messages.filter(viewed=False)
 
+    def get_new_notifications(self) -> QuerySet:
+        return self.notifications.filter(viewed=False)
+
     def get_posts(self):
         return self.posts.all().order_by('-created_at')
 

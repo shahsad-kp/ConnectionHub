@@ -32,6 +32,7 @@ def home_view(request: HttpRequest, username: str):
         'logged_user': request.user.get_context(),
         'self_profile_tab': request.user == user,
         'new_messages': logined_user.get_new_messages().exists(),
+        'new_notifications': request.user.get_new_notifications().count()
     }
 
     if (
@@ -479,7 +480,8 @@ def settings_change_password(request: HttpRequest):
             'logged_user': request.user,
             'settings': True,
             'update_password': True,
-            'selector': True
+            'selector': True,
+            'new_notifications': request.user.get_new_notifications().count()
         }
         return render(
             request=request,
@@ -526,7 +528,8 @@ def settings_delete_account(request: HttpRequest):
             'logged_user': request.user,
             'settings': True,
             'delete_account': True,
-            'selector': True
+            'selector': True,
+            'new_notifications': request.user.get_new_notifications().count()
         }
         return render(
             request=request,

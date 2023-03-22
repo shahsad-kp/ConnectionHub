@@ -14,7 +14,8 @@ def privacy_settings(request: HttpRequest) -> HttpResponse:
         'settings': True,
         'private_account': request.user.settings.private_account,
         'blocked_users': [blocks.user.get_context() for blocks in request.user.blocked_users.all()],
-        'selector': True
+        'selector': True,
+        'new_notifications': request.user.get_new_notifications().count()
     }
     return render(
         request=request,
