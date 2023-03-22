@@ -46,8 +46,6 @@ Thank you for being a valued member of our community.'''
 @receiver(post_save, sender=User)
 def welcome_notification(sender: Type[User], instance: User, created: bool, **kwargs):
     if created:
-        from UsersSettings.models import UserSettings
-        UserSettings.objects.create(user=instance)
         Notification.create_notification(
             recipient=instance,
             notification_type='welcome',
