@@ -7,8 +7,7 @@ from .models import Notification
 @login_required(login_url='user-login')
 def notification_view(request):
     notifications = Notification.objects.filter(
-        recipient=request.user,
-        viewed=False
+        recipient=request.user
     ).order_by('-timestamp')
     follow_requests = request.user.follow_requests.all().order_by('-created_at')
     context = {
