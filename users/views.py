@@ -116,6 +116,7 @@ def follow_user(request: HttpRequest, username: str):
             {
                 'success': True,
                 'followed': True,
+                'private_account': user.settings.private_account,
                 'followers': user.followers_count,
                 'followings': user.followings_count,
             }
@@ -139,6 +140,7 @@ def unfollow_user(request: HttpRequest, username: str):
             {
                 'success': True,
                 'followed': False,
+                'private_account': user.settings.private_account,
                 'followers': user.followers_count,
                 'followings': user.followings_count,
             }

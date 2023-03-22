@@ -78,6 +78,10 @@ $(document).ready(
                             thisButton.removeAttr('data-remove-data')
                         }
                         else {
+                            if (response['private_account']){
+                                location.reload()
+                                return
+                            }
                             thisButton.removeClass('following')
                             thisButton.html('Follow')
                             thisButton.attr(
