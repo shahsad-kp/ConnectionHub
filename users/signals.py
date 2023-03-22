@@ -95,45 +95,51 @@ def unfollow_signal(sender: Type[Follow], instance: Follow, **kwargs):
 @receiver(pre_save, sender=User)
 def user_updated(sender, **kwargs):
     user: User = kwargs.get('instance', None)
-    if user:
-        new_password = user.password
-        new_username = user.username
-        try:
-            old_password = User.objects.get(pk=user.pk).password
-            old_username = User.objects.get(pk=user.pk).username
-        except User.DoesNotExist:
-            old_password = None
-            old_username = None
-        if new_password != old_password:
-            subject = 'Your password is changed'
-            html_message = render_to_string(
-                'email-template.html',
-                {
-                    'name': user.full_name,
-                    'message': PASSWORD_CHANGED_MESSAGE
-                }
-            )
-            message = EmailMessage(
-                subject=subject,
-                body=html_message,
-                to=[user.email],
-            )
-            message.content_subtype = 'html'
-            message.send(fail_silently=True)
+    if not user:
+        return
+    if not User.objects.filter(pk=user.pk).exists():
+        return
 
-        if new_username != old_username:
-            subject = 'Your username is changed'
-            html_message = render_to_string(
-                'email-template.html',
-                {
-                    'name': user.full_name,
-                    'message': USERNAME_CHANGED_MESSAGE.format(username=new_username)
-                }
-            )
-            message = EmailMessage(
-                subject=subject,
-                body=html_message,
-                to=[user.email],
-            )
-            message.content_subtype = 'html'
-            message.send(fail_silently=True)
+    new_password = user.password
+    new_username = user.username
+
+    try:
+        old_password = User.objects.get(pk=user.pk).password
+        old_username = User.objects.get(pk=user.pk).username
+    except User.DoesNotExist:
+        old_password = None
+        old_username = None
+
+    if new_password != old_password:
+        subject = 'Your password is changed'
+        html_message = render_to_string(
+            'email-template.html',
+            {
+                'name': user.full_name,
+                'message': PASSWORD_CHANGED_MESSAGE
+            }
+        )
+        message = EmailMessage(
+            subject=subject,
+            body=html_message,
+            to=[user.email],
+        )
+        message.content_subtype = 'html'
+        message.send(fail_silently=True)
+
+    if new_username != old_username:
+        subject = 'Your username is changed'
+        html_message = render_to_string(
+            'email-template.html',
+            {
+                'name': user.full_name,
+                'message': USERNAME_CHANGED_MESSAGE.format(username=new_username)
+            }
+        )
+        message = EmailMessage(
+            subject=subject,
+            body=html_message,
+            to=[user.email],
+        )
+        message.content_subtype = 'html'
+        message.send(fail_silently=True)
