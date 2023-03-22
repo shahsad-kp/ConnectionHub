@@ -22,6 +22,7 @@ def home_view(request: HttpRequest) -> HttpResponse:
         post.get_context(user)
         for post in suggested_posts
     ]
+    new_messages = user.get_new_messages()
 
     context = {
         'suggestions': user_suggestions,
@@ -29,6 +30,7 @@ def home_view(request: HttpRequest) -> HttpResponse:
         'post_updates': suggested_posts,
         'logged_user': request.user.get_context(),
         'home_tab': True,
+        'new_messages': new_messages.exists(),
     }
     return render(
         request=request,

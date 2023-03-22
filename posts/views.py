@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from utils.posts import get_saved_posts_context
@@ -15,24 +15,13 @@ def post_detail_page(request: HttpRequest, post_id: int):
             post.user.settings.private_account and
             not post.user.followers.filter(follower=logined_user).exists()
     ) and not logined_user == post.user:
-        return render(
-            request=request,
-            template_name='private-account.html',
-            context={
-                'user': post.user.get_context(
-                    logined_user=logined_user,
-                    full_data=True,
-                ),
-                'suggestions': [
-                    user.get_context(logined_user)
-                    for user in logined_user.get_suggestions()
-                ],
-                'followings': [
-                    user.get_context(logined_user)
-                    for user in logined_user.get_all_followings()
-                ],
-                'logged_user': request.user.get_context()
-            }
+        return redirect(
+            reverse(
+                'profile-pages',
+                kwargs={
+                    'username': post.user.username
+                }
+            )
         )
 
     context = {
@@ -123,10 +112,12 @@ def save_post(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def saved_posts(request: HttpRequest):
+    new_messages = request.user.get_new_messages()
     data = {
         'saved_posts_rows': get_saved_posts_context(request.user),
         'logged_user': request.user.get_context(),
-        'saved_posts_tab': True
+        'saved_posts_tab': True,
+        'new_messages': new_messages.exists(),
     }
     data['number_of_saved_posts'] = len(data['saved_posts_rows'][0]) + len(data['saved_posts_rows'][1])
     return render(request, 'saved-posts-dashboard.html', context=data)

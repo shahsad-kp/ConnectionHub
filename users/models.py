@@ -3,7 +3,7 @@ import uuid
 
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 
 
 def generate_filename(instance: 'User', filename):
@@ -89,6 +89,9 @@ class User(AbstractUser):
             Q(follow_requests__follower=self)
         ).distinct().order_by('-followers_count')[:10]
         return users_not_followed
+
+    def get_new_messages(self) -> QuerySet:
+        return self.receiver_messages.filter(viewed=False)
 
     def get_posts(self):
         return self.posts.all().order_by('-created_at')

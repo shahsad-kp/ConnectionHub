@@ -31,6 +31,7 @@ def home_view(request: HttpRequest, username: str):
         ],
         'logged_user': request.user.get_context(),
         'self_profile_tab': request.user == user,
+        'new_messages': logined_user.get_new_messages().exists(),
     }
 
     if (
