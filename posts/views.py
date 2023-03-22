@@ -44,22 +44,23 @@ def post_detail_page(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def like_post(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
-    like = post.likes.filter(user=request.user)
-    dislike = post.dislikes.filter(user=request.user)
-    if like.exists():
-        like.delete()
+    post: Post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
+    user = request.user
+    reaction = post.reactions.filter(user=user).first()
+    if not reaction:
+        Reaction.objects.create(user=request.user, post=post, reaction='like')
+        liked = True
+        disliked = False
+    elif reaction.reaction == 'like':
+        reaction.delete()
         liked = False
         disliked = False
-    elif dislike.exists():
-        dislike.delete()
-        Reaction.objects.create(user=request.user, post=post, reaction='like')
-        liked = True
-        disliked = False
     else:
-        Reaction.objects.create(user=request.user, post=post, reaction='like')
+        reaction.reaction = 'like'
+        reaction.save()
         liked = True
         disliked = False
+
     post.refresh_from_db()
     return JsonResponse(
         data={
@@ -74,22 +75,23 @@ def like_post(request: HttpRequest, post_id: int):
 
 @login_required(login_url='user-login')
 def dislike_post(request: HttpRequest, post_id: int):
-    post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
-    like = Reaction.objects.filter(user=request.user, post=post, reaction='like')
-    dislike = Reaction.objects.filter(user=request.user, post=post, reaction='dislike')
-    if dislike.exists():
-        dislike.delete()
+    post: Post = get_object_or_404(Post.not_blocked_posts(request.user), id=post_id)
+    user = request.user
+    reaction = post.reactions.filter(user=user).first()
+    if not reaction:
+        Reaction.objects.create(user=request.user, post=post, reaction='dislike')
+        disliked = True
+        liked = False
+    elif reaction.reaction == 'dislike':
+        reaction.delete()
         liked = False
         disliked = False
-    elif like.exists():
-        like.delete()
-        Reaction.objects.create(user=request.user, post=post, reaction='dislike')
-        disliked = True
-        liked = False
     else:
-        Reaction.objects.create(user=request.user, post=post, reaction='dislike')
+        reaction.reaction = 'dislike'
+        reaction.save()
         disliked = True
         liked = False
+
     post.refresh_from_db()
     return JsonResponse(
         data={

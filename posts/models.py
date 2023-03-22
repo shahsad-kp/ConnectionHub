@@ -42,13 +42,6 @@ class Post(models.Model):
     def not_blocked_posts(cls, logined_user: 'User'):
         return cls.objects.exclude(Q(user__blocked_users__user=logined_user) & ~Q(user=logined_user))
 
-    @property
-    def likes(self):
-        return self.reactions.filter(reaction='like')
-
-    @property
-    def dislikes(self):
-        return self.reactions.filter(reaction='dislike')
 
     def get_context(self, user: 'User', comments: bool = False, admin_data: bool = False) -> Dict[str, str]:
         if admin_data:
@@ -100,11 +93,23 @@ class Reaction(models.Model):
     reaction = models.CharField(choices=REACTION_TYPES, max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._old_reaction = self.reaction
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self._old_reaction = self.reaction
+
     def __str__(self):
         return self.reaction
 
     def __repr__(self):
         return f'<Reaction {self.id}>'
+
+    @property
+    def old_reaction(self):
+        return self._old_reaction
 
 
 class Tag(models.Model):
