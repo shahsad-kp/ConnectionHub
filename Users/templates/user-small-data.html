@@ -1,0 +1,15 @@
+<a href="{% url 'profile-pages' username=user.username %}">
+    <div class="dis-row gap-10">
+        <div class="small-avatar">
+            <img class="avatar" src="{{ user.profile_picture }}" alt="Avatar">
+        </div>
+        <div class="dis-col just-cent">
+            <div class="fullname text-color">{{ user.fullname }}</div>
+            {% if location %}
+            <div class="location">{{ location }}</div>
+            {% else %}
+            <div class="username text-color">@{{ user.username }}</div>
+            {% endif %}
+        </div>
+    </div>
+</a>

@@ -1,0 +1,34 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+
+{% block title %}
+Help Messages
+{% endblock %}
+
+{% block content %}
+<div class="width-max padding-20 dis-col">
+    <h1 class="text-color">Help Messages</h1>
+    <div class="dis-col gap-10">
+        {% for message in messages %}
+        <div class="dis-col gap-10 padding-20 card secondary-background">
+            <div class="dis-col gap-5">
+                <span class="admin-data-title text-color">User</span>
+                {% include 'admin-user-small-data.html' with user=message.user %}
+            </div>
+            <div>
+                <span class="admin-data-title text-color">Subject</span>
+                <span class="admin-data-content text-color">{{ message.subject }}</span>
+            </div>
+            <div>
+                <span class="admin-data-title text-color">Message</span>
+                <span class="admin-data-content text-color">{{ message.message }}</span>
+            </div>
+            <div>
+                <span class="admin-data-title text-color">Date</span>
+                <span class="admin-data-content text-color">{{ message.date_created }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

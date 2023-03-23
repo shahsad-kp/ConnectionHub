@@ -1,0 +1,21 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+
+{% block title %}
+Admin Panel
+{% endblock %}
+
+{% block content %}
+<div class="width-max padding-20 dis-col">
+    <h1 class="text-color">Analytics</h1>
+    <div class="dis-col gap-20 padding-30 text-color card secondary-background">
+        {% for analytic in analytics %}
+        <div class="dis-row just-sb">
+            <span>{{ analytic.title }}</span>
+            <span>-</span>
+            <span>{{ analytic.value }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

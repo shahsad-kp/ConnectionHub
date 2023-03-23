@@ -1,0 +1,34 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+
+{% block title %}
+Reports
+{% endblock %}
+
+{% block content %}
+<div class="width-max padding-20 dis-col">
+    <h1 class="text-color">Reports</h1>
+    <div class="dis-col gap-10">
+        {% for report in reports %}
+        <div class="dis-col gap-10 padding-20 card secondary-background">
+            <div class="dis-col gap-5">
+                <span class="admin-data-title text-color">User</span>
+                {% include 'admin-user-small-data.html' with user=report.user %}
+            </div>
+            <div>
+                <span class="admin-data-title text-color">Reported by</span>
+                {% include 'admin-user-small-data.html' with user=report.reported_user %}
+            </div>
+            <div>
+                <span class="admin-data-title text-color">Reason</span>
+                <span class="admin-data-content text-color">{{ report.reason }}</span>
+            </div>
+            <div>
+                <span class="admin-data-title text-color">Date</span>
+                <span class="admin-data-content text-color">{{ report.date_created }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

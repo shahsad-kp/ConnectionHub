@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login to admin panel{% endblock %}
+
+{% block body %}
+    <div class="view-body center-group gap-20">
+        <div class="login-center-portion secondary-background card padding-50 dis-col gap-10">
+            <div class="algn-cent dis-col text-color gap-10">
+                <span class="welcome text-weight-700">WELCOME</span>
+                <span class="brand-color text-weight-400 brand-text">ConnectionHub</span>
+            </div>
+            <form class="dis-col gap-10 algn-cent just-cent" id="register-form" method="post" action="">
+                <span class="sign-in-text text-color">Sign In</span>
+                {% csrf_token %}
+                <input id="username" class="main-background text-color" type="text"
+                       placeholder="Enter Username">
+                <input id="password" class="main-background text-color" type="password"
+                       placeholder="Enter Password">
+                <div id="error" class="error-message danger-text"></div>
+                <button type="submit" id="submit-button" class="accent-two-bg text-color card full-width">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/admin-login.js' %}"></script>
+{% endblock %}
