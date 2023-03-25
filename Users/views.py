@@ -16,19 +16,26 @@ def home_view(request: HttpRequest, username: str):
             "No %s matches the given query."
         )
 
+    followings = [
+        user.get_context(logined_user)
+        for user in logined_user.get_all_followings()
+    ]
+    extra_followings = len(followings[10:])
+    followings = followings[:10]
+
+    suggestions = [
+        user.get_context(logined_user)
+        for user in logined_user.get_suggestions()
+    ]
+
     context = {
         'user': user.get_context(
             logined_user=logined_user,
             posts=True,
         ),
-        'suggestions': [
-            user.get_context(logined_user)
-            for user in logined_user.get_suggestions()
-        ],
-        'followings': [
-            user.get_context(logined_user)
-            for user in logined_user.get_all_followings()
-        ],
+        'suggestions': suggestions,
+        'followings': followings,
+        'extra_followings': extra_followings,
         'logged_user': request.user.get_context(),
         'self_profile_tab': request.user == user,
         'new_messages': logined_user.get_new_messages().exists(),
