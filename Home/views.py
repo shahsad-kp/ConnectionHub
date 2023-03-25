@@ -23,10 +23,13 @@ def home_view(request: HttpRequest) -> HttpResponse:
         for post in suggested_posts
     ]
     new_messages = user.get_new_messages()
+    extra_followings = len(followings[10:])
+    followings = followings[:10]
 
     context = {
         'suggestions': user_suggestions,
         'followings': followings,
+        'extra_followings': extra_followings,
         'post_updates': suggested_posts,
         'logged_user': request.user.get_context(),
         'home_tab': True,

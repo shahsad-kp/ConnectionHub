@@ -73,7 +73,7 @@ class User(AbstractUser):
         Blocks.objects.filter(user=user, blocked_by=self).delete()
 
     def get_all_followings(self):
-        list_of_followings = [following.followee for following in self.followings.all()]
+        list_of_followings = [following.followee for following in self.followings.all().order_by('-followed_at')]
         return list_of_followings
 
     def get_all_followers(self):
@@ -166,6 +166,7 @@ class User(AbstractUser):
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followings')
     followee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+    followed_at = models.DateTimeField(auto_now_add=True)
 
     objects = FollowsUserManager()
     admin_objects = models.Manager()
