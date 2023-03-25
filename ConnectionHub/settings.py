@@ -32,7 +32,9 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['connectionhub.live', 'www.connectionhub.live', 'connectionhub.social', 'www.connectionhub.social']
+
+CSRF_TRUSTED_ORIGINS = ['localhost', '127.0.0.1', 'https://connectionhub.live','https://connectionhub.social']
 
 # Application definition
 

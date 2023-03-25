@@ -3,7 +3,7 @@ $(document).ready(
         let send_message_form = $('#message-bar')
         let input_message = $('#message-input')
         let message_body = $('#message-body')
-        const endpoint = 'ws://' + window.location.host + '/chat/';
+        const endpoint = 'wss://' + window.location.host + '/chat/';
         let socket = new WebSocket(endpoint)
 
         socket.onopen = async function (e) {
