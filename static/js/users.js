@@ -72,19 +72,20 @@ $(document).ready(
                 success: function (response) {
                     if (response['success']) {
                         $(thisButton.data('remove-data')).remove()
+                        let followButton = $(`#follow-button-${username}`)
                         if (response['followed']) {
-                            thisButton.addClass('following')
-                            thisButton.html('Unfollow')
-                            thisButton.removeAttr('data-remove-data')
+                            followButton.addClass('following')
+                            followButton.html('Unfollow')
+                            followButton.removeAttr('data-remove-data')
                         }
                         else {
                             if (response['private_account']){
                                 location.reload()
                                 return
                             }
-                            thisButton.removeClass('following')
-                            thisButton.html('Follow')
-                            thisButton.attr(
+                            followButton.removeClass('following')
+                            followButton.html('Follow')
+                            followButton.attr(
                                 'data-remove-data',
                                 `.follow-remover-${username}`
                             )
