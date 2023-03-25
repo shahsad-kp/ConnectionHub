@@ -89,8 +89,8 @@ $(document).ready(
                                 `.follow-remover-${username}`
                             )
                         }
-                        $('#followers-count').html(`${response['followers']} Followers`)
-                        $('#followings-count').html(`${response['followings']} Followings`)
+                        $(`#followers-count-${username}`).html(`${response['followers']} Followers`)
+                        $(`#followings-count${username}`).html(`${response['followings']} Followings`)
                         refreshSideBar()
                     }
                 }

@@ -40,9 +40,9 @@
                 {% endif %}
             </div>
             <div class="profile-relation-info">
-                <span id="followers-count">{{ user.number_of_followers }} Followers</span>
+                <span id="followers-count-{{ user.username }}">{{ user.number_of_followers }} Followers</span>
                 <i>●</i>
-                <span id="followings-count">{{ user.number_of_followings }} Followings</span>
+                <span id="followings-count-{{ user.username }}">{{ user.number_of_followings }} Followings</span>
             </div>
             {% if not user.self and not user.is_banned and not user.blocked %}
             <div id="follow-button-div">
