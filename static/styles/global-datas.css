@@ -50,6 +50,10 @@
 .accent-three{
     color: #C74CD2;
 }
+.padding-5{
+    padding: 5px;
+    box-sizing: border-box;
+}
 
 .padding-10{
     padding: 10px;

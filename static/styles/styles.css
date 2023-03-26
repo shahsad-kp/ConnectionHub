@@ -635,3 +635,7 @@ input:checked + .slider:before {
     height: min-content;
     background-color: #FF0000 !important;
 }
+
+.tag {
+    color: #0000FF;
+}
