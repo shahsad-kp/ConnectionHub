@@ -147,7 +147,8 @@ def new_post(request: HttpRequest):
             caption=caption,
             location=location
         )
-        for tag_name in str(tags).split(','):
+        for tag_name in str(tags).strip().split(' '):
+            tag_name = tag_name.strip()
             tag, _ = Tag.objects.get_or_create(name=tag_name)
             post.tags.add(tag)
 

@@ -42,7 +42,6 @@ class Post(models.Model):
     def not_blocked_posts(cls, logined_user: 'User'):
         return cls.objects.exclude(Q(user__blocked_users__user=logined_user) & ~Q(user=logined_user))
 
-
     def get_context(self, user: 'User', comments: bool = False, admin_data: bool = False) -> Dict[str, str]:
         if admin_data:
             from Comments.models import Comment
@@ -79,7 +78,11 @@ class Post(models.Model):
                 kwargs={
                     'post_id': self.id
                 }
-            )
+            ),
+            'tags': [
+                tag.name
+                for tag in self.tags.all()
+            ],
         }
 
 
