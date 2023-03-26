@@ -18,8 +18,8 @@
                 <input id="username" class="main-background text-color" type="text" placeholder="Username">
                 <input id="password" class="main-background text-color" type="password" placeholder="Password">
                 <input id="otp-input" class="main-background text-color" style="display: none" type="text"
-                       placeholder="Enter OTP" readonly>
-                <div id="error" class="error-message danger-text"></div>
+                       placeholder="Enter OTP">
+                <div id="error" class="error-message danger-text" style="display: none"></div>
                 <button type="submit" id="submit-button" class="accent-two-bg text-color card full-width">Send OTP
                 </button>
                 <div class="register-text text-color">Already have an account? <a href="{% url 'user-login' %}">Log

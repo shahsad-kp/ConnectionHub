@@ -6,6 +6,7 @@ $(document).ready(function() {
             const username = $('#username').val();
             const password = $('#password').val();
             const csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
+            $(this).text('Logging in..').prop('disabled', true);
             $.ajax(
                 {
                     type: 'POST',
@@ -21,6 +22,7 @@ $(document).ready(function() {
                     },
                     statusCode: {
                         400: function(xhr, textStatus, errorThrown) {
+                            $('#submit-button').text('Login').prop('disabled', false);
                             showError('#password', xhr.responseJSON['error']);
                         }
                     }
