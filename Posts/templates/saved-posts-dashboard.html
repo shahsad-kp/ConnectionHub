@@ -7,7 +7,7 @@
 <div class="saved-posts-root padding-10 dis-col gap-10">
     {% if number_of_saved_posts > 0 %}
     {% for saved_posts_row in saved_posts_rows %}
-    <div class="gap-10 dis-col">
+    <div class="gap-10 dis-col posts-row">
         {% for post in saved_posts_row %}
         <div class="saved-post">
             {% include 'post.html' %}
