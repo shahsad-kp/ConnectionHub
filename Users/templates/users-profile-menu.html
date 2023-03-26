@@ -1,9 +1,14 @@
 <div class="menu-bar padding-10 card secondary-background position-abs" id="{{ id }}">
     <ul>
+        {% if user.self %}
+        <li class="text-color"><a href="{% url 'settings-home' %}">Settings</a></li>
+        <li class="danger-text-color"><a href="{% url 'user-logout' %}" class="danger-text-color">Logout</a></li>
+        {% else %}
         <li class="text-color"><a href="{% url 'chat-room' username=username %}">Message</a></li>
         <li class="report-button text-color" data-username='{{ username }}'>Report</li>
         <li class="block-button{% if blocked %} blocked{% endif %} danger-text-color"
             data-username='{{ username }}'>{% if blocked %}Unblock{% else %}Block{% endif %}</li>
+        {% endif %}
         {% csrf_token %}
     </ul>
 </div>

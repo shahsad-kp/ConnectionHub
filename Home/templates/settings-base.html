@@ -10,7 +10,6 @@
         <a class="settings-options card{% if profile_settings %} selected-settings{% endif %}" href="{% url 'update-profile' %}">Profile Settings</a>
         <a class="settings-options card{% if update_password %} selected-settings{% endif %}" href="{% url 'change-password' %}">Change Password</a>
         <a class="settings-options card{% if help_center %} selected-settings{% endif %}" href="{% url 'help-center' %}">Help Center</a>
-        <a class="settings-options card" href="{% url 'user-logout' %}">Logout</a>
         <a class="settings-options card danger-text-color{% if delete_account %} danger-bg{% endif %}" href="{% url 'delete-profile' %}">Delete Account</a>
     </div>
     <div class="full-width algn-cent dis-col gap-10 padding-10">
