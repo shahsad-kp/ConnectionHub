@@ -639,3 +639,7 @@ input:checked + .slider:before {
 .tag {
     color: #0000FF;
 }
+
+.posts-row {
+    width: 100%;
+}
