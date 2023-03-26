@@ -436,7 +436,7 @@ def settings_update_profile(request: HttpRequest):
         )
     else:
         data = {
-            'logged_user': request.user.get_context(),
+            'logged_user': request.user.get_context(full_data=True),
             'settings': True,
             'profile_settings': True,
             'selector': True

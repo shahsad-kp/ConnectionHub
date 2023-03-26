@@ -147,7 +147,7 @@ class User(AbstractUser):
                 'is_banned': self.is_banned,
                 'blocked': False
             }
-        if admin_data:
+        if admin_data or full_data:
             data['date_joined'] = self.date_joined
             data['last_login'] = self.last_login
             data['phone'] = self.phone_number

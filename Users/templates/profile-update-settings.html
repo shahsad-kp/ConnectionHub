@@ -8,24 +8,24 @@
     </div>
     <div class="dis-col gap-5">
         <label for="fullname" class="text-color">Full name</label>
-        <input class="secondary-background card text-color" type="text" name="fullname" id="fullname">
+        <input placeholder="{{ logged_user.fullname }}" class="secondary-background card text-color" type="text" name="fullname" id="fullname">
     </div>
     <div class="dis-col gap-5">
         <label for="username" class="text-color">Username</label>
-        <input class="secondary-background card text-color" type="text" name="username" id="username">
+        <input placeholder="@{{ logged_user.username }}" class="secondary-background card text-color" type="text" name="username" id="username">
     </div>
     <div class="dis-col gap-5">
         <label for="email-address" class="text-color">Email Address</label>
-        <input class="secondary-background card text-color" type="text" name="email" id="email-address">
+        <input placeholder="{{ logged_user.email }}" class="secondary-background card text-color" type="text" name="email" id="email-address">
     </div>
     <div class="dis-col gap-5">
         <label for="phone-number" class="text-color">Phone no</label>
-        <input class="secondary-background card text-color" type="text" name="phone" id="phone-number">
+        <input  placeholder="{% if logged_user.phone %}{{ logged_user.phone }}{% else %}Not given{% endif %}" class="secondary-background card text-color" type="text" name="phone" id="phone-number">
     </div>
 
     <div class="dis-col gap-5">
         <label for="bio" class="text-color">Bio</label>
-        <textarea style="height: 200px" name="bio" id="bio" class="secondary-background card text-color"></textarea>
+        <textarea placeholder="{% if logged_user.bio %}{{ logged_user.bio }}{% else %}Not given{% endif %}" style="height: 200px" name="bio" id="bio" class="secondary-background card text-color"></textarea>
     </div>
     <div id="error" class="error-message danger-text"></div>
     <div id="success" class="success-message"></div>
