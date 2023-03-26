@@ -28,6 +28,7 @@ $(document).ready(
                     'otp': otpInput.val(),
                     'csrfmiddlewaretoken': csrfTokken
                 }
+                submitButton.text('Resetting Password...').prop('disabled', true);
                 $.ajax(
                     {
                         url: url,
@@ -37,9 +38,10 @@ $(document).ready(
                             location.href = ''
                         },
                         error: function(response) {
+                            submitButton.text('Reset Password').prop('disabled', false);
                             showError(
                                 'otp-invalid',
-                                response['error']
+                                response.responseJSON['error']
                             )
                         }
                     }
@@ -55,6 +57,7 @@ $(document).ready(
                 'otp': otpInput.val(),
                 'csrfmiddlewaretoken': csrfTokken
             }
+            submitButton.text('Verifying OTP...').prop('disabled', true);
             $.ajax({
                 url: url,
                 data: data,
@@ -62,14 +65,15 @@ $(document).ready(
                 success: function(response){
                     otpVerified = true;
                     otpInput.hide();
-                    submitButton.html('Reset Password');
+                    submitButton.text('Reset Password').prop('disabled', false);
                     usernameInput.prop("readonly", true);
                     passwordInput.show()
                 },
                 error: function(response) {
+                    submitButton.text('Verify OTP').prop('disabled', false);
                     showError(
                         '#otp-input',
-                        response['error']
+                        response.responseJSON['error']
                     )
                 }
             })
@@ -81,6 +85,7 @@ $(document).ready(
                 'username': usernameInput.val(),
                 'csrfmiddlewaretoken': csrfTokken
             }
+            submitButton.text('Sending OTP...').prop('disabled', true);
             $.ajax({
                 url: url,
                 data: data,
@@ -88,11 +93,17 @@ $(document).ready(
                 success: function(response){
                     otpSended = true;
                     otpInput.show();
-                    submitButton.html('Verify OTP');
+                    submitButton.text('Verify OTP').prop('disabled', false);
                     usernameInput.prop("readonly", true);
                 },
                 error: function(response) {
-                    console.log(response);
+                    submitButton.text('Send OTP').prop('disabled', false);
+                    if(response.status === 404){
+                        showError(
+                            '#username',
+                            'Username is not registered'
+                        )
+                    }
                 }
             })
         }
@@ -148,6 +159,13 @@ $(document).ready(
                 else{
                     clearError('#password')
                 }
+            }
+        )
+
+        usernameInput.on(
+            'input',
+            function () {
+                clearError('#username')
             }
         )
     }

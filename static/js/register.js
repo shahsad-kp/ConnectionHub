@@ -52,6 +52,7 @@ $(document).ready(
                 }
 
                 if (otpSended === false) {
+                    submitButton.text('Sending OTP...').prop('disabled', true)
                     $.ajax(
                         {
                             type: 'POST',
@@ -63,12 +64,14 @@ $(document).ready(
                             },
                             success: function(){
                                 otpSended = true;
-                                otp_input.prop('readonly', false);
+                                otp_input.show();
                                 otp_input.removeClass('main-background-disabled');
+                                submitButton.text('Verify OTP').prop('disabled', false)
                             },
                             statusCode: {
                                 400: function(xhr) {
                                     showError('#otp-input', xhr.responseJSON['error']);
+                                    submitButton.text('Send OTP').prop('disabled', false)
                                 }
                             },
                             error: function(xhr, status, error) {
@@ -79,6 +82,7 @@ $(document).ready(
                     waitForOtp()
                 }
                 else {
+                    submitButton.text('Verifying OTP...').prop('disabled', true)
                     $.ajax(
                         {
                             type: 'POST',
@@ -89,6 +93,7 @@ $(document).ready(
                                 csrfmiddlewaretoken: csrf_token,
                             },
                             success: function(_) {
+                                submitButton.text('Registering...').prop('disabled', true)
                                 $.ajax(
                                     {
                                         type: 'POST',
@@ -106,7 +111,8 @@ $(document).ready(
                                         },
                                         statusCode: {
                                             400: function(xhr) {
-                                               showError('#otp-input', xhr.responseJSON['error']);
+                                                submitButton.text('Verify OTP').prop('disabled', false)
+                                                showError('#otp-input', xhr.responseJSON['error']);
                                             }
                                         },
                                         error: function(xhr, status, error) {
@@ -120,6 +126,7 @@ $(document).ready(
                             },
                             statusCode: {
                                 400: function(xhr) {
+                                    submitButton.text('Verify OTP').prop('disabled', false)
                                     showError('#otp-input', xhr.responseJSON['error']);
                                 }
                             },
@@ -233,8 +240,6 @@ $(document).ready(
             passwordInput.addClass('text-color-disabled')
             fullnameInput.prop('readonly', true);
             fullnameInput.addClass('text-color-disabled')
-            submitButton.text('Verify OTP');
-            otp_input.show();
         }
 
         function showError(
