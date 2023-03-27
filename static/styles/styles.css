@@ -276,11 +276,19 @@ button {
 
 
 .comment-section {
+    height: 100%;
+    height: -moz-available;          /* WebKit-based browsers will ignore this. */
+    height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width: fill-available;
+    overflow-y: auto;
+}
+
+.comment-section::-webkit-scrollbar {
+  display: none;
 }
 
 .new-comment {
-    position: absolute;
-    bottom: 0;
+    position: relative;
 }
 
 .comment {
