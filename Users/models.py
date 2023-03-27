@@ -159,7 +159,7 @@ class User(AbstractUser):
         return data
 
     def search_users(self, query: str):
-        results = User.not_blocked_users(logined_user=self).filter(username__icontains=query, is_banned=False)
+        results = User.not_blocked_users(logined_user=self).filter(username__icontains=query)[:10]
         return results
 
 
