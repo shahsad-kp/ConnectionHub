@@ -80,7 +80,7 @@ class Post(models.Model):
                 }
             ),
             'tags': [
-                tag.name
+                tag.name.replace('#', '')
                 for tag in self.tags.all()
             ],
         }
@@ -117,7 +117,7 @@ class Reaction(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
-    post = models.ManyToManyField(Post, related_name='tags')
+    posts = models.ManyToManyField(Post, related_name='tags')
 
     def __str__(self):
         return self.name

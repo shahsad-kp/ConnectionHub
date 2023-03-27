@@ -113,9 +113,9 @@ class User(AbstractUser):
         if admin_data:
             from Posts.models import Post
             posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in
-                     Post.admin_objects.filter(user=self)]
+                     Post.admin_objects.filter(user=self).order_by('-created_at')]
         elif posts:
-            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in self.posts.all()]
+            posts = [post.get_context(user=logined_user, admin_data=admin_data) for post in self.posts.all().order_by('-created_at')]
         else:
             posts = []
 

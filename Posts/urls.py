@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import post_detail_page, like_post, dislike_post, save_post, saved_posts, new_post, delete_post
+from .views import *
 
 urlpatterns = [
     path('saved/', saved_posts, name='saved-posts-dashboards'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:post_id>/dislike/', dislike_post, name='dislike-post'),
     path('<int:post_id>/save/', save_post, name='save-post'),
     path('<int:post_id>/delete/', delete_post, name='delete-post'),
+    path('tag/<str:tag_name>/', tag_posts, name='tag-posts'),
 ]

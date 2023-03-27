@@ -126,6 +126,31 @@ def saved_posts(request: HttpRequest):
 
 
 @login_required(login_url='user-login')
+def tag_posts(request: HttpRequest, tag_name: str):
+    tag = Tag.objects.filter(name='#' + tag_name).first()
+    if not tag:
+        posts = []
+    else:
+        posts = tag.posts.all()
+    posts_rows = [[], []]
+    for index, post in enumerate(
+            iterable=posts,
+            start=0
+    ):
+        posts_rows[index % 2].append(post.get_context(request.user))
+    new_messages = request.user.get_new_messages()
+    data = {
+        'logged_user': request.user.get_context(),
+        'posts_rows': posts_rows,
+        'new_messages': new_messages.exists(),
+        'new_notifications': request.user.get_new_notifications().count(),
+        'tag': tag_name
+    }
+    data['number_of_posts'] = len(data['posts_rows'][0]) + len(data['posts_rows'][1])
+    return render(request, 'tag-dashboard.html', context=data)
+
+
+@login_required(login_url='user-login')
 def new_post(request: HttpRequest):
     if request.method == 'POST':
         try:
