@@ -211,7 +211,10 @@ def send_otp(request: HttpRequest):
             email = user.email
         else:
             email = email.lower()
-            username = username.lower()
+            if not username and request.user:
+                username = request.user.username
+            else:
+                username = username.lower()
 
         OtpVerification.objects.filter(email=email).delete()
         email_verification = OtpVerification(username=username, email=email, type='email')

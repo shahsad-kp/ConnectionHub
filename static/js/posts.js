@@ -142,7 +142,6 @@ $(document).ready(
             );
         }
 
-
         function submitNewComment(event) {
             event.preventDefault();
             const commentText = $('#comment-input').val();
