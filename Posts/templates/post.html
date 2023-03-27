@@ -13,7 +13,7 @@
     {% if post.tags %}
     <div style="display: flex; flex-wrap: wrap; padding: 0 10px" class="gap-5">
         {% for tag in post.tags %}
-        <a href="/tag/{{ tag }}" class="tag">{{ tag }}</a>
+        <a href="{% url 'tag-posts' tag_name=tag %}" class="tag">#{{ tag }}</a>
         {% endfor %}
     </div>
     {% endif %}

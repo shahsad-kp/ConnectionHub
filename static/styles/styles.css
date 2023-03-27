@@ -643,3 +643,11 @@ input:checked + .slider:before {
 .posts-row {
     width: 100%;
 }
+
+.page-title {
+    font-family: 'MuseoModerno', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+}

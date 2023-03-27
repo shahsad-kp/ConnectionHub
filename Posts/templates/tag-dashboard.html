@@ -1,0 +1,31 @@
+{% extends 'users-base.html' %}
+{% load static %}
+
+{% block title %}#{{ tag }}{% endblock %}
+
+{% block content %}
+    <div class="width-max dis-col">
+        <div class="width-max"><h1 class="text-color">#{{ tag }}</h1></div>
+        <div class="saved-posts-root padding-10 dis-col gap-10">
+            {% if number_of_posts %}
+                {% for posts_row in posts_rows %}
+                    <div class="gap-10 dis-col posts-row">
+                        {% for post in posts_row %}
+                            <div class="saved-post">
+                                {% include 'post.html' %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="blank-page">No Posts..</div>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'chat-button.html' %}
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{% static '/js/posts.js' %}"></script>
+{% endblock %}
