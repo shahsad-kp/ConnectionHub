@@ -1,5 +1,6 @@
 from django.db import models
 
+from ConnectionHub.settings import cipher_suite
 from Users.models import User
 
 
@@ -9,11 +10,21 @@ class MessageUserManager(models.Manager):
 
 
 class Message(models.Model):
-    message = models.CharField(max_length=255)
     sender = models.ForeignKey('Users.User', on_delete=models.CASCADE, related_name='sender_messages')
     receiver = models.ForeignKey('Users.User', on_delete=models.CASCADE, related_name='receiver_messages')
     timestamp = models.DateTimeField(auto_now_add=True)
     viewed = models.BooleanField(default=False)
+
+    encrypted_message = models.BinaryField()
+
+    @property
+    def message(self):
+        message_bytes = bytes(self.encrypted_message)
+        return cipher_suite.decrypt(message_bytes).decode()
+
+    @message.setter
+    def message(self, value):
+        self.encrypted_message = cipher_suite.encrypt(value.encode())
 
     objects = MessageUserManager()
     admin_objects = models.Manager()

@@ -173,3 +173,5 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
     }
 }
+
+cipher_suite = Fernet(env('FERNET_KEY'))
