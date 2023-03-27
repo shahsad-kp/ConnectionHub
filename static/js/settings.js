@@ -360,6 +360,7 @@ $(document).ready(function () {
             contentType: false,
             success: function (response) {
                 $('#success').text('Your message has been sent').show();
+                $('form').trigger('reset');
             },
             error: function (error) {
                 console.log(error);

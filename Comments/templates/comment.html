@@ -1,7 +1,7 @@
 <div class="dis-col padding-10 gap-5 position-rel" id="comment-{{ comment.id }}">
     {% if comment.user.self %}
         <div class="less-action-button-corner delete-button" data-type="comment" data-comment-id="{{ comment.id }}"
-             data-element-id="#comment-{{ comment.id }}">
+             data-element-id="#comment-{{ comment.id }}" data-post-id="{{ post.id }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M21 5.97998C17.67 5.64998 14.32 5.47998 10.98 5.47998C9 5.47998 7.02 5.57998 5.04 5.77998L3 5.97998"
                       stroke="#FF4136" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>

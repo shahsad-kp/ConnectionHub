@@ -22,21 +22,22 @@ def comments(request: HttpRequest, post_id: int):
 
         comment = request.POST['comment']
         comment = post.comments.create(user=request.user, content=comment)
-        post.comments_count += 1
-        post.save()
+        post.refresh_from_db(fields=['comments_count'])
         return JsonResponse(
             data={
                 'success': True,
                 'comment': comment.get_context(),
+                'comment_count': post.comments_count
             }
         )
     return JsonResponse(
         data={
             'success': True,
             'comments': [
-                comment.get_context()
+                comment.get_context(request.user)
                 for comment in post.comments.all()
             ],
+            'comment_count': post.comments.count()
         }
     )
 
@@ -54,8 +55,10 @@ def delete_comment(request: HttpRequest, comment_id: int):
         )
 
     comment.delete()
+    comment.post.refresh_from_db(fields=['comments_count'])
     return JsonResponse(
         data={
-            'success': True
+            'success': True,
+            'comment_count': comment.post.comments_count
         }
     )

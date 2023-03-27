@@ -51,7 +51,7 @@
                 <path d="M13 15.23C13 16.42 12.56 17.5201 11.82 18.3901C10.83 19.5901 9.26 20.36 7.5 20.36L4.89 21.91C4.45 22.18 3.89 21.81 3.95 21.3L4.2 19.3301C2.86 18.4001 2 16.91 2 15.23C2 13.47 2.94 11.9201 4.38 11.0001C5.27 10.4201 6.34 10.0901 7.5 10.0901C10.54 10.0901 13 12.39 13 15.23Z"
                       stroke="#F8E71C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-            <span class="post-action-text text-color">{{ post.comments_count }}</span>
+            <span class="post-action-text text-color" id="comments-count-{{ post.id }}">{{ post.comments_count }}</span>
         </div>
     </a>
     {#            Save#}
