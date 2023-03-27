@@ -187,7 +187,7 @@ $(document).ready(
                             $(`#comment-delete-${response['comment']['id']}`).click(
                                 deletePost
                             )
-                            commentForm.reset()
+                            commentForm.trigger("reset");
                         }
                     }
                 }
