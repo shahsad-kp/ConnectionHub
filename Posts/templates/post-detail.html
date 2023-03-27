@@ -55,14 +55,14 @@
                 {% endif %}
                 {% include 'post-actions.html' %}
             </div>
-            <div class="new-comment width-max card">
+            <div class="new-comment width-max card" style="z-index: 999">
                 <form id="comment-form" action="{% url 'comments-view' post_id=post.id %}">
                     {% csrf_token %}
                     <input type="text" name="comment" placeholder="Add a comment..."
                            class="secondary-background text-color">
                 </form>
             </div>
-            <div class="dis-col padding-10" id="post-comments-list">
+            <div class="dis-col padding-10 comment-section" id="post-comments-list">
                 {% for comment in post.comments %}
                     {% include 'comment.html' with comment=comment %}
                 {% endfor %}
