@@ -15,6 +15,8 @@ $(document).ready(function () {
     const helpMessageInput = $('#message')
     const accountTypeInput = $('#private-account')
     const errorMessages = {};
+    let emailOtpSended = false;
+    let emailOtpVerified = false;
 
 
     function checkEmpty(element, name) {
@@ -197,6 +199,14 @@ $(document).ready(function () {
     function clearError(
         field
     ) {
+        if (field == 'all') {
+            for (let key in errorMessages) {
+                $(key).removeClass('is-invalid');
+            }
+            errorMessages = {};
+            $('#error').hide();
+            return;
+        }
         delete errorMessages[field];
         $(field).removeClass('is-invalid');
         let errorMessage = '';
@@ -230,20 +240,74 @@ $(document).ready(function () {
         form.append('bio', bioInput.val());
         form.append('profile-picture', profileInput[0].files[0]);
 
-        $.ajax({
-            url: updateProfileUrl,
-            type: 'POST',
-            data: form,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                $('#success').text('Your profile was updated successfully..').show();
-                ;
-            },
-            error: function (error) {
-                showError('#undefined', response.responseJSON['error']);
+        if ((emailInput.val() !== '') && (emailOtpSended === false)) {
+            submitButton.text('Sending OTP...')
+            $.ajax({
+                url: sendOtpUrl,
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': csrfToken,
+                    'email': emailInput.val(),
+                },
+                success: function (response) {
+                    $('#email-otp-field').show()
+                    submitButton.text('Submit')
+                    emailOtpSended = true;
+                    emailInput.prop('readonly', true)
+                },
+                error: function (error) {
+                    submitButton.text('Submit')
+                    showError('#undefined', error.responseJSON['error']);
+                }
+            });
+        } else if ((emailInput.val() !== '') && (emailOtpSended === true) && (emailOtpVerified === false)) {
+            submitButton.text('Verifying OTP...')
+            $.ajax({
+                url: verifyOtpUrl,
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': csrfToken,
+                    'email': emailInput.val(),
+                    'otp': $('#email-otp').val(),
+                },
+                success: function (response) {
+                    submitButton.text('Submit')
+                    emailOtpVerified = true;
+                    updateProfile();
+                },
+                error: function (error) {
+                    submitButton.text('Submit')
+                    showError('#email-otp', error.responseJSON['error']);
+                }
+            });
+        } else {
+            submitButton.text('Updating Profile...')
+            if (emailOtpVerified) {
+                form.append('email-otp', $('#email-otp').val());
             }
-        });
+            $.ajax({
+                url: updateProfileUrl,
+                type: 'POST',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    $('#success').text('Your profile was updated successfully..').show();
+                    $('#email-otp-field').hide()
+                    submitButton.text('Submit')
+                    emailInput.prop('readonly', false)
+                    emailOtpSended = false;
+                    emailOtpVerified = false;
+                    $('form').trigger('reset');
+                    clearError('all')
+                },
+                error: function (error) {
+                    showError('#undefined', error.responseJSON['error']);
+                    submitButton.text('Submit')
+                }
+            });
+        }
+
     }
 
     function updatePassword() {
@@ -410,4 +474,13 @@ $(document).ready(function () {
     accountTypeInput.change(
         updateAccountType
     )
-});
+
+    $('#email-otp').on('input', function () {
+            if ($(this).val().length === 6) {
+                updateProfile();
+            } else {
+                clearError('#email-otp')
+            }
+        }
+    );
+})

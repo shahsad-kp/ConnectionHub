@@ -4,6 +4,7 @@ from django.http import HttpRequest, JsonResponse, Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
+from Auth.models import OtpVerification
 from .models import User, Follow, Blocks, FollowRequest
 
 
@@ -258,18 +259,10 @@ def respond_follow_request(request: HttpRequest, username: str, action: str):
         )
         response.status_code = 400
     elif action == 'accept':
-        response = accept_follow_request(
-            request=request,
-            user=user,
-            logined_user=logined_user,
-        )
+        response = _accept_follow_request(request=request, user=user, logined_user=logined_user)
 
     elif action == 'reject':
-        response = reject_follow_request(
-            request=request,
-            user=user,
-            logined_user=logined_user,
-        )
+        response = _reject_follow_request(request=request, user=user, logined_user=logined_user)
     else:
         response = JsonResponse(
             {
@@ -283,7 +276,7 @@ def respond_follow_request(request: HttpRequest, username: str, action: str):
     return response
 
 
-def accept_follow_request(request: HttpRequest, user: 'User', logined_user: 'User') -> HttpResponse:
+def _accept_follow_request(request: HttpRequest, user: 'User', logined_user: 'User') -> HttpResponse:
     if Follow.objects.filter(follower=user, followee=logined_user).exists():
         response = JsonResponse(
             {
@@ -307,7 +300,7 @@ def accept_follow_request(request: HttpRequest, user: 'User', logined_user: 'Use
     return response
 
 
-def reject_follow_request(request: HttpRequest, user: 'User', logined_user: 'User'):
+def _reject_follow_request(request: HttpRequest, user: 'User', logined_user: 'User'):
     request = FollowRequest.objects.filter(follower=user, followee=logined_user).first()
     request.decline()
     response = JsonResponse(
@@ -376,6 +369,7 @@ def settings_update_profile(request: HttpRequest):
             bio = request.POST['bio']
             phone_number = request.POST['phone']
             profile_picture = request.FILES.get('profile-picture')
+            email_otp = request.POST.get('email-otp')
         except KeyError:
             response = JsonResponse(
                 data={
@@ -410,6 +404,39 @@ def settings_update_profile(request: HttpRequest):
                     }
                 )
                 response.status_code = 409
+                return response
+
+            if not email_otp:
+                return JsonResponse(
+                    data={
+                        'success': False,
+                        'error': 'Email not verified'
+                    },
+                    status=400
+                )
+            email_verification = OtpVerification.objects.filter(
+                email=email,
+                otp__exact=email_otp
+            ).first()
+            if email_verification and not email_verification.verified:
+                response = JsonResponse(
+                    data={
+                        'success': False,
+                        'error': 'Email is not verified'
+                    }
+                )
+                response.status_code = 400
+                return response
+            elif email_verification and email_verification.verified:
+                email_verification.delete()
+            else:
+                response = JsonResponse(
+                    data={
+                        'success': False,
+                        'error': 'Email is not verified'
+                    }
+                )
+                response.status_code = 400
                 return response
             user.email = email
         if phone_number:

@@ -20,12 +20,17 @@
     </div>
     <div class="dis-col gap-5">
         <label for="phone-number" class="text-color">Phone no</label>
-        <input  placeholder="{% if logged_user.phone %}{{ logged_user.phone }}{% else %}Not given{% endif %}" class="secondary-background card text-color" type="text" name="phone" id="phone-number">
+        <input placeholder="{% if logged_user.phone %}{{ logged_user.phone }}{% else %}Not given{% endif %}" class="secondary-background card text-color" type="text" name="phone" id="phone-number">
     </div>
 
     <div class="dis-col gap-5">
         <label for="bio" class="text-color">Bio</label>
         <textarea placeholder="{% if logged_user.bio %}{{ logged_user.bio }}{% else %}Not given{% endif %}" style="height: 200px" name="bio" id="bio" class="secondary-background card text-color"></textarea>
+    </div>
+
+    <div class="dis-col gap-5" id="email-otp-field" style="display: none">
+        <label for="email-otp" class="text-color">Email OTP</label>
+        <input placeholder="Enter the email OTP" class="secondary-background card text-color" type="text" name="email-otp" id="email-otp">
     </div>
     <div id="error" class="error-message danger-text"></div>
     <div id="success" class="success-message"></div>
