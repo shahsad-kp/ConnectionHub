@@ -56,7 +56,7 @@
                 {% include 'post-actions.html' %}
             </div>
             <div class="new-comment width-max card" style="z-index: 999">
-                <form id="comment-form" action="{% url 'comments-view' post_id=post.id %}">
+                <form id="comment-form" action="{% url 'comments-view' post_id=post.id %}" data-post-id="{{ post.id }}">
                     {% csrf_token %}
                     <input type="text" name="comment" placeholder="Add a comment..."
                            class="secondary-background text-color">

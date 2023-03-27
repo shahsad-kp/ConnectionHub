@@ -117,8 +117,8 @@ $(document).ready(
             let thisButton = $(this)
             let dataType = thisButton.data('type')
             let url;
+            let postId = thisButton.data('post-id')
             if (dataType === 'post') {
-                let postId = thisButton.data('post-id')
                 url = deletePostUrl.replace('0', postId)
 
             } else if (dataType === 'comment') {
@@ -135,6 +135,7 @@ $(document).ready(
                                 location.href = response['redirect_url']
                             } else {
                                 $(thisButton.data('element-id')).remove()
+                                $('#comments-count-' + postId).text(response['comment_count'])
                             }
                         }
                     }
@@ -150,6 +151,7 @@ $(document).ready(
             }
             const url = commentForm.attr('action');
             const data = commentForm.serialize();
+            const postId = commentForm.data('post-id');
             $.ajax({
                     url: url,
                     data: data,
@@ -183,6 +185,7 @@ $(document).ready(
                                     </div>`
                                 )
                             )
+                            $('#comments-count-' + postId).text(response['comment_count'])
                             $(`#comment-delete-${response['comment']['id']}`).click(
                                 deletePost
                             )
