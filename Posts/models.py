@@ -54,7 +54,6 @@ class Post(models.Model):
                 comment.get_context(logined_user=user)
                 for comment in self.comments.all().order_by('-created_at')
             ]
-            comments = comments * 15
         else:
             comments = []
 
