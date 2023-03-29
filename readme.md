@@ -1,6 +1,6 @@
 # Django Social Network
 
-A Django 4.0 -based open source social network application.
+A Django 4.1 -based open source social network application.
 ## Badges
 [![GitHub issues](https://img.shields.io/github/issues/shahsad-kp/connectionhub)](https://github.com/shahsad-kp/connectionhubk/issues)
 [![Forks](https://img.shields.io/github/forks/shahsad-kp/connectionhub)](https://github.com/shahsad-kp/connectionhubk/fork)
