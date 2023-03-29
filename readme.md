@@ -67,7 +67,7 @@ python manage.py migrate
 ```bash
 python manage.py createsuperuser
 ```
-9. To get start runserver localy by:
+9. To get start runserver locally by:
 ```bash
 python manage.py runserver
 ```
