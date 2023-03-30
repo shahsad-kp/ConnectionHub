@@ -14,7 +14,7 @@ def pre_like_dislike(sender: Type[Reaction], instance: Reaction, created: bool, 
                 Notification.create_notification(
                     recipient=instance.post.user,
                     notification_type='like',
-                    content=f'@{instance.user} liked your post',
+                    content=f'{instance.user} liked your post',
                     arg_value=str(instance.post.id)
                 )
         else:
@@ -29,7 +29,7 @@ def pre_like_dislike(sender: Type[Reaction], instance: Reaction, created: bool, 
                     Notification.create_notification(
                         recipient=instance.post.user,
                         notification_type='like',
-                        content=f'@{instance.user} liked your post',
+                        content=f'{instance.user} liked your post',
                         arg_value=str(instance.post.id)
                     )
             else:
