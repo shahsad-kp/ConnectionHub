@@ -174,6 +174,8 @@ def new_post(request: HttpRequest):
         )
         for tag_name in str(tags).strip().split(' '):
             tag_name = tag_name.strip()
+            if not tag_name:
+                continue
             tag, _ = Tag.objects.get_or_create(name=tag_name)
             post.tags.add(tag)
 
