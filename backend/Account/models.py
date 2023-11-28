@@ -2,9 +2,7 @@ from uuid import uuid4
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, AbstractUser
-from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.db.models import Model, UUIDField, DateTimeField, CharField, EmailField, ImageField, BooleanField
-from django.utils import timezone
+from django.db.models import Model, UUIDField, DateTimeField, CharField, EmailField, BooleanField
 from django.utils.translation import gettext_lazy as _
 
 
@@ -32,24 +30,49 @@ class BaseModel(Model):
 
 
 class User(AbstractUser, PermissionsMixin):
-    full_name = CharField(
-        _('Full Name'),
+    id = UUIDField(
+        default=uuid4,
+        primary_key=True,
+        editable=False,
+        verbose_name='ID'
+    )
+    username = CharField(
+        _("Username"),
         max_length=150,
-        blank=False
+        unique=True,
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[AbstractUser.username_validator],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
     )
-    profile_picture = ImageField(
-        _('Profile Picture'),
-        upload_to='profile_picture/',
-        blank=True,
-    )
+
     phone = CharField(
-        _('Phone Number')
+        _('Phone Number'),
+        unique=True
+    )
+    email = EmailField(
+        _("Email Address"),
+        unique=True
+    )
+    is_verified = BooleanField(
+        _("Email Verified"),
+        default=False,
+        help_text=_(
+            "Designates whether this user email verified or not. "
+            "Unselect this instead of deleting accounts."
+        ),
     )
 
     first_name = None
     last_name = None
 
-    REQUIRED_FIELDS = ["full_name", "email", "phone"]
+    REQUIRED_FIELDS = ["email", "phone"]
 
     class Meta:
         db_table = 'users'
+
+    def __str__(self):
+        return f'@{self.username}'
