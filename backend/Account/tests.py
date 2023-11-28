@@ -11,7 +11,7 @@ class RegisterTestCase(APITestCase):
         self.url = reverse('register_view')
         self.username = 'shahsad-kp'
         self.username_1 = 'shahsadkp'
-        self.email = 'shahsadkpklr@gmail.com'
+        self.email = 'm.shahsad@gmail.com'
         self.email_1 = 'shahsad.dev@gmail.com'
         self.password = 'admin@1234'
         self.phone = '+9100000000'

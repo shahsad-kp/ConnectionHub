@@ -2,19 +2,28 @@ import uuid
 
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from Account.models import User
+from Account.permissions import IsVerified
 from Account.serializers import UserSerializer
 
 
 class RegisterView(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+
+class UpdateUserView(UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsVerified]
+
+    def get_object(self):
+        return self.request.user
 
 
 class CurrentUserView(RetrieveAPIView):
