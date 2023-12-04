@@ -20,6 +20,7 @@ class UserSerializer(ModelSerializer):
             'password',
             'phone',
             'username',
+            'profile_id'
         ]
         extra_kwargs = {
             'password': {'write_only': True},
@@ -34,7 +35,6 @@ class UserSerializer(ModelSerializer):
         if password:
             if not confirm_password:
                 errors['confirm_password'] = 'This field is required.'
-
             elif password != confirm_password:
                 errors['confirm_password'] = 'Confirm password do not match.'
 

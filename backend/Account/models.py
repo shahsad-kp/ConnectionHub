@@ -1,7 +1,10 @@
+import uuid
+from typing import Optional
 from uuid import uuid4
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, AbstractUser
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model, UUIDField, DateTimeField, CharField, EmailField, BooleanField
 from django.utils.translation import gettext_lazy as _
 
@@ -73,6 +76,13 @@ class User(AbstractUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
+
+    @property
+    def profile_id(self) -> Optional[uuid.UUID]:
+        try:
+            return self.profile.id
+        except ObjectDoesNotExist:
+            return None
 
     def __str__(self):
         return f'@{self.username}'
