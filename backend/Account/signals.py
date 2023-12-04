@@ -8,10 +8,10 @@ from Account.models import User
 
 
 @receiver(post_save, sender=User)
-def send_email_verification_link(sender: type[User], instance: User, created: bool, **__):
+def send_email_verification_link(_: type[User], instance: User, created: bool, **__):
     if created:
         token = default_token_generator.make_token(instance)
-        subject = 'welcome to ConnectionHub world'
+        subject = 'Welcome to ConnectionHub world'
         message = f'Hi {instance.username}, thank you for registering in ConnectionHub. Your Token is: {token}.'
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [instance.email]
