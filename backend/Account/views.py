@@ -1,6 +1,5 @@
 import uuid
 
-from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -35,7 +34,8 @@ class CurrentUserView(RetrieveAPIView):
 
 
 class VerifyUserEmail(APIView):
-    def get(self, request: Request, user_id: uuid, token: str):
+    @staticmethod
+    def get(request: Request, user_id: uuid, token: str):
         try:
             user = User.objects.get(
                 id=user_id
@@ -55,9 +55,7 @@ class VerifyUserEmail(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        if default_token_generator.check_token(user, token):
-            user.is_verified = True
-            user.save()
+        if user.verify_email(token):
             return Response(
                 data={
                     'message': 'Email verified successfully.',

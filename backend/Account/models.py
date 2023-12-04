@@ -1,7 +1,11 @@
+import uuid
+from typing import Optional
 from uuid import uuid4
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, AbstractUser
+from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model, UUIDField, DateTimeField, CharField, EmailField, BooleanField
 from django.utils.translation import gettext_lazy as _
 
@@ -73,6 +77,20 @@ class User(AbstractUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
+
+    def verify_email(self, token: str) -> bool:
+        if default_token_generator.check_token(self, token):
+            self.is_verified = True
+            self.save()
+            return True
+        return False
+
+    @property
+    def profile_id(self) -> Optional[uuid.UUID]:
+        try:
+            return self.profile.id
+        except ObjectDoesNotExist:
+            return None
 
     def __str__(self):
         return f'@{self.username}'
