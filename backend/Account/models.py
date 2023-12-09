@@ -2,12 +2,15 @@ import uuid
 from typing import Optional
 from uuid import uuid4
 
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, AbstractUser
-from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.db.models import Model, UUIDField, DateTimeField, CharField, EmailField, BooleanField
 from django.utils.translation import gettext_lazy as _
+
+from Account.tokens import Token
 
 
 class BaseModel(Model):
@@ -51,6 +54,7 @@ class User(AbstractUser, PermissionsMixin):
         error_messages={
             "unique": _("A user with that username already exists."),
         },
+        db_index=True
     )
 
     phone = CharField(
@@ -78,12 +82,9 @@ class User(AbstractUser, PermissionsMixin):
     class Meta:
         db_table = 'users'
 
-    def verify_email(self, token: str) -> bool:
-        if default_token_generator.check_token(self, token):
-            self.is_verified = True
-            self.save()
-            return True
-        return False
+    def verify_email(self):
+        self.is_verified = True
+        self.save()
 
     @property
     def profile_id(self) -> Optional[uuid.UUID]:
@@ -91,6 +92,20 @@ class User(AbstractUser, PermissionsMixin):
             return self.profile.id
         except ObjectDoesNotExist:
             return None
+
+    def send_verification_email(self):
+        token = Token.email_verification_token(user=self)
+        subject = 'Welcome to ConnectionHub world'
+        message = f'Hi {self.username}, Thank you for registering in ConnectionHub. Your Token is: {str(token)}.'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [self.email]
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=email_from,
+            recipient_list=recipient_list,
+            fail_silently=False
+        )
 
     def __str__(self):
         return f'@{self.username}'

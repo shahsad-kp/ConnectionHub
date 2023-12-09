@@ -1,4 +1,4 @@
-from typing import OrderedDict
+from typing import OrderedDict, Optional
 
 from rest_framework.fields import CharField
 from rest_framework.serializers import ModelSerializer, ValidationError
@@ -20,10 +20,12 @@ class UserSerializer(ModelSerializer):
             'password',
             'phone',
             'username',
-            'profile_id'
+            'profile_id',
+            'is_verified',
         ]
         extra_kwargs = {
             'password': {'write_only': True},
+            'is_verified': {'read_only': True}
         }
 
     def validate(self, data: OrderedDict):
@@ -58,3 +60,10 @@ class UserSerializer(ModelSerializer):
             instance.set_password(password)
             instance.save()
         return instance
+
+    def to_representation(self, instance: User):
+        data: OrderedDict = super().to_representation(instance)
+        username: Optional[str] = data.get('username', None)
+        if username is not None:
+            data['username'] = '@' + username
+        return data

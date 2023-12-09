@@ -1,5 +1,3 @@
-import uuid
-
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -7,9 +5,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from Account.models import User
-from Account.permissions import IsVerified
+from Account.permissions import NotVerified
 from Account.serializers import UserSerializer
+from Account.tokens import Token
 
 
 class RegisterView(CreateAPIView):
@@ -19,7 +17,7 @@ class RegisterView(CreateAPIView):
 
 class UpdateUserView(UpdateAPIView):
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, IsVerified]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return self.request.user
@@ -33,38 +31,26 @@ class CurrentUserView(RetrieveAPIView):
         return self.request.user
 
 
-class VerifyUserEmail(APIView):
-    @staticmethod
-    def get(request: Request, user_id: uuid, token: str):
-        try:
-            user = User.objects.get(
-                id=user_id
-            )
-        except User.DoesNotExist:
-            return Response(
-                data={
-                    'message': 'No user found',
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
-        if user.is_verified:
-            return Response(
-                data={
-                    'message': 'This email is already verified'
-                },
-                status=status.HTTP_403_FORBIDDEN
-            )
+class ResendUserEmailVerification(APIView):
+    permission_classes = [IsAuthenticated & NotVerified]
 
-        if user.verify_email(token):
-            return Response(
-                data={
-                    'message': 'Email verified successfully.',
-                },
-                status=status.HTTP_200_OK
-            )
-        return Response(
-            data={
-                'message': 'Token is invalid/expired.'
-            },
-            status=status.HTTP_400_BAD_REQUEST
-        )
+    @staticmethod
+    def post(request, *args, **kwargs):
+        user = request.user
+        user.send_verification_email()
+        return Response(data={}, status=status.HTTP_200_OK)
+
+
+class VerifyUserEmail(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request: Request, **kwargs):
+        user = self.get_user()
+        user.verify_email()
+        serializer = UserSerializer(instance=user)
+        return Response(data=serializer.data)
+
+    def get_user(self):
+        token = Token(self.kwargs.get('token'))
+        token.verify()
+        return token.user
