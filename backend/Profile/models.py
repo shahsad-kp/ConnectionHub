@@ -1,4 +1,12 @@
-from django.db.models import CharField, ImageField, TextField, OneToOneField, CASCADE
+from django.core.exceptions import ValidationError
+from django.db.models import (
+    CharField,
+    ImageField,
+    TextField,
+    OneToOneField,
+    CASCADE,
+    ForeignKey
+)
 from django.utils.translation import gettext_lazy as _
 
 from Account.models import BaseModel, User
@@ -9,14 +17,18 @@ class Profile(BaseModel):
         to=User,
         related_name='profile',
         on_delete=CASCADE
+        on_delete=CASCADE,
+        db_index=True
     )
     first_name = CharField(
         _('First name'),
-        max_length=255
+        max_length=255,
+        blank=True
     )
     last_name = CharField(
         _('Last name'),
-        max_length=255
+        max_length=255,
+        blank=True
     )
     profile_picture = ImageField(
         _('Profile Picture'),
@@ -32,7 +44,7 @@ class Profile(BaseModel):
         db_table = 'profiles'
 
     def __str__(self):
-        return self.full_name
+        return f'Profile of {self.user}'
 
     @property
     def full_name(self) -> str:
