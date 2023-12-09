@@ -14,3 +14,20 @@ class ProfileAPIPermission(BasePermission):
             return request.method in ['GET', 'PUT', 'PATCH']
         except ObjectDoesNotExist:
             return request.method == 'POST'
+
+
+class ProfileCreatedOnly(BasePermission):
+    def __init__(self):
+        super().__init__()
+        self.message = None
+
+    def has_permission(self, request: Request, view: APIView):
+        if not request.user:
+            return False
+        user: User = request.user
+        try:
+            _ = user.profile
+            return True
+        except ObjectDoesNotExist:
+            self.message = 'You must setup your profile.'
+            return False
