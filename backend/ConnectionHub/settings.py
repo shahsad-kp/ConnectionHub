@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'Account.apps.AccountConfig',
     'Profile.apps.ProfileConfig',
     "Post.apps.PostConfig",
-    "storages"
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -100,6 +100,7 @@ DATABASES = {
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_BUCKET_REGION = env('AWS_BUCKET_REGION')
 
 STORAGES = {
     "default": {
