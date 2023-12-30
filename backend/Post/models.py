@@ -2,7 +2,9 @@ from django.db.models import ForeignKey, CASCADE, FilePathField, TextField, Many
 from django.utils.translation import gettext_lazy as _
 
 from Account.models import BaseModel, User
+from Post.choices import UploadingStatus
 from Profile.models import Profile
+from utils.s3_storage import generate_presigned_url_get, generate_presigned_url_put
 
 
 class Post(BaseModel):
@@ -40,6 +42,11 @@ class PostImage(BaseModel):
         on_delete=CASCADE,
         related_name='images'
     )
+    status = CharField(
+        verbose_name=_('File uploading status'),
+        choices=UploadingStatus.choices,
+        default=UploadingStatus.UPLOADING
+    )
 
     class Meta:
         db_table = 'post_images'
@@ -48,12 +55,16 @@ class PostImage(BaseModel):
         return 'Image of {}'.format(str(self.post))
 
     @property
-    def url(self) -> str:
-        return f'{self}'
-
-    @property
     def key(self):
         return f'posts/{self.post.profile_id}/{self.post_id}/{self.id}'
+
+    @property
+    def get_url(self) -> str:
+        return generate_presigned_url_get(self.key)
+
+    @property
+    def put_url(self) -> str:
+        return generate_presigned_url_put(self.key)
 
 
 class Tag(BaseModel):
