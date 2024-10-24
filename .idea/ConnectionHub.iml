@@ -1,44 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="PYTHON_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="django" name="Django">
-      <configuration>
-        <option name="rootFolder" value="$MODULE_DIR$" />
-        <option name="settingsModule" value="ConnectionHub/settings.py" />
-        <option name="manageScript" value="$MODULE_DIR$/manage.py" />
-        <option name="environment" value="&lt;map/&gt;" />
-        <option name="doNotUseTestRunner" value="false" />
-        <option name="trackFilePattern" value="migrations" />
-      </configuration>
-    </facet>
-  </component>
-  <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/media" />
-    </content>
-    <orderEntry type="jdk" jdkName="Python 3.11 (ConnectionHub)" jdkType="Python SDK" />
-    <orderEntry type="sourceFolder" forTests="false" />
+<module version="4">
+  <component name="PyDocumentationSettings">
+    <option name="format" value="PLAIN" />
+    <option name="myDocStringFormat" value="Plain" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/templates" />
-        <option value="$MODULE_DIR$/Home/templates" />
-        <option value="$MODULE_DIR$/Posts/templates" />
-        <option value="$MODULE_DIR$/Users/templates" />
-        <option value="$MODULE_DIR$/Auth/templates" />
-        <option value="$MODULE_DIR$/Admin/AdminHome/templates" />
         <option value="$MODULE_DIR$/Admin/AdminHelp/templates" />
-        <option value="$MODULE_DIR$/Admin/AdminPost/templates" />
-        <option value="$MODULE_DIR$/Admin/AdminUsers/templates" />
-        <option value="$MODULE_DIR$/Help/templates" />
-        <option value="$MODULE_DIR$/Comments/templates" />
-        <option value="$MODULE_DIR$/Admin/AdminReports/templates" />
-        <option value="$MODULE_DIR$/Notifications/templates" />
-        <option value="$MODULE_DIR$/Communications/templates" />
-        <option value="$MODULE_DIR$/UsersSettings/templates" />
       </list>
     </option>
   </component>
