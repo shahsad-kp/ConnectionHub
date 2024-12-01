@@ -1,4 +1,4 @@
-django~=4.1.7
+django~=4.2.7
 psycopg2
 pillow
 twilio~=7.16.4
