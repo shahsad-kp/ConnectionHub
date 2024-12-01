@@ -106,3 +106,4 @@ dmypy.json
 cython_debug/
 /media/
 *admins.json
+/staticfiles/
